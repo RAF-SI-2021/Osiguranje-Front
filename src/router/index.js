@@ -8,6 +8,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
+    },
+    {
+      path: '/admin/users',
+      name: 'users',
+      component: () => import('../views/UserSearch.vue')
     }
   ]
 })
