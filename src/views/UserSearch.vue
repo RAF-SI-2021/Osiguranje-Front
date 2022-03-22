@@ -6,7 +6,22 @@ console.log(data);
 
 const obj = reactive({
     users: data,
+    filteredUsers: data,
+    search: '',
 })
+
+function handleSearch(e) {
+    obj.search = e.target.value;
+    obj.filteredUsers = obj.users.filter(user => {
+        // search by name, surname, email, phone and position
+        return user.name.toLowerCase().includes(obj.search.toLowerCase()) ||
+            user.surname.toLowerCase().includes(obj.search.toLowerCase()) ||
+            user.email.toLowerCase().includes(obj.search.toLowerCase()) ||
+            user.position.toLowerCase().includes(obj.search.toLowerCase());
+    });
+    // console.log(obj.filteredUsers);
+}
+
 </script>
 
 <template>
@@ -15,7 +30,7 @@ const obj = reactive({
         <div class="row justify-content-center">
             <div class="col-6">
                 <div class="input-group mt-3 mb-3">
-                    <input type="text" class="form-control" />
+                    <input type="text" class="form-control" @input="handleSearch" />
                     <span class="input-group-text" id="inputGroup-sizing-default">
                         <svg
                             fill="#000000"
@@ -35,7 +50,7 @@ const obj = reactive({
 
         <!-- TODO: Replace the div within the row with the UserCard component -->
         <div class="row">
-            <div class="col-6 p-3" v-for="user in obj.users" :key="user.id">
+            <div class="col-6 p-3" v-for="user in obj.filteredUsers" :key="user.id">
                 <p>Name: {{ user.name }}</p>
                 <p>Surname: {{ user.surname }}</p>
                 <p>JMBG: {{ user.jmbg }}</p>
