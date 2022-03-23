@@ -13,7 +13,17 @@ const router = createRouter({
       path: '/admin/users',
       name: 'users',
       component: () => import('../views/UserSearch.vue')
-    }
+    },
+    {
+      path: '/addPassword/',
+      name: 'addPassword',
+      component: AddPassword
+    },
+    {
+      path: '/addPassword/:pass',
+      name: 'addPassword1',
+      component: AddPassword
+    },
   ]
 })
 
