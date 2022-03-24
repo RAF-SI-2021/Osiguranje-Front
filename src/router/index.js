@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import AdminView from '../views/AdminView.vue'
 import LoginView from '../views/LoginView.vue'
 import EditUser from '../views/user/EditUser.vue';
+import NewUserView from '../views/NewUserView.vue'
 
 
 const router = createRouter({
@@ -22,6 +23,11 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView
+    },
+    {
+      path: '/newUser',
+      name: 'newUser',
+      component: NewUserView
     },
     {
       path: '/admin/users',
