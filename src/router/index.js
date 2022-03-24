@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import AdminView from '../views/AdminView.vue'
 import LoginView from '../views/LoginView.vue'
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -25,7 +26,13 @@ const router = createRouter({
       path: '/admin/users',
       name: 'users',
       component: () => import('../views/UserSearch.vue')
-    }
+    },
+    {
+      path: '/addPassword/',
+      name: 'addPassword',
+      component: () => import('../views/AddPassword.vue')
+    },
+    
   ]
 })
 
