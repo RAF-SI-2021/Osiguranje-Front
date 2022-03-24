@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AdminView from '../views/AdminView.vue'
 import LoginView from '../views/LoginView.vue'
+import EditUser from '../views/user/EditUser.vue';
 
 
 const router = createRouter({
@@ -32,7 +33,11 @@ const router = createRouter({
       name: 'addPassword',
       component: () => import('../views/AddPassword.vue')
     },
-    
+    {
+      path: '/users/:id',
+      name: 'userEdit',
+      component: () => EditUser
+    }
   ]
 })
 
