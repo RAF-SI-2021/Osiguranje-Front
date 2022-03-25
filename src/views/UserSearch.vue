@@ -1,7 +1,10 @@
 <script setup>
 import { data } from '../mock-data/data';
 import { ref, reactive } from 'vue';
-
+import UserCard from "../components/UserCard";
+export default {
+    components: {UserCard}
+}
 console.log(data);
 
 const obj = reactive({
@@ -48,17 +51,18 @@ function handleSearch(e) {
             </div>
         </div>
 
-        <!-- TODO: Replace the div within the row with the UserCard component -->
+        
         <div class="row">
-            <div class="col-6 p-3" v-for="user in obj.filteredUsers" :key="user.id">
-                <p>Name: {{ user.name }}</p>
-                <p>Surname: {{ user.surname }}</p>
-                <p>JMBG: {{ user.jmbg }}</p>
-                <p>Email: {{ user.email }}</p>
-                <p>Phone: {{ user.phone }}</p>
-                <p>Position: {{ user.position }}</p>
-                <p>Active: {{ user.active }}</p>
-            </div>
+            <UserCard v-for="user in obj.filteredUsers" :key="user.id"
+                :id="user.id"
+                :name="user.name"
+                :surname="user.surname"
+                :jmbg="user.jmbg"
+                :email="user.email"
+                :phone="user.phone"
+                :position="user.position"
+                :active="user.active">
+            </UserCard>
         </div>
     </div>
 </template>
