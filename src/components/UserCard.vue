@@ -2,10 +2,10 @@
     <div class="card p-4" style="width: 18rem;" >
         <div class="d-flex justify-content-between">
             <div>
-                <h5 class="card-title">Name Surname<!--{{name}}, {{surname}} --></h5>
+                <h5 class="card-title">{{name}} {{surname}} </h5>
             </div>
             <div>
-                <button type="button" class="btn btn-primary btn-sm text-end" @click="editUser({id})"> Edit user</button>
+                <button type="button" class="btn btn-primary btn-sm text-end" @click="editUser(id)"> Edit user</button>
             </div>
         </div>
         <hr>
