@@ -13,7 +13,7 @@
                 <Slider
                         v-model="value_price"
                         :min=0.00
-                        :max=9.99
+                        :max=10000.00
                         :step=0.01
                         :format="format_price"
                 />
@@ -24,7 +24,7 @@
                 <Slider
                         v-model="value_bid"
                         :min=0.00
-                        :max=9.99
+                        :max=10000.00
                         :step=0.01
                         :format="format_price"
                 />
@@ -35,7 +35,7 @@
                 <Slider
                         v-model="value_ask"
                         :min=0.00
-                        :max=9.99
+                        :max=10000.00
                         :step=0.01
                         :format="format_price"
                 />
@@ -46,7 +46,7 @@
                 <Slider
                         v-model="value_volume"
                         :min=0
-                        :max=100
+                        :max=5000000
                 />
             </div>
             <hr class="col-lg-8 col-md-8 col-sm-8">
