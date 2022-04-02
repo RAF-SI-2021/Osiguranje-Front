@@ -1,0 +1,177 @@
+<template>
+    <div id="filter-stock-sidebar" class="p-4 col-lg-3 col-md-3 col-sm-3">
+        <h3> Filters:</h3>
+        <br>
+        <div>
+            <h5> Stock market: </h5>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <vue3-simple-typeahead :items="stock_markets" :placeholder="options.stock_placeholder" @selectItem="selectItem" @onInput="onInput" @onBlur="onBlur" :minInputLength="options.minInputLength" />
+            </div>
+            <br>
+            <h5> Price: </h5>
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <Slider
+                        v-model="value_price"
+                        :min=0.00
+                        :max=9.99
+                        :step=0.01
+                        :format="format_price"
+                />
+            </div>
+            <br>
+            <h5> Bid: </h5>
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <Slider
+                        v-model="value_bid"
+                        :min=0.00
+                        :max=9.99
+                        :step=0.01
+                        :format="format_price"
+                />
+            </div>
+            <br>
+            <h5> Ask: </h5>
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <Slider
+                        v-model="value_ask"
+                        :min=0.00
+                        :max=9.99
+                        :step=0.01
+                        :format="format_price"
+                />
+            </div>
+            <br>
+            <h5> Volume: </h5>
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <Slider
+                        v-model="value_volume"
+                        :min=0
+                        :max=100
+                />
+            </div>
+            <hr class="col-lg-8 col-md-8 col-sm-8">
+            <div id="future_contracts">
+                <h4>For future contracts: </h4>
+                <br>
+                <h5>Maintainance margin: </h5>
+                <div class="col-lg-8 col-md-8 col-sm-8">
+                    <Slider
+                            v-model="value_margin"
+                            :min=0
+                            :max=10000
+                    />
+                </div>
+                <br>
+                <h5>Settlement Date: </h5>
+                <input type="date" v-model="currentDate" id="settlement_date">
+            </div>
+
+        </div>
+    </div>
+
+
+</template>
+
+<script>
+    import Slider from '@vueform/slider'
+    import {defineStore} from 'pinia'
+    export const filterStockStore = defineStore('filterStockStore',{
+        state: () =>{
+            return {
+                stock: this.data.selection,
+                price: 0,
+                bid: 0,
+                ask: 0,
+                volume: 0,
+                margin: 0,
+                settlement_date: this.currentDate
+            }
+        },
+        actions:{
+            setStock(){
+                this.stock= this.data.selection;
+            },
+            setPrice(){
+                this.price=this.value_price;
+            },
+            setBid(){
+                this.bid = this.value_bid;
+            },
+            setAsk(){
+                this.ask=this.value_ask;
+            },
+            setVolume(){
+                this.volume=this.value_volume;
+            },
+            setMargin(){
+                this.margin=this.value_margin;
+            },
+            setSettlementDate(){
+                this.settlement_date = $('#settlement_date').val();
+            }
+        }
+    })
+
+    export default {
+        components: {
+            Slider,
+        },
+        created() {
+            this.listFiltered = this.stock_markets;
+        },
+        data() {
+            return {
+                value_price: 10,
+                value_bid: 10,
+                value_ask: 10,
+                value_volume: 20,
+                value_margin:2500,
+
+                format_price: {
+                   decimals: 2
+                },
+                options: {
+                    stock_placeholder: 'Choose a stock',
+                    minInputLength: 1,
+                },
+                stock_markets: [
+                    'NY',
+                    'NAS',
+                    'AMS',
+                    'BRU',
+                    'MSM',
+                    'JPX',
+                    'HKG',
+                    'SHE',
+                    'LON',
+                    'BOM'
+                ],
+                listFiltered: [],
+                data: {
+                    input: '',
+                    selection: null,
+                },
+            };
+        },
+        methods: {
+            selectItem(item) {
+                this.data.selection = item;
+            },
+            onInput(event) {
+                this.data.selection = null;
+                this.data.input = event.input;
+                this.listFiltered = event.items;
+            },
+            onBlur(event) {
+                this.data.input = event.input;
+                this.listFiltered = event.items;
+            },
+            currentDate(){
+                const curent = new Date();
+                const date = current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate();
+                return date;
+            }
+        },
+    };
+</script>
+<style src="@vueform/slider/themes/default.css"></style>
