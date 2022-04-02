@@ -43,6 +43,11 @@ const router = createRouter({
       path: '/users/:id',
       name: 'userEdit',
       component: () => EditUser
+    },
+    {
+      path: '/stock/:symbol',
+      name: 'stockInfo',
+      component: () => import('../views/StockSecurityInfoView.vue')
     }
   ]
 })
