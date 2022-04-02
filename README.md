@@ -39,3 +39,7 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+## Docker
+
+Check [Osiguranje-Back](https://github.com/RAF-SI-2021/Osiguranje-Back) repository README for details.
