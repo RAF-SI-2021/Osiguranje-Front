@@ -42,19 +42,3 @@ export default {
     </div>
   </div>
 </template>
-
-<style scoped>
-
-table {
-  counter-reset: rowNumber;
-}
-
-table tr::before {
-  display: table-cell;
-  counter-increment: rowNumber;
-  content: counter(rowNumber) ".";
-  padding-right: 0.3em;
-  text-align: left;
-}
-    
-</style>
