@@ -4,6 +4,7 @@ import AdminView from '../views/AdminView.vue'
 import LoginView from '../views/LoginView.vue'
 import EditUser from '../views/user/EditUser.vue';
 import NewUserView from '../views/NewUserView.vue'
+import StockSecuritiesView from '../views/StockSecuritiesView.vue';
 
 
 const router = createRouter({
@@ -48,6 +49,11 @@ const router = createRouter({
       path: '/stock/:symbol',
       name: 'stockInfo',
       component: () => import('../views/StockSecurityInfoView.vue')
+    },
+    {
+      path: '/StockSecuritiesView',
+      name: 'StockSecuritiesView',
+      component: StockSecuritiesView
     }
   ]
 })
