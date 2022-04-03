@@ -31,4 +31,9 @@ export const listings = Array.from({ length: 100 }, (_, index) => ({
     bid: faker.random.number({min: 0, max: 1000, precision: .01}),
     change: faker.random.number({min:0, max:2, precision: .01}),
     volume: faker.random.number({min:10000000, max:99999999}),
-})); 
+    listing_type: faker.random.arrayElement(['ACTION', 'FOREX', 'FUTURE']),
+    initial_margin_cost: faker.datatype.number({ min: 0, max: 1000, precision: .01 })
+}));
+
+// For historical data, maybe put it in a .env later
+export const apiKey = '83560be253a04a8a944edf4d6488cd41';
