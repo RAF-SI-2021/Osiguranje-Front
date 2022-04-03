@@ -63,7 +63,7 @@
                 </div>
                 <br>
                 <h5>Settlement Date: </h5>
-                <input type="date" v-model="currentDate" id="settlement_date">
+                <input type="date" class="form-control col-lg-8 col-md-8 col-sm-8" v-model="currentDate" id="settlement_date">
             </div>
 
         </div>
@@ -74,44 +74,6 @@
 
 <script>
     import Slider from '@vueform/slider'
-    import {defineStore} from 'pinia'
-    export const filterStockStore = defineStore('filterStockStore',{
-        state: () =>{
-            return {
-                stock: this.data.selection,
-                price: 0,
-                bid: 0,
-                ask: 0,
-                volume: 0,
-                margin: 0,
-                settlement_date: this.currentDate
-            }
-        },
-        actions:{
-            setStock(){
-                this.stock= this.data.selection;
-            },
-            setPrice(){
-                this.price=this.value_price;
-            },
-            setBid(){
-                this.bid = this.value_bid;
-            },
-            setAsk(){
-                this.ask=this.value_ask;
-            },
-            setVolume(){
-                this.volume=this.value_volume;
-            },
-            setMargin(){
-                this.margin=this.value_margin;
-            },
-            setSettlementDate(){
-                this.settlement_date = $('#settlement_date').val();
-            }
-        }
-    })
-
     export default {
         components: {
             Slider,
