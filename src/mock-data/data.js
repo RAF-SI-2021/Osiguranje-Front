@@ -22,13 +22,18 @@ export const stocks = Array.from({ length: 100 }, (_, index) => ({
 
 export const listings = Array.from({ length: 100 }, (_, index) => ({
     id: index + 1,
-    stock_symbol: faker.random.arrayElement(['MSFT', 'GGL', 'SMM', 'FKR', 'QWE', 'OPRS', 'TSL', 'AMZN']),,
+    stock_symbol: faker.random.arrayElement(['MSFT', 'GGL', 'SMM', 'FKR', 'QWE', 'OPRS', 'TSL', 'AMZN']),
     description: faker.company.companyName(),
     stock_market: faker.random.arrayElement(['NYSE', 'TSE', 'LSE', 'NASDAQ']),
     last_updated: faker.date.past(10),
-    price: faker.random.number({min: 0, max: 1000, precision: .25}),
-    ask: faker.random.number({min: 0, max: 1000, precision: .25}),
-    bid: faker.random.number({min: 0, max: 1000, precision: .25}),
-    change: faker.random.number({min:0, max:2, precision: .25}),
+    price: faker.random.number({min: 0, max: 1000, precision: .01}),
+    ask: faker.random.number({min: 0, max: 1000, precision: .01}),
+    bid: faker.random.number({min: 0, max: 1000, precision: .01}),
+    change: faker.random.number({min:0, max:2, precision: .01}),
     volume: faker.random.number({min:10000000, max:99999999}),
-})); 
+    listing_type: faker.random.arrayElement(['ACTION', 'FOREX', 'FUTURE']),
+    initial_margin_cost: faker.datatype.number({ min: 0, max: 1000, precision: .01 })
+}));
+
+// For historical data, maybe put it in a .env later
+export const apiKey = '83560be253a04a8a944edf4d6488cd41';
