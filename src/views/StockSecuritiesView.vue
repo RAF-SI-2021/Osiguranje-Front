@@ -1,4 +1,14 @@
 <script>
+import { listings } from '../mock-data/data';
+import { ref, reactive } from 'vue';
+
+const obj = reactive({
+    stock_security: listings,
+    filtered_stock_security: listings,
+    search: '',
+})
+
+
 </script>
 
 
