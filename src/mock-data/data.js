@@ -22,7 +22,7 @@ export const stocks = Array.from({ length: 100 }, (_, index) => ({
 
 export const listings = Array.from({ length: 100 }, (_, index) => ({
     id: index + 1,
-    stock_symbol: faker.random.arrayElement(['MSFT', 'GGL', 'SMM', 'FKR', 'QWE', 'OPRS', 'TSL', 'AMZN']),,
+    stock_symbol: faker.random.arrayElement(['MSFT', 'GGL', 'SMM', 'FKR', 'QWE', 'OPRS', 'TSL', 'AMZN']),
     description: faker.company.companyName(),
     stock_market: faker.random.arrayElement(['NYSE', 'TSE', 'LSE', 'NASDAQ']),
     last_updated: faker.date.past(10),
