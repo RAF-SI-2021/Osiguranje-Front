@@ -1,12 +1,19 @@
-<script>
+<script setup>
 import { listings } from '../mock-data/data';
 import { ref, reactive } from 'vue';
 
 const obj = reactive({
-    stock_security: listings,
-    filtered_stock_security: listings,
-    search: '',
+    stock_securities: listings,
+    filtered_stock_securities: listings,
 })
+
+
+function onType(e){
+    if(e.target.value === "action") obj.filtered_stock_securities = obj.stock_securities.filter(security => security.listing_type === "ACTION");
+    else if(e.target.value === "future") obj.filtered_stock_securities = obj.stock_securities.filter(security => security.listing_type === "FUTURE");
+    else obj.filtered_stock_securities = obj.stock_securities.filter(security => security.listing_type === "FOREX");
+}
+
 
 
 </script>
@@ -14,7 +21,6 @@ const obj = reactive({
 
 
 <template>
-    <div class="mt-5 pt-2"></div>
 
     <div class="container-fluid">
         <div class="row content">
@@ -35,9 +41,9 @@ const obj = reactive({
             <div class="col-sm-9">
                 <br />
                 <div class="btn-toolbar">
-                    <button type="button" class="btn btn-primary mx-2">Akcije</button>
-                    <button type="button" class="btn btn-primary mx-2">Future</button>
-                    <button type="button" class="btn btn-primary mx-2">Forex</button>
+                    <button @click="onType" value="action" type="button" class="btn btn-primary mx-2">Action</button>
+                    <button @click="onType" value="future" class="btn btn-primary mx-2">Future</button>
+                    <button @click="onType" value="forex" class="btn btn-primary mx-2">Forex</button>
                 </div>
                 
                 <hr />

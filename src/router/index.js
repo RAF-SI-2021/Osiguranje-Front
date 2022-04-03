@@ -46,6 +46,11 @@ const router = createRouter({
       component: () => EditUser
     },
     {
+      path: '/stock/:symbol',
+      name: 'stockInfo',
+      component: () => import('../views/StockSecurityInfoView.vue')
+    },
+    {
       path: '/StockSecuritiesView',
       name: 'StockSecuritiesView',
       component: StockSecuritiesView
