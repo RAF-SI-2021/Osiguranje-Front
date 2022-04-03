@@ -51,6 +51,11 @@ const router = createRouter({
       component: () => import('../views/StockSecurityInfoView.vue')
     },
     {
+      path: '/stock-tabledemo',
+      name: 'StockTableDemo',
+      component: () => import('../views/StockTableDemo.vue')
+    },
+    {
       path: '/StockSecuritiesView',
       name: 'StockSecuritiesView',
       component: StockSecuritiesView
