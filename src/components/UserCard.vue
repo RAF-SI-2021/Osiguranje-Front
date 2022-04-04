@@ -1,5 +1,5 @@
 <template>
-    <div class="card p-4" style="width: 18rem;" >
+    <div class="card p-4 mx-3 my-2" style="width: 18rem;" >
         <div class="d-flex justify-content-between">
             <div>
                 <h5 class="card-title">{{name}} {{surname}} </h5>

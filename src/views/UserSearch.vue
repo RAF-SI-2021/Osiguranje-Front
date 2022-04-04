@@ -50,7 +50,7 @@ function handleSearch(e) {
         </div>
 
         <!-- TODO: Replace the div within the row with the UserCard component -->
-        <div class="row">
+        <div class="row justify-content-center">
             <UserCard v-for="user in obj.filteredUsers" :key="user.id"
                 :id="user.id"
                 :name="user.name"
