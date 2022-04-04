@@ -16,9 +16,9 @@ export default {
 
 <template>
   <div class="align-middle">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
-        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+        <div class="col-12">
           <table class="table table-bordered">
             <thead>
               <tr bgcolor="#80aaff">
