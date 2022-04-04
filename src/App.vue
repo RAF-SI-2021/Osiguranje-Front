@@ -11,4 +11,10 @@ import Footer from "./components/Footer.vue";
   <Footer />
 </template>
 
-<style></style>
+<style>
+  :root {
+    --slider-connect-bg: #4b4646;
+    --slider-tooltip-bg: #4b4646;
+    --slider-handle-ring-color: #4b4646;
+  }
+</style>

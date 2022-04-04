@@ -1,6 +1,6 @@
 <template>
     <div>
-        <table class="table table-dark">
+        <table class="table table-light">
         <thead>
             <tr>
                 <th scope="col">Stock Symbol</th>
@@ -49,6 +49,6 @@ export default {
 </script>
 <style scoped>
 .stocktable-stocksymbol-link {
-    color:white;
+    color:black;
 }
 </style>
