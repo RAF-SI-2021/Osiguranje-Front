@@ -20,17 +20,17 @@
                         <span>{{error.$message}}</span>
                     </div>
                 </div>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" value="remember-me">Remember Me
-                    </label>
-                </div>
+<!--                <div class="checkbox">-->
+<!--                    <label>-->
+<!--                        <input type="checkbox" value="remember-me">Remember Me-->
+<!--                    </label>-->
+<!--                </div>-->
                 <div class="mt-2">
                     <button type="submit" class="btn btn-primary btn-lg">Sign in</button>
                 </div>
-                
-                <a href="#" class="link-primary">Forgot Password?</a>
-                <p>Don't have an account? <a href="#">Register here</a></p>
+
+                <RouterLink to="/admin">Admin</RouterLink>
+<!--                <p>Don't have an account? <a href="#">Register here</a></p>-->
                 
             </form>
         </div>
