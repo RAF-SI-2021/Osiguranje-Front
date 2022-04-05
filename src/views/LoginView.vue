@@ -7,17 +7,17 @@
                 <!--img src="/favicon.ico" height="70"-->
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input v-model="state.email" type="text" class="form-control" id="email" placeholder="Enter email"  autofocus>
+                    <input v-model="state.email" type="email" class="form-control" id="email" placeholder="Enter email"  autofocus>
                     <small id="usernameHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     <div v-for="error in v$.email.$errors" :key="error.$uid">
-                        <span>{{error.$message}}</span>
+                        <span ref="error-span">{{error.$message}}</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
                     <input v-model="state.password" type="password" class="form-control" id="password" placeholder="Enter password" >
                     <div v-for="error in v$.password.$errors" :key="error.$uid">
-                        <span>{{error.$message}}</span>
+                        <span ref="error-span">{{error.$message}}</span>
                     </div>
                 </div>
 <!--                <div class="checkbox">-->
