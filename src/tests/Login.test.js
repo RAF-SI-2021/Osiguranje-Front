@@ -30,4 +30,19 @@ describe('Login tests', () => {
         expect(wrapper.findAll('span').length).toBe(1);
     })
 
+    it('should show no validation errors on valid field', async () => {
+        const wrapper = mount(LoginView);
+        await wrapper.find('#email').setValue('testmail@gmail.com')
+        await wrapper.find('#password').setValue('1234567890')
+        expect(wrapper.findAll('span').length).toBe(0);
+    })
+
+    it('should show password length error on invalid password', async () => {
+        const wrapper = mount(LoginView);
+        await wrapper.find('#email').setValue('testmail@gmail.com');
+        await wrapper.find('#password').setValue('1234567');
+        await wrapper.find('.btn-primary').trigger('submit');
+        expect(wrapper.findAll('span').length).toBe(1);
+        expect(wrapper.find('span').text()).toBe('This field should be at least 8 long');
+    })
 });
