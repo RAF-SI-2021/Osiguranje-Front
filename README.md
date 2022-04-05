@@ -6,9 +6,9 @@ This template should help get you started developing with Vue 3 in Vite.
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin).
 
-## Customize configuration
+## Images
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+Check the images folder for the current status of the layout.
 
 ## Project Setup
 
@@ -39,3 +39,7 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+## Docker
+
+Check [Osiguranje-Back](https://github.com/RAF-SI-2021/Osiguranje-Back) repository README for details.
