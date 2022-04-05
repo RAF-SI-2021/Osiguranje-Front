@@ -1,5 +1,5 @@
 <template>
-    <div id="filter-stock-sidebar" class="p-4 col-lg-3 col-md-3 col-sm-3">
+    <div id="filter-stock-sidebar" class="container">
         <h3> Filters:</h3>
         <br>
         <div>
@@ -16,6 +16,7 @@
                         :max=10000.00
                         :step=0.01
                         :format="format_price"
+                        class="slider-grey"
                 />
             </div>
             <br>
@@ -63,7 +64,7 @@
                 </div>
                 <br>
                 <h5>Settlement Date: </h5>
-                <input type="date" class="form-control col-lg-8 col-md-8 col-sm-8" v-model="currentDate" id="settlement_date">
+                <input type="date" class="form-control col-lg-6 col-md-6 col-sm-6" v-model="currentDate" id="settlement_date">
             </div>
 
         </div>
@@ -136,4 +137,5 @@
         },
     };
 </script>
-<style src="@vueform/slider/themes/default.css"></style>
+<style src="@vueform/slider/themes/default.css">
+</style>

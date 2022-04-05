@@ -1,6 +1,8 @@
 <script setup>
 import { listings } from '../mock-data/data';
 import { ref, reactive } from 'vue';
+import StockSecuritiesTable from "../components/StockSecuritiesTable.vue";
+import FilterStock from "../components/FilterStock.vue";
 
 const obj = reactive({
     stock_securities: listings,
@@ -35,7 +37,7 @@ function onType(e){
                     </span>
                 </div>
                 <br>
-                <h4>Filter component here...</h4>
+                <FilterStock />
             </div>
 
             <div class="col-sm-9">
@@ -47,7 +49,7 @@ function onType(e){
                 </div>
                 
                 <hr />
-                <h4>Table component here...</h4>
+                <StockSecuritiesTable :data="obj.filtered_stock_securities" :is-future-contracts="false" />
             
             </div>
         </div>
@@ -62,7 +64,7 @@ function onType(e){
 
 .sidenav {
     background-color: #f1f1f1;
-    height: 100%;
+    height: auto;
 }
 
 
