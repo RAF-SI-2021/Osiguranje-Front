@@ -1,22 +1,34 @@
 <script setup>
 import { data } from '../mock-data/data';
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import UserCard from "../components/UserCard.vue";
+import { userAPI } from '../api/userAPI';
 
 console.log(data);
 
 const obj = reactive({
-    users: data,
-    filteredUsers: data,
+    users: [],
+    filteredUsers: [],
     search: '',
+})
+
+onMounted(() => {
+    userAPI.getAllUsers()
+        .then(res => {
+            obj.users = res.data;
+            obj.filteredUsers = res.data;
+        })
+        .catch(err => {
+            console.log(err);
+        })
 })
 
 function handleSearch(e) {
     obj.search = e.target.value;
     obj.filteredUsers = obj.users.filter(user => {
         // search by name, surname, email, phone and position
-        return user.name.toLowerCase().includes(obj.search.toLowerCase()) ||
-            user.surname.toLowerCase().includes(obj.search.toLowerCase()) ||
+        return user.firstName.toLowerCase().includes(obj.search.toLowerCase()) ||
+            user.lastName.toLowerCase().includes(obj.search.toLowerCase()) ||
             user.email.toLowerCase().includes(obj.search.toLowerCase()) ||
             user.position.toLowerCase().includes(obj.search.toLowerCase());
     });
@@ -53,11 +65,11 @@ function handleSearch(e) {
         <div class="row justify-content-center">
             <UserCard v-for="user in obj.filteredUsers" :key="user.id"
                 :id="user.id"
-                :name="user.name"
-                :surname="user.surname"
+                :name="user.firstName"
+                :surname="user.lastName"
                 :jmbg="user.jmbg"
                 :email="user.email"
-                :phone="user.phone"
+                :phone="user.phoneNumber"
                 :position="user.position"
                 :active="user.active">
             </UserCard>

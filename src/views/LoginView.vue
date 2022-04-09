@@ -42,11 +42,16 @@ import {reactive, computed } from 'vue';
 import useVuelidate from '@vuelidate/core'
 import {required,minLength, maxLength, email} from '@vuelidate/validators'
 import { authAPI } from '../api/authAPI';
-import axios from 'axios';
+import { userAPI } from '../api/userAPI';
+import { userStore } from '../stores/userStore';
+import { useRouter } from 'vue-router';
 
 export default {
 
     setup(){
+
+        const router = useRouter();
+        const store = userStore();
 
         const state = reactive({
             email:'',
@@ -67,7 +72,13 @@ export default {
             // console.log(this.v$.$error);
             authAPI.login(state.email, state.password)
                 .then(res=>{
-                    console.log(res.headers.authorization);
+                    localStorage.setItem('token', res.headers.authorization.split(' ')[1]);
+                    userAPI.getCurrentUser()
+                        .then((res) => {
+                            store.setUser(res.data);
+                            console.log(store.user);
+                        })
+                    router.push('/admin');
                 })
                 .catch(err=>{
                     console.log(err);
