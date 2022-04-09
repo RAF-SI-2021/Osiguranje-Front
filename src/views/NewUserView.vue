@@ -92,10 +92,13 @@ import {reactive, computed} from 'vue';
 import useVuelidate from '@vuelidate/core'
 import {required,minLength, maxLength, email, numeric} from '@vuelidate/validators'
 import { userAPI } from '../api/userAPI';
+import { useRouter } from 'vue-router';
 
 export default {
 
     setup(){
+
+        const router = useRouter();
 
         const state = reactive({
             email:'',
@@ -127,7 +130,7 @@ export default {
               const newUser = {
                 firstName: state.name,
                 lastName: state.surname,
-                JMBG: state.jmbg,
+                jmbg: state.jmbg,
                 email: state.email,
                 position: state.position,
                 phoneNumber: state.phoneNumber,
@@ -140,7 +143,10 @@ export default {
                 }
               }
               userAPI.createNewUser(newUser).then(response => {
-                console.log(response);
+                // console.log(response);
+                if(response.status === 200){
+                  router.push('/admin/users');
+                }
               }).catch(error => {
                 console.log(error);
               })
