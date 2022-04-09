@@ -32,5 +32,16 @@ export const userAPI = {
                 }
             });
         }
+    },
+
+    updateUser: (user) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            return axios.put('/api/user', user, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+        }
     }
 }

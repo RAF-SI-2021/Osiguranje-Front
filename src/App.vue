@@ -17,4 +17,8 @@ import Footer from "./components/Footer.vue";
     --slider-tooltip-bg: #4b4646;
     --slider-handle-ring-color: #4b4646;
   }
+
+  body {
+    padding-bottom: 60px;
+  }
 </style>
