@@ -70,4 +70,35 @@ const router = createRouter({
   ]
 })
 
+const routeNames = [
+  'admin', 
+  'newUser', 
+  'stockMarketList', 
+  'stockMarketList', 
+  'users', 
+  'addPassword', 
+  'userEdit', 
+  'stockInfo', 
+  'StockTableDemo', 
+  'StockSecuritiesView'
+]
+
+router.beforeEach((to, from, next) => {
+  if (routeNames.includes(to.name)) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      next('/login');
+    } else {
+      next();
+    }
+  } else if (to.name === 'login') {
+    const token = localStorage.getItem('token');
+    if (token) {
+      next('/admin');
+    } else {
+      next();
+    }
+  }
+})
+
 export default router
