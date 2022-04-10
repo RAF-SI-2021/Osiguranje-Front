@@ -9,3 +9,9 @@ services:
     image: osiguranje/front
     ports:
       - '80:80'
+    networks:
+      - nginx
+
+networks:
+  nginx:
+    name: gateway_nginx
