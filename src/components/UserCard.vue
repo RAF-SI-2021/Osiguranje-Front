@@ -10,7 +10,6 @@
         </div>
         <hr>
         <div>
-            <p>JMBG: {{ jmbg }} </p>
             <p>Email: {{ email }}</p>
             <p>Phone: {{ phone }}</p>
             <p>Position: {{ position }}</p>
@@ -24,7 +23,6 @@
         props: ['id',
                 'name',
                 'surname',
-                'jmbg',
                 'email',
                 'phone',
                 'position',

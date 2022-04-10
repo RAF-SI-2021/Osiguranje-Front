@@ -7,7 +7,7 @@
                 <!--img src="/favicon.ico" height="70"-->
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input v-model="state.email" type="email" class="form-control" id="email" placeholder="Enter email"  autofocus>
+                    <input v-model="state.email" type="text" class="form-control" id="email" placeholder="Enter email"  autofocus>
                     <small id="usernameHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     <div v-for="error in v$.email.$errors" :key="error.$uid">
                         <span ref="error-span">{{error.$message}}</span>
@@ -41,10 +41,17 @@
 import {reactive, computed } from 'vue';
 import useVuelidate from '@vuelidate/core'
 import {required,minLength, maxLength, email} from '@vuelidate/validators'
+import { authAPI } from '../api/authAPI';
+import { userAPI } from '../api/userAPI';
+import { userStore } from '../stores/userStore';
+import { useRouter } from 'vue-router';
 
 export default {
 
     setup(){
+
+        const router = useRouter();
+        const store = userStore();
 
         const state = reactive({
             email:'',
@@ -61,8 +68,21 @@ export default {
         const v$ = useVuelidate(rules,state);
 
         function submitForm(){
-            this.v$.$validate();
-            console.log(this.v$.$error);
+            // this.v$.$validate();
+            // console.log(this.v$.$error);
+            authAPI.login(state.email, state.password)
+                .then(res=>{
+                    localStorage.setItem('token', res.headers.authorization.split(' ')[1]);
+                    userAPI.getCurrentUser()
+                        .then((res) => {
+                            store.setUser(res.data);
+                            console.log(store.user);
+                        })
+                    router.push('/admin');
+                })
+                .catch(err=>{
+                    console.log(err);
+                })
         }
 
         return{

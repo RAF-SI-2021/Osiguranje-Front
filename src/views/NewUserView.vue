@@ -68,6 +68,7 @@
                     value=""
                     checked
                     id="form2Example3cg"
+                    v-model="state.active"
                   />
                   <label class="form-check-label" for="form2Example3g"> Active </label>
                 </div>
@@ -90,10 +91,14 @@
 import {reactive, computed} from 'vue';
 import useVuelidate from '@vuelidate/core'
 import {required,minLength, maxLength, email, numeric} from '@vuelidate/validators'
+import { userAPI } from '../api/userAPI';
+import { useRouter } from 'vue-router';
 
 export default {
 
     setup(){
+
+        const router = useRouter();
 
         const state = reactive({
             email:'',
@@ -101,7 +106,8 @@ export default {
             surname:'',
             jmbg:'',
             position:'',
-            phoneNumber:''
+            phoneNumber:'',
+            active: false
         })
 
         const rules = computed(()=>{
@@ -120,7 +126,31 @@ export default {
 
         function submitForm(){
             this.v$.$validate();
-            console.log(this.v$.$error);
+            if(!this.v$.$invalid){
+              const newUser = {
+                firstName: state.name,
+                lastName: state.surname,
+                jmbg: state.jmbg,
+                email: state.email,
+                position: state.position,
+                phoneNumber: state.phoneNumber,
+                active: state.active,
+                permissions: {
+                  stockTrading: false,
+                  stockOverview: false,
+                  contractConclusion: false,
+                  admin: false
+                }
+              }
+              userAPI.createNewUser(newUser).then(response => {
+                // console.log(response);
+                if(response.status === 200){
+                  router.push('/admin/users');
+                }
+              }).catch(error => {
+                console.log(error);
+              })
+            }
         }
 
         return{
