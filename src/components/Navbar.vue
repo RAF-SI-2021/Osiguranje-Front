@@ -1,4 +1,19 @@
-<script setup></script>
+<script setup>
+import { onMounted, ref } from 'vue';
+import { userAPI } from '../api/userAPI';
+
+const logged = ref(false);
+const user = ref('');
+
+onMounted(() => {
+  if (localStorage.getItem('token')) {
+    logged.value = true;
+    userAPI.getCurrentUser().then((res) => {
+      user.value = res.data.firstName + ' ' + res.data.lastName;
+    });
+  }
+})
+</script>
 
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -18,7 +33,8 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <RouterLink to="/login" class="nav-link">Log In</RouterLink>
+            <RouterLink to="/login" class="nav-link" v-if="!logged">Log In</RouterLink>
+            <p class="nav-link" v-if="logged">{{ user }}</p>
           </li>
         </ul>
       </div>
