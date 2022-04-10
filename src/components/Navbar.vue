@@ -1,9 +1,11 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { userAPI } from '../api/userAPI';
+import { useRouter } from 'vue-router';
 
 const logged = ref(false);
 const user = ref('');
+const router = useRouter();
 
 onMounted(() => {
   if (localStorage.getItem('token')) {
@@ -13,6 +15,13 @@ onMounted(() => {
     });
   }
 })
+
+function logout() {
+  localStorage.removeItem('token');
+  logged.value = false;
+  user.value = '';
+  router.push('/login');
+}
 </script>
 
 <template>
@@ -35,6 +44,9 @@ onMounted(() => {
           <li class="nav-item">
             <RouterLink to="/login" class="nav-link" v-if="!logged">Log In</RouterLink>
             <p class="nav-link" v-if="logged">{{ user }}</p>
+          </li>
+          <li v-if="logged">
+            <a @click="logout" class="nav-link">Log Out</a>
           </li>
         </ul>
       </div>
