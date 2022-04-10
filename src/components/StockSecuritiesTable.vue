@@ -7,18 +7,18 @@
                 <th scope="col">Price</th>
                 <th scope="col">Change</th>
                 <th scope="col">Volume</th>
-                <th v-if="isFutureContracts" scope="col">Initial Margin Cost</th>
+                <th v-if="futures" scope="col">Initial Margin Cost</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="dataRow in data" :key="dataRow.id">
                 <th>
-                    <router-link class="stocktable-stocksymbol-link" :to="{name:'stockInfo', params:{symbol:dataRow.symbol}}">{{dataRow.symbol}}</router-link>
+                    <router-link class="stocktable-stocksymbol-link" :to="{name:'stockInfo', query: { q: stockType }, params:{symbol:dataRow.symbol}}">{{dataRow.symbol}}</router-link>
                 </th>
                 <td>{{dataRow.price}}</td>
                 <td :class="{ 'text-danger': dataRow.priceChange < 0, 'text-success': dataRow.priceChange >= 0 }">{{dataRow.priceChange}}</td>
                 <td>{{dataRow.volume}}</td>
-                <td v-if="isFutureContracts"> {{dataRow.initial_margin_cost}}</td>
+                <td v-if="dataRow.initialMarginCost"> {{dataRow.initialMarginCost}}</td>
             </tr>
         </tbody>
         </table>
@@ -33,6 +33,8 @@ export default {
     setup(props, context) {
         const store = securityStore();
         const emitter = inject('emitter');
+        const futures = ref(false);
+        const stockType = ref('stock')
         let isFutureContracts = false;
         if(props.isFutureContracts) {
             isFutureContracts=props.isFutureContracts;
@@ -43,16 +45,24 @@ export default {
         emitter.on("filter-stock", (type) => {
             if(type === "stock") {
                 data.value = store.stock;
+                futures.value = false;
+                stockType.value = "stock";
             } else if(type === "futures") {
                 data.value = store.futures;
+                futures.value = true;
+                stockType.value = "future";
             } else {
                 data.value = store.forex;
+                futures.value = false;
+                stockType.value = "forex";
             }
         });
 
         return {
             isFutureContracts,
-            data
+            data,
+            futures,
+            stockType
         }
     },
 }

@@ -55,7 +55,8 @@ const router = createRouter({
     {
       path: '/stock/:symbol',
       name: 'stockInfo',
-      component: () => import('../views/StockSecurityInfoView.vue')
+      component: () => import('../views/StockSecurityInfoView.vue'),
+      props: route => ({ query: route.query.q })
     },
     {
       path: '/stock-tabledemo',
