@@ -1,19 +1,35 @@
 <script setup>
 import { listings } from '../mock-data/data';
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted, inject } from 'vue';
 import StockSecuritiesTable from "../components/StockSecuritiesTable.vue";
 import FilterStock from "../components/FilterStock.vue";
+import { securitiesAPI } from '../api/securitiesAPI';
+import { securityStore } from '../stores/securityStore';
 
 const obj = reactive({
-    stock_securities: listings,
-    filtered_stock_securities: listings,
+    stock_securities: [],
+    filtered_stock_securities: [],
 })
 
+const emitter = inject('emitter');
 
-function onType(e){
-    if(e.target.value === "action") obj.filtered_stock_securities = obj.stock_securities.filter(security => security.listing_type === "ACTION");
-    else if(e.target.value === "future") obj.filtered_stock_securities = obj.stock_securities.filter(security => security.listing_type === "FUTURE");
-    else obj.filtered_stock_securities = obj.stock_securities.filter(security => security.listing_type === "FOREX");
+onMounted(() => {
+    let store = securityStore();
+    securitiesAPI.getSecurities().then(response => {
+        store.setStock(response.data.stock);
+        store.setForex(response.data.forex);
+        store.setFutures(response.data.futures);
+    });
+})
+
+function onType(e) {
+    if (e.target.value === "action") {
+        emitter.emit('filter-stock', 'stock')
+    } else if (e.target.value === "future") {
+        emitter.emit('filter-stock', 'futures')
+    } else {
+        emitter.emit('filter-stock', 'forex')
+    }
 }
 
 
@@ -49,7 +65,7 @@ function onType(e){
                 </div>
                 
                 <hr />
-                <StockSecuritiesTable :data="obj.filtered_stock_securities" :is-future-contracts="false" />
+                <StockSecuritiesTable />
             
             </div>
         </div>
