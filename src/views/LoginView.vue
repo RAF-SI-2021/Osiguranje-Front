@@ -1,4 +1,5 @@
 <template>
+    <vue-element-loading :active="loading" spinner="bar-fade-scale" />
     <div id="big" class="text-center">
         <!--h1 id="pera" class="mt-4" v-if="state.email">Hi: {{state.email}}</h1-->
         <div id="divForm" class="text-center">
@@ -38,7 +39,7 @@
 </template>
 
 <script>
-import {reactive, computed } from 'vue';
+import {reactive, computed, ref } from 'vue';
 import useVuelidate from '@vuelidate/core'
 import {required,minLength, maxLength, email} from '@vuelidate/validators'
 import { authAPI } from '../api/authAPI';
@@ -58,6 +59,8 @@ export default {
             password:''
         })
 
+        const loading = ref(false);
+
         const rules = computed(()=>{
             return {
                 email:{required, minLength:minLength(4), maxLength:maxLength(24), email},
@@ -68,6 +71,7 @@ export default {
         const v$ = useVuelidate(rules,state);
 
         function submitForm(){
+            loading.value = true;
             // this.v$.$validate();
             // console.log(this.v$.$error);
             authAPI.login(state.email, state.password)
@@ -78,15 +82,17 @@ export default {
                             store.setUser(res.data);
                             console.log(store.user);
                         })
+                    loading.value = false;
                     router.push('/admin');
                 })
                 .catch(err=>{
                     console.log(err);
+                    loading.value = false;
                 })
         }
 
         return{
-            state,v$, submitForm
+            state,v$, submitForm, loading
         }
     }
 
