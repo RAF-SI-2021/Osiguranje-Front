@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import {reactive, computed, ref } from 'vue';
+import {reactive, computed, ref, inject } from 'vue';
 import useVuelidate from '@vuelidate/core'
 import {required,minLength, maxLength, email} from '@vuelidate/validators'
 import { authAPI } from '../api/authAPI';
@@ -51,6 +51,7 @@ export default {
 
     setup(){
 
+        const toast = inject('toast');
         const router = useRouter();
         const store = userStore();
 
@@ -88,6 +89,7 @@ export default {
                 .catch(err=>{
                     console.log(err);
                     loading.value = false;
+                    toast.error('Failed to get response from server');
                 })
         }
 
