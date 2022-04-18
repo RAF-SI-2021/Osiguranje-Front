@@ -16,6 +16,7 @@
                 <th>
                     <router-link class="stocktable-stocksymbol-link" :to="{name:'stockInfo', query: { q: stockType }, params:{symbol:dataRow.symbol}}">{{dataRow.symbol}}</router-link>
                 </th>
+                <td v-if="actions">{{dataRow.market ? dataRow.market : '-'}}</td>
                 <td>{{dataRow.price}}</td>
                 <td :class="{ 'text-danger': dataRow.priceChange < 0, 'text-success': dataRow.priceChange >= 0 }">{{dataRow.priceChange}}</td>
                 <td>{{dataRow.volume}}</td>

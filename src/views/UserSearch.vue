@@ -14,15 +14,19 @@ const obj = reactive({
     search: '',
 })
 
+const loading = ref(true)
+
 onMounted(() => {
     userAPI.getAllUsers()
         .then(res => {
             obj.users = res.data;
             obj.filteredUsers = res.data;
+            loading.value = false;
         })
         .catch(err => {
             toast.error('Could not get response from server');
             console.log(err);
+            loading.value = false;
         })
 })
 
@@ -41,6 +45,7 @@ function handleSearch(e) {
 </script>
 
 <template>
+    <vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh" />
     <div class="container">
         <h1 class="mt-3 text-center">User List</h1>
         <div class="row justify-content-center">
