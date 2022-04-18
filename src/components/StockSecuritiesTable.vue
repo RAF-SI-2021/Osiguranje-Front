@@ -4,6 +4,7 @@
         <thead>
             <tr>
                 <th scope="col">Stock Symbol</th>
+                <th scope="col" v-if="actions">Market</th>
                 <th scope="col">Price</th>
                 <th scope="col">Change</th>
                 <th scope="col">Volume</th>
@@ -34,6 +35,7 @@ export default {
         const store = securityStore();
         const emitter = inject('emitter');
         const futures = ref(false);
+        const actions = ref(false);
         const stockType = ref('stock')
         let isFutureContracts = false;
         if(props.isFutureContracts) {
@@ -51,14 +53,17 @@ export default {
             if(type === "stock") {
                 data.value = store.stock;
                 futures.value = false;
+                actions.value = true;
                 stockType.value = "stock";
             } else if(type === "futures") {
                 data.value = store.futures;
                 futures.value = true;
+                actions.value = false;
                 stockType.value = "future";
             } else {
                 data.value = store.forex;
                 futures.value = false;
+                actions.value = false;
                 stockType.value = "forex";
             }
         });
@@ -67,7 +72,8 @@ export default {
             isFutureContracts,
             data,
             futures,
-            stockType
+            stockType,
+            actions
         }
     },
 }
