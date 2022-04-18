@@ -14,6 +14,7 @@ const obj = reactive({
 const emitter = inject('emitter');
 const toast = inject('toast');
 const loading = ref(false);
+const active = ref(1);
 
 onMounted(() => {
     loading.value = true;
@@ -31,7 +32,8 @@ onMounted(() => {
     });
 })
 
-function onType(e) {
+function onType(e, tab) {
+    active.value = tab;
     if (e.target.value === "action") {
         emitter.emit('filter-stock', 'stock')
     } else if (e.target.value === "future") {
@@ -68,9 +70,9 @@ function onType(e) {
             <div class="col-sm-9">
                 <br />
                 <div class="btn-toolbar">
-                    <button @click="onType" value="action" type="button" class="btn btn-primary mx-2">Action</button>
-                    <button @click="onType" value="future" class="btn btn-primary mx-2">Future</button>
-                    <button @click="onType" value="forex" class="btn btn-primary mx-2">Forex</button>
+                    <button @click="onType($event, 1)" value="action" type="button" :class="{ 'btn-primary': active == 1, 'btn-secondary': active != 1 }" class="btn mx-2">Action</button>
+                    <button @click="onType($event, 2)" value="future" :class="{ 'btn-primary': active == 2, 'btn-secondary': active != 2 }" class="btn mx-2">Future</button>
+                    <button @click="onType($event, 3)" value="forex" :class="{ 'btn-primary': active == 3, 'btn-secondary': active != 3 }" class="btn mx-2">Forex</button>
                 </div>
                 
                 <hr />
