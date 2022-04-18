@@ -13,7 +13,7 @@
                 <Slider
                         v-model="value_price"
                         :min=0.00
-                        :max=10000.00
+                        :max=2000.00
                         :step=0.01
                         :format="format_price"
                         class="slider-grey"
@@ -25,7 +25,7 @@
                 <Slider
                         v-model="value_bid"
                         :min=0.00
-                        :max=10000.00
+                        :max=2000.00
                         :step=0.01
                         :format="format_price"
                 />
@@ -36,7 +36,7 @@
                 <Slider
                         v-model="value_ask"
                         :min=0.00
-                        :max=10000.00
+                        :max=2000.00
                         :step=0.01
                         :format="format_price"
                 />
@@ -64,7 +64,10 @@
                 </div>
                 <br>
                 <h5>Settlement Date: </h5>
-                <input type="date" class="form-control col-lg-6 col-md-6 col-sm-6" v-model="currentDate" id="settlement_date">
+                <input type="date" class="form-control col-lg-6 col-md-6 col-sm-6" v-model="value_date" id="settlement_date">
+            </div>
+            <div>
+                <button class="btn btn-primary mt-3" @click="filter">Apply Filters</button>
             </div>
 
         </div>
@@ -96,6 +99,7 @@
                 value_ask: 10,
                 value_volume: 20,
                 value_margin:2500,
+                value_date: new Date(),
 
                 format_price: {
                    decimals: 2
@@ -129,9 +133,19 @@
                 this.listFiltered = event.items;
             },
             currentDate(){
-                const curent = new Date();
+                const current = new Date();
                 const date = current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate();
                 return date;
+            },
+            filter() {
+                this.$emitter.emit("apply-filter", {
+                    price: this.value_price,
+                    bid: this.value_bid,
+                    ask: this.value_ask,
+                    volume: this.value_volume,
+                    margin: this.value_margin,
+                    date: this.value_date,
+                });
             }
         },
     };

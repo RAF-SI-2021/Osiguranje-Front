@@ -38,6 +38,8 @@ export default {
         const futures = ref(false);
         const actions = ref(false);
         const stockType = ref('stock')
+        const toast = inject('toast');
+        const backup = ref([]);
         let isFutureContracts = false;
         if(props.isFutureContracts) {
             isFutureContracts=props.isFutureContracts;
@@ -48,21 +50,42 @@ export default {
         emitter.on("data-loaded", () => {
             console.log("Data loaded");
             data.value = store.stock;
+            backup.value = store.stock;
+        })
+
+        emitter.on("apply-filter", (filter) => {
+            data.value = backup.value;
+            // toast.success('Filters applied');
+            if (filter.price > 0) {
+                data.value = data.value.filter(row => row.price <= filter.price);
+            }
+            if (filter.bid > 0) {
+                data.value = data.value.filter(row => row.bid <= filter.bid);
+            }
+            if (filter.ask > 0) {
+                data.value = data.value.filter(row => row.ask <= filter.ask);
+            }
+            if (filter.volume > 0) {
+                data.value = data.value.filter(row => row.volume >= filter.volume);
+            }
         })
 
         emitter.on("filter-stock", (type) => {
             if(type === "stock") {
                 data.value = store.stock;
+                backup.value = store.stock;
                 futures.value = false;
                 actions.value = true;
                 stockType.value = "stock";
             } else if(type === "futures") {
                 data.value = store.futures;
+                backup.value = store.futures;
                 futures.value = true;
                 actions.value = false;
                 stockType.value = "future";
             } else {
                 data.value = store.forex;
+                backup.value = store.forex;
                 futures.value = false;
                 actions.value = false;
                 stockType.value = "forex";
