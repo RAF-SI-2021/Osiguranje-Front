@@ -1,5 +1,5 @@
 <template>
-    <vue-element-loading :active="loading" spinner="bar-fade-scale" />
+    <vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh" />
     <div id="big" class="text-center">
         <!--h1 id="pera" class="mt-4" v-if="state.email">Hi: {{state.email}}</h1-->
         <div id="divForm" class="text-center">
@@ -89,7 +89,11 @@ export default {
                 .catch(err=>{
                     console.log(err);
                     loading.value = false;
-                    toast.error('Failed to get response from server');
+                    if (err.response.status === 403) {
+                        toast.error('Invalid email or password');
+                    } else {
+                        toast.error('Failed to get response from server');
+                    }
                 })
         }
 

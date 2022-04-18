@@ -40,7 +40,12 @@ export default {
             isFutureContracts=props.isFutureContracts;
         }
 
-        const data = ref(store.currentList);
+        const data = ref([]);
+
+        emitter.on("data-loaded", () => {
+            console.log("Data loaded");
+            data.value = store.stock;
+        })
 
         emitter.on("filter-stock", (type) => {
             if(type === "stock") {

@@ -12,13 +12,22 @@ const obj = reactive({
 })
 
 const emitter = inject('emitter');
+const toast = inject('toast');
+const loading = ref(false);
 
 onMounted(() => {
+    loading.value = true;
     let store = securityStore();
     securitiesAPI.getSecurities().then(response => {
         store.setStock(response.data.stock);
         store.setForex(response.data.forex);
         store.setFutures(response.data.futures);
+        loading.value = false;
+        emitter.emit('data-loaded');
+    })
+    .catch(err => {
+        loading.value = false;
+        toast.error("Failed to get response from server.");
     });
 })
 
@@ -39,7 +48,7 @@ function onType(e) {
 
 
 <template>
-
+    <vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh" />
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-3 sidenav">

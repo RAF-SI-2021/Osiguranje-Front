@@ -5,7 +5,8 @@ export const securitiesAPI = {
         return axios.get('/api/securities/data', {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
-            }
+            },
+            timeout: 5000
         });
     }
 }

@@ -24,6 +24,7 @@ Chart.register(...registerables);
 
 const emitter = mitt();
 app.provide('emitter', emitter);
+app.config.globalProperties.$emitter = emitter;
 app.mount('#app')
 
 import "bootstrap/dist/css/bootstrap.min.css"

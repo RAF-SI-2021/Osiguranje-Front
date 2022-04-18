@@ -51,7 +51,7 @@
                 />
             </div>
             <hr class="col-lg-8 col-md-8 col-sm-8">
-            <div id="future_contracts">
+            <div id="future_contracts" v-if="futureFlag">
                 <h4>For future contracts: </h4>
                 <br>
                 <h5>Maintainance margin: </h5>
@@ -81,6 +81,13 @@
         },
         created() {
             this.listFiltered = this.stock_markets;
+            this.$emitter.on("filter-stock", (type) => {
+                if (type == "futures") {
+                    this.futureFlag = true;
+                } else {
+                    this.futureFlag = false;
+                }
+            });
         },
         data() {
             return {
@@ -98,22 +105,14 @@
                     minInputLength: 1,
                 },
                 stock_markets: [
-                    'NY',
-                    'NAS',
-                    'AMS',
-                    'BRU',
-                    'MSM',
-                    'JPX',
-                    'HKG',
-                    'SHE',
-                    'LON',
-                    'BOM'
+                    'XNYS', 'XNAS'
                 ],
                 listFiltered: [],
                 data: {
                     input: '',
                     selection: null,
                 },
+                futureFlag: false,
             };
         },
         methods: {

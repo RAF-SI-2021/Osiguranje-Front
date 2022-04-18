@@ -1,10 +1,12 @@
 <script setup>
 import { data } from '../mock-data/data';
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, inject } from 'vue';
 import UserCard from "../components/UserCard.vue";
 import { userAPI } from '../api/userAPI';
 
 console.log(data);
+
+const toast = inject('toast');
 
 const obj = reactive({
     users: [],
@@ -19,6 +21,7 @@ onMounted(() => {
             obj.filteredUsers = res.data;
         })
         .catch(err => {
+            toast.error('Could not get response from server');
             console.log(err);
         })
 })
