@@ -8,7 +8,8 @@ export const authAPI = {
         }, {
             headers: {
                 'Access-Control-Allow-Origin': '*',
-            }
+            },
+            timeout: 5000
         });
     }
 }

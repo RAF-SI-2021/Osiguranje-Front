@@ -1,4 +1,5 @@
 <template>
+    <vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh" />
     <div id="big" class="text-center">
         <!--h1 id="pera" class="mt-4" v-if="state.email">Hi: {{state.email}}</h1-->
         <div id="divForm" class="text-center">
@@ -38,7 +39,7 @@
 </template>
 
 <script>
-import {reactive, computed } from 'vue';
+import {reactive, computed, ref, inject } from 'vue';
 import useVuelidate from '@vuelidate/core'
 import {required,minLength, maxLength, email} from '@vuelidate/validators'
 import { authAPI } from '../api/authAPI';
@@ -50,6 +51,7 @@ export default {
 
     setup(){
 
+        const toast = inject('toast');
         const router = useRouter();
         const store = userStore();
 
@@ -57,6 +59,8 @@ export default {
             email:'',
             password:''
         })
+
+        const loading = ref(false);
 
         const rules = computed(()=>{
             return {
@@ -68,6 +72,7 @@ export default {
         const v$ = useVuelidate(rules,state);
 
         function submitForm(){
+            loading.value = true;
             // this.v$.$validate();
             // console.log(this.v$.$error);
             authAPI.login(state.email, state.password)
@@ -78,15 +83,22 @@ export default {
                             store.setUser(res.data);
                             console.log(store.user);
                         })
+                    loading.value = false;
                     router.push('/admin');
                 })
                 .catch(err=>{
                     console.log(err);
+                    loading.value = false;
+                    if (err.response.status === 403) {
+                        toast.error('Invalid email or password');
+                    } else {
+                        toast.error('Failed to get response from server');
+                    }
                 })
         }
 
         return{
-            state,v$, submitForm
+            state,v$, submitForm, loading
         }
     }
 

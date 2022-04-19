@@ -1,10 +1,12 @@
 <script setup>
 import { data } from '../mock-data/data';
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, inject } from 'vue';
 import UserCard from "../components/UserCard.vue";
 import { userAPI } from '../api/userAPI';
 
 console.log(data);
+
+const toast = inject('toast');
 
 const obj = reactive({
     users: [],
@@ -12,14 +14,19 @@ const obj = reactive({
     search: '',
 })
 
+const loading = ref(true)
+
 onMounted(() => {
     userAPI.getAllUsers()
         .then(res => {
             obj.users = res.data;
             obj.filteredUsers = res.data;
+            loading.value = false;
         })
         .catch(err => {
+            toast.error('Could not get response from server');
             console.log(err);
+            loading.value = false;
         })
 })
 
@@ -38,6 +45,7 @@ function handleSearch(e) {
 </script>
 
 <template>
+    <vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh" />
     <div class="container">
         <h1 class="mt-3 text-center">User List</h1>
         <div class="row justify-content-center">

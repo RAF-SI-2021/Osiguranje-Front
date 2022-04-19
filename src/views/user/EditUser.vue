@@ -1,4 +1,5 @@
 <template>
+    <vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh" />
     <div class="container user-edit-container">
       <h1 class="mt-3 mb-3 text-center">Editing User</h1>
       <div class="row justify-content-center"></div>
@@ -63,7 +64,7 @@
 
 <script>
 import { data } from '../../mock-data/data';
-import {reactive, computed, onMounted, ref} from 'vue';
+import {reactive, computed, onMounted, ref, inject} from 'vue';
 import { useRoute, useRouter } from 'vue-router'
 import ToggleButton from '../misc/ToggleButton.vue';
 import {email, maxLength, minLength, numeric, required} from "@vuelidate/validators";
@@ -75,6 +76,8 @@ export default {
     setup() {
         const route = useRoute();
         const router = useRouter();
+        const toast = inject("toast");
+        const loading = ref(false);
 
         function fetchUserData(id) {
             const users = [];
@@ -82,7 +85,7 @@ export default {
                 for (var i = 0; i < response.data.length; i++) {
                 console.log(response.data[i].id, id);
                 if (response.data[i].id === id) {
-                  console.log("FOUND");
+                  // console.log("FOUND");
                   return response.data[i];
                 }
             }
@@ -170,15 +173,23 @@ export default {
               contractConclusion: true
             }
           }
+          loading.value = true;
           userAPI.updateUser(userToUpdate).then(response => {
+            loading.value = false;
+            toast.show("User updated successfully!");
             console.log(response);
             router.push('/admin/users');
+          })
+          .catch(error => {
+            loading.value = false;
+            toast.show("Error updating user!");
+            console.log(error);
           });
         }
       }
 
 
-        return { state, valueChanged, submit, v$, user };
+        return { state, valueChanged, submit, v$, user, loading };
     },
     components: { ToggleButton }
 }

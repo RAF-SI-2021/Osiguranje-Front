@@ -1,4 +1,5 @@
 <template>
+  <vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh; width: 100vw" />
   <div class="mask d-flex align-items-center h-100 gradient-custom-3">
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -88,7 +89,7 @@
 </template>
 
 <script>
-import {reactive, computed} from 'vue';
+import {reactive, computed, ref, inject} from 'vue';
 import useVuelidate from '@vuelidate/core'
 import {required,minLength, maxLength, email, numeric} from '@vuelidate/validators'
 import { userAPI } from '../api/userAPI';
@@ -99,6 +100,8 @@ export default {
     setup(){
 
         const router = useRouter();
+        const toast = inject('toast');
+        const loading = ref(false);
 
         const state = reactive({
             email:'',
@@ -142,19 +145,24 @@ export default {
                   admin: false
                 }
               }
+              loading.value = true;
               userAPI.createNewUser(newUser).then(response => {
                 // console.log(response);
+                loading.value = false;
+                toast.success("User created successfully!");
                 if(response.status === 200){
                   router.push('/admin/users');
                 }
               }).catch(error => {
+                loading.value = false;
+                toast.error("Something went wrong");
                 console.log(error);
               })
             }
         }
 
         return{
-            state,v$, submitForm
+            state,v$, submitForm, loading
         }
     }
 
