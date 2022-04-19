@@ -147,7 +147,6 @@
                 return date;
             },
             filter() {
-                console.log(this.stockTerm);
                 this.$emitter.emit("apply-filter", {
                     price: this.value_price,
                     bid: this.value_bid,
