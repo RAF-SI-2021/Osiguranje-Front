@@ -36,7 +36,7 @@ export default {
         const store = securityStore();
         const emitter = inject('emitter');
         const futures = ref(false);
-        const actions = ref(false);
+        const actions = ref(true);
         const stockType = ref('stock')
         const toast = inject('toast');
         const backup = ref([]);
@@ -55,18 +55,26 @@ export default {
 
         emitter.on("apply-filter", (filter) => {
             data.value = backup.value;
-            // toast.success('Filters applied');
-            if (filter.price > 0) {
-                data.value = data.value.filter(row => row.price <= filter.price);
+            if (filter.price[0] != 0 && filter.price[1] != 0) {
+                data.value = data.value.filter(row => row.price >= filter.price[0] && row.price <= filter.price[1]);
             }
-            if (filter.bid > 0) {
-                data.value = data.value.filter(row => row.bid <= filter.bid);
+            if (filter.bid[0] != 0 && filter.bid[1] != 0) {
+                data.value = data.value.filter(row => row.bid >= filter.bid[0] && row.bid <= filter.bid[1]);
             }
-            if (filter.ask > 0) {
-                data.value = data.value.filter(row => row.ask <= filter.ask);
+            if (filter.ask[0] != 0 && filter.ask[1] != 0) {
+                data.value = data.value.filter(row => row.ask >= filter.ask[0] && row.ask <= filter.ask[1]);
             }
-            if (filter.volume > 0) {
-                data.value = data.value.filter(row => row.volume >= filter.volume);
+            if (filter.volume[0] != 0 && filter.volume[1] != 0) {
+                data.value = data.value.filter(row => row.volume >= filter.volume[0] && row.volume <= filter.volume[1]);
+            }
+
+            if (filter.futureFlag) {
+                if (filter.margin[0] != 0 && filter.margin[1] != 0) {
+                    data.value = data.value.filter(row => row.maintenanceMargin >= filter.margin[0] && row.maintenanceMargin <= filter.margin[1]);
+                }
+                if (filter.date) {
+                    data.value = data.value.filter(row => new Date(row.settlementDate) <= new Date(filter.date));
+                }
             }
         })
 

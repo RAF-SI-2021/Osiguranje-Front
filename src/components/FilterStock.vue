@@ -94,11 +94,11 @@
         },
         data() {
             return {
-                value_price: 10,
-                value_bid: 10,
-                value_ask: 10,
-                value_volume: 20,
-                value_margin:2500,
+                value_price: [10, 100],
+                value_bid: [10, 100],
+                value_ask: [10, 100],
+                value_volume: [20000, 500000],
+                value_margin: [2500, 10000],
                 value_date: new Date(),
 
                 format_price: {
@@ -143,6 +143,7 @@
                     bid: this.value_bid,
                     ask: this.value_ask,
                     volume: this.value_volume,
+                    futureFlag: this.futureFlag,
                     margin: this.value_margin,
                     date: this.value_date,
                 });
