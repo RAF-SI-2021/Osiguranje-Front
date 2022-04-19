@@ -58,7 +58,7 @@ export default {
 
             if (filter.stockTerm) {
                 data.value = data.value.filter(stock => {
-                    return stock.symbol.toLowerCase().includes(filter.stockTerm.toLowerCase());
+                    return stock.market.includes(filter.stockTerm);
                 })
             }
 

@@ -73,8 +73,8 @@ function handleInput() {
             <div class="col-sm-9">
                 <br />
                 <div class="btn-toolbar">
-                    <button @click="onType($event, 1)" value="action" type="button" :class="{ 'btn-primary': active == 1, 'btn-secondary': active != 1 }" class="btn mx-2">Action</button>
-                    <button @click="onType($event, 2)" value="future" :class="{ 'btn-primary': active == 2, 'btn-secondary': active != 2 }" class="btn mx-2">Future</button>
+                    <button @click="onType($event, 1)" value="action" type="button" :class="{ 'btn-primary': active == 1, 'btn-secondary': active != 1 }" class="btn mx-2">Stocks</button>
+                    <button @click="onType($event, 2)" value="future" :class="{ 'btn-primary': active == 2, 'btn-secondary': active != 2 }" class="btn mx-2">Futures</button>
                     <button @click="onType($event, 3)" value="forex" :class="{ 'btn-primary': active == 3, 'btn-secondary': active != 3 }" class="btn mx-2">Forex</button>
                 </div>
                 
