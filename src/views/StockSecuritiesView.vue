@@ -15,6 +15,7 @@ const emitter = inject('emitter');
 const toast = inject('toast');
 const loading = ref(false);
 const active = ref(1);
+const searchTerm = ref('');
 
 onMounted(() => {
     loading.value = true;
@@ -43,7 +44,9 @@ function onType(e, tab) {
     }
 }
 
-
+function handleInput() {
+    emitter.emit('search-term', searchTerm.value);
+}
 
 </script>
 
@@ -56,7 +59,7 @@ function onType(e, tab) {
             <div class="col-sm-3 sidenav">
                 <br />
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" />
+                    <input type="text" class="form-control" @input="handleInput" v-model="searchTerm" placeholder="Search" />
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="button">
                             <span class="glyphicon glyphicon-search"></span>

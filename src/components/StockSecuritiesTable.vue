@@ -55,6 +55,13 @@ export default {
 
         emitter.on("apply-filter", (filter) => {
             data.value = backup.value;
+
+            if (filter.stockTerm) {
+                data.value = data.value.filter(stock => {
+                    return stock.symbol.toLowerCase().includes(filter.stockTerm.toLowerCase());
+                })
+            }
+
             if (filter.price[0] != 0 && filter.price[1] != 0) {
                 data.value = data.value.filter(row => row.price >= filter.price[0] && row.price <= filter.price[1]);
             }
@@ -98,6 +105,10 @@ export default {
                 actions.value = false;
                 stockType.value = "forex";
             }
+        });
+
+        emitter.on("search-term", (term) => {
+            data.value = backup.value.filter(row => row.symbol.toLowerCase().includes(term.toLowerCase()));
         });
 
         return {

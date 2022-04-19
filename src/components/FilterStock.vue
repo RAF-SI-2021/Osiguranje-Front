@@ -3,11 +3,14 @@
         <h3> Filters:</h3>
         <br>
         <div>
+            <div v-if="actionsFlag">
             <h5> Stock market: </h5>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-                <vue3-simple-typeahead :items="stock_markets" :placeholder="options.stock_placeholder" @selectItem="selectItem" @onInput="onInput" @onBlur="onBlur" :minInputLength="options.minInputLength" />
-            </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <vue3-simple-typeahead :items="stock_markets" :placeholder="options.stock_placeholder" @selectItem="selectItem" @onInput="onInput" @onBlur="onBlur" :minInputLength="options.minInputLength" />
+                </div>
             <br>
+            </div>
+            
             <h5> Price: </h5>
             <div class="col-lg-8 col-md-8 col-sm-8">
                 <Slider
@@ -86,20 +89,25 @@
             this.listFiltered = this.stock_markets;
             this.$emitter.on("filter-stock", (type) => {
                 if (type == "futures") {
+                    this.actionsFlag = false;
                     this.futureFlag = true;
+                } else if (type == "stock") {
+                    this.actionsFlag = true;
+                    this.futureFlag = false;
                 } else {
+                    this.actionsFlag = false;
                     this.futureFlag = false;
                 }
             });
         },
         data() {
             return {
-                value_price: [10, 100],
-                value_bid: [10, 100],
-                value_ask: [10, 100],
-                value_volume: [20000, 500000],
-                value_margin: [2500, 10000],
-                value_date: new Date(),
+                value_price: [0, 0],
+                value_bid: [0, 0],
+                value_ask: [0, 0],
+                value_volume: [0, 0],
+                value_margin: [0, 0],
+                value_date: '',
 
                 format_price: {
                    decimals: 2
@@ -117,6 +125,7 @@
                     selection: null,
                 },
                 futureFlag: false,
+                actionsFlag: true,
             };
         },
         methods: {
@@ -138,6 +147,7 @@
                 return date;
             },
             filter() {
+                console.log(this.stockTerm);
                 this.$emitter.emit("apply-filter", {
                     price: this.value_price,
                     bid: this.value_bid,
@@ -146,6 +156,7 @@
                     futureFlag: this.futureFlag,
                     margin: this.value_margin,
                     date: this.value_date,
+                    stockTerm: this.data.selection,
                 });
             }
         },
