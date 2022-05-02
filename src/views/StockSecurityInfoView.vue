@@ -42,7 +42,10 @@
         if (response.data.code === 400) {
           chartFlag.value = false;
         }
-        historic_data.value.push(...response.data.values)
+        for(let v of response.data.values) {
+          historic_data.value.unshift(v)
+        }
+        //console.log(historic_data);
         // console.log(historic_data.value)
       })
       .catch(err => {
