@@ -1,10 +1,17 @@
 <script setup>
   import {useRoute} from "vue-router";
-  import { listings, apiKey } from "../mock-data/data";
+  import { listings, apiKey, API_KEYS} from "../mock-data/data";
   import {computed, onMounted, reactive, ref} from "vue";
   import axios from 'axios';
   import { LineChart } from 'vue-chart-3';
   import { securityStore } from '../stores/securityStore';
+
+  import { marketauxCacheResponse } from '../mock-data/marketaux-cache'
+
+  import StockInfoNewsItem from '../components/StockInfoNewsItem.vue'
+
+  // Change this to use the LIVE API - Pazite na broj zahteva, maximum 100 *na dan*, znaci 100 refreshova strane 
+  const USE_MARKETAUX_API = false;
 
   const route = useRoute();
   var symbol = route.params.symbol;
@@ -18,6 +25,8 @@
   const color = ref(false);
 
   const chartFlag = ref(true);
+
+  let marketauxNewsData = reactive({});
 
   onMounted(() => {
     if (type === "stock") {
@@ -52,6 +61,29 @@
         console.error(err)
       })
   })
+
+
+  function fetchMarketauxNews() {
+    if(USE_MARKETAUX_API) {
+      axios.get(`https://api.marketaux.com/v1/news/all?symbols=${symbol}&api_token=${API_KEYS.marketaux}&language=en`)
+      .then(response => {
+        marketauxNewsData.data = response.data.data;
+        marketauxNewsData.meta = response.data.meta;
+      })
+      .catch(err => {
+        console.error(err);
+      })
+    }
+    else {
+      marketauxNewsData.data = marketauxCacheResponse.data;
+      marketauxNewsData.meta = marketauxCacheResponse.meta;
+    }
+  }
+
+
+  fetchMarketauxNews();
+
+  
 
   const line_data = computed(() => ({
     labels: historic_data.value.map(el => el.datetime),
@@ -129,6 +161,17 @@
       </div>
     </div>
     <LineChart v-if="chartFlag" class="mt-4" :chartData="line_data" />
+
+    <hr/>
+    <div class="row justify-content-center">
+      <StockInfoNewsItem v-for="marktauxNewsItem in marketauxNewsData.data" 
+        :title="marktauxNewsItem.title"
+        :snippet="marktauxNewsItem.snippet"
+        :published_at="marktauxNewsItem.published_at"
+        :image_url="marktauxNewsItem.image_url"
+        :description="marktauxNewsItem.description"
+        :url="marktauxNewsItem.url"></StockInfoNewsItem>
+    </div>
   </div>
 </template>
 
