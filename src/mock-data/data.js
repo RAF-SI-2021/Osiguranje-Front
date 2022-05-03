@@ -35,5 +35,9 @@ export const listings = Array.from({ length: 100 }, (_, index) => ({
     initial_margin_cost: faker.datatype.number({ min: 0, max: 1000, precision: .01 })
 }));
 
+
 // For historical data, maybe put it in a .env later
 export const apiKey = '83560be253a04a8a944edf4d6488cd41';
+export const API_KEYS = {
+    'marketaux': '5fumFM3ufoJj7SAUq5yQTih5Xrw04dPbGHAiWwnn'
+}
