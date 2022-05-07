@@ -9,6 +9,8 @@
   import { marketauxCacheResponse } from '../mock-data/marketaux-cache'
 
   import StockInfoNewsItem from '../components/StockInfoNewsItem.vue'
+import SecurityModal from "../components/SecurityModal.vue";
+import ConfirmationModal from "../components/ConfirmationModal.vue";
 
   // Change this to use the LIVE API - Pazite na broj zahteva, maximum 100 *na dan*, znaci 100 refreshova strane 
   const USE_MARKETAUX_API = false;
@@ -27,6 +29,8 @@
   const chartFlag = ref(true);
 
   let marketauxNewsData = reactive({});
+
+  const action = ref('Buy');
 
   onMounted(() => {
     if (type === "stock") {
@@ -114,6 +118,12 @@
         <h5><strong>Last updated:</strong> {{ security.lastUpdated }}</h5>
       </div>
     </div>
+    <div class="row mb-3 mt-3">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button @click="action = 'Buy'" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#buysellmodal">Buy</button>
+        <button @click="action = 'Sell'" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#buysellmodal">Sell</button>
+    </div>
+    </div>
     <div class="row mb-3">
       <div class="col mx-1 border border-dark d-flex justify-content-between" style="background: lightgrey">
         <p><strong>Ask:</strong></p>
@@ -173,5 +183,8 @@
         :url="marktauxNewsItem.url"></StockInfoNewsItem>
     </div>
   </div>
+
+  <SecurityModal :action="action" :security="security"/>
+  <ConfirmationModal />
 </template>
 
