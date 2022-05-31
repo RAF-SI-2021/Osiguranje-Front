@@ -16,10 +16,39 @@ const props = defineProps({
             limitValue: 0,
             stopValue: 0,
             allOrNone: false,
-            margin:false
-        }
+            margin:false,
+            orderType: ""
+        },
     }
+
 })
+
+          function  determineOrderType(){
+                if(props.myInput.amount !== 0 && props.myInput.limitValue === 0 && props.myInput.stopValue === 0){
+                    props.myInput.orderType = prefix() + " Market Order"
+                }
+                if(props.myInput.amount !== 0 && props.myInput.limitValue !== 0 && props.myInput.stopValue === 0){
+                    props.myInput.orderType = prefix() + " Limit Order"
+                }
+                if(props.myInput.amount !== 0 && props.myInput.limitValue === 0 && props.myInput.stopValue !== 0){
+                   props.myInput.orderType = prefix() + " Stop Order"
+                }
+                if(props.myInput.amount !== 0 && props.myInput.limitValue !== 0 && props.myInput.stopValue !== 0){
+                    props.myInput.orderType = prefix() + " Stop-Limit Order"
+                }   
+            
+        }
+
+        function  prefix(){
+                    if(props.myInput.allOrNone === false && props.myInput.margin === false){
+                        return ""
+                    }else if(props.myInput.allOrNone !== false){
+                        return "All or none "
+                    }else if(props.myInput.margi !== false){
+                        return "Margine "
+                    }
+        }
+
 
 
 </script>
@@ -66,7 +95,7 @@ const props = defineProps({
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmationModal">{{ props.action }}</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmationModal" @click="determineOrderType()">{{ props.action }}</button>
                 </div>
             </div>
         </div>
