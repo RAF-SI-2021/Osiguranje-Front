@@ -1,5 +1,11 @@
 <script setup>
-    const props = defineProps({
+
+
+const props = defineProps({
+    security: {
+        type: Object,
+        default: {}
+    },
     myInput:{
         type: Object,
         default:{
@@ -7,8 +13,9 @@
             limitValue: 0,
             stopValue: 0,
             allOrNone: false,
-            margin:false
-        }
+            margin:false,
+            orderType: ""
+        },
     }
 })
 
@@ -23,15 +30,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Amount of securities: {{props.myInput.amount}}</p>
-                    <p>Limit Value: {{props.myInput.limitValue}}</p>
-                    <p>Stop Value: {{props.myInput.stopValue}}</p>
-                    <p>All or none: {{props.myInput.allOrNone}}</p>
-                    <p>Margin: {{props.myInput.margin}}</p>
+                    <p>The quantity: {{props.myInput.amount}}</p>
+                    <p>Order type: {{props.myInput.orderType}}</p>
+                    <p>Approximate price: {{props.security.price * props.myInput.amount}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Confirm</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirm</button>
                 </div>
             </div>
         </div>
