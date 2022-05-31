@@ -22,6 +22,8 @@ const type = route.query.q;
 const store = securityStore();
 
 const historic_data = ref([]);
+const historic_data_copy = ref([]);
+const active = ref(1);
 
 const security = ref({
   id: 352,
@@ -100,6 +102,7 @@ onMounted(() => {
       }
       for (let v of response.data.values) {
         historic_data.value.unshift(v);
+        historic_data_copy.value.unshift(v);
       }
       //console.log(historic_data);
       // console.log(historic_data.value)
@@ -139,6 +142,34 @@ const line_data = computed(() => ({
     },
   ],
 }));
+
+
+function filterData(e, tab) {
+    active.value = tab;
+    const currentDate = new Date();
+    let previous = new Date(currentDate.getTime());
+
+    if (e.target.value === "5 days") {
+        previous.setDate(currentDate.getDate() - 5); //last 5 days
+    } else if (e.target.value === "week") {
+        previous.setDate(currentDate.getDate() - 7); //last week
+    } else if (e.target.value === "month") {
+        previous.setMonth(currentDate.getMonth() - 1); //last month
+    } else if (e.target.value === "year") {
+        previous.setYear(currentDate.getFullYear() - 1); //last year
+    } else {
+        let date = new Date(historic_data_copy.value[0].datetime);
+        previous = new Date(date.getTime());
+    }
+    
+    historic_data.value = historic_data_copy.value.filter((element) => {
+        let date = new Date(element.datetime);
+        if (date >= previous) {
+            return element;
+        }
+    });
+}
+
 </script>
 
 <template>
@@ -261,6 +292,22 @@ const line_data = computed(() => ({
       </div>
     </div>
     <LineChart v-if="chartFlag" class="mt-4" :chartData="line_data" :label="'Price'" />
+    <br />
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group me-2" role="group" aria-label="Second group">
+        <button @click="filterData($event, 5)" value="5 days" 
+        :class="{ 'btn btn-secondary': active == 5, 'btn btn-outline-secondary': active != 5 }">Last 5 days</button>
+        <button @click="filterData($event, 2)" value="week"
+        :class="{ 'btn btn-secondary': active == 2, 'btn btn-outline-secondary': active != 2 }">Last week</button>
+        <button @click="filterData($event, 3)" value="month"
+        :class="{ 'btn btn-secondary': active == 3, 'btn btn-outline-secondary': active != 3 }">Last month</button>
+        <button @click="filterData($event, 4)" value="year"
+        :class="{ 'btn btn-secondary': active == 4, 'btn btn-outline-secondary': active != 4 }">Last year</button>
+        <button @click="filterData($event, 1)" value="all"
+        :class="{ 'btn btn-secondary': active == 1, 'btn btn-outline-secondary': active != 1 }">Start of selling</button>
+      </div>
+    </div>
+
 
     <hr />
     <div class="row justify-content-center">
