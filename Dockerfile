@@ -1,4 +1,7 @@
 FROM node:14-alpine3.15 as build
+
+LABEL org.opencontainers.image.source https://github.com/RAF-SI-2021/osiguranje-front
+
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
