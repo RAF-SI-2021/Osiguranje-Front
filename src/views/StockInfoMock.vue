@@ -63,6 +63,14 @@ let marketauxNewsData = reactive({});
 
 const action = ref("Buy");
 
+const myInput = reactive({
+      amount: 0,
+      limitValue: 0,
+      stopValue: 0,
+      allOrNone: false,
+      margin:false
+    });
+
 onMounted(() => {
   console.log("INFO:", security);
   // if (type === "stock") {
@@ -268,6 +276,6 @@ const line_data = computed(() => ({
     </div>
   </div>
 
-  <SecurityModal :action="action" :security="security" />
-  <ConfirmationModal />
+  <SecurityModal :action="action" :security="security" :my-input="myInput"/>
+  <ConfirmationModal :my-input="myInput"/>
 </template>
