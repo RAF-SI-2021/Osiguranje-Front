@@ -277,5 +277,5 @@ const line_data = computed(() => ({
   </div>
 
   <SecurityModal :action="action" :security="security" :my-input="myInput"/>
-  <ConfirmationModal :my-input="myInput"/>
+  <ConfirmationModal :security="security" :my-input="myInput"/>
 </template>

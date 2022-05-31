@@ -1,5 +1,11 @@
 <script setup>
-    const props = defineProps({
+
+
+const props = defineProps({
+    security: {
+        type: Object,
+        default: {}
+    },
     myInput:{
         type: Object,
         default:{
@@ -9,7 +15,7 @@
             allOrNone: false,
             margin:false,
             orderType: ""
-        }
+        },
     }
 })
 
@@ -26,7 +32,7 @@
                 <div class="modal-body">
                     <p>The quantity: {{props.myInput.amount}}</p>
                     <p>Order type: {{props.myInput.orderType}}</p>
-                    <p>Approximate price: {{}}</p>
+                    <p>Approximate price: {{props.security.price * props.myInput.amount}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
