@@ -3,7 +3,7 @@
     myInput:{
         type: Object,
         default:{
-            brojHartija: 0,
+            amount: 0,
             limitValue: 0,
             stopValue: 0,
             allOrNone: false,
@@ -23,7 +23,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Broj hartija: {{props.myInput.brojHartija}}</p>
+                    <p>Amount of securities: {{props.myInput.amount}}</p>
                     <p>Limit Value: {{props.myInput.limitValue}}</p>
                     <p>Stop Value: {{props.myInput.stopValue}}</p>
                     <p>All or none: {{props.myInput.allOrNone}}</p>

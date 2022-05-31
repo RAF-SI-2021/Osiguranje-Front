@@ -12,7 +12,7 @@ const props = defineProps({
     myInput:{
         type: Object,
         default:{
-            brojHartija: 0,
+            amount: 0,
             limitValue: 0,
             stopValue: 0,
             allOrNone: false,
@@ -35,17 +35,17 @@ const props = defineProps({
                 </div>
                 <div class="modal-body">
                     <div>
-                        <label for="broj_hartija">Unesite broj hartija: </label>
-                        <input v-model="props.myInput.brojHartija" type="number" class="form-control" id="broj_hartija" min="0">
+                        <label for="security_amount">Enter the amount of securities to {{props.action}}: </label>
+                        <input v-model="props.myInput.amount" type="number" class="form-control" id="security_amount" min="0">
                     </div>
 
                     <div>
-                        <label for="limit_value">Unesite limit value: </label>
+                        <label for="limit_value">Enter limit value: </label>
                         <input v-model="props.myInput.limitValue" type="number" class="form-control" id="limit_value" min="0">
                     </div>
 
                     <div>
-                        <label for="stop_value">Unesite stop value: </label>
+                        <label for="stop_value">Enter stop value: </label>
                         <input v-model="props.myInput.stopValue" type="number" class="form-control" id="stop_value" min="0">
                     </div>
                     

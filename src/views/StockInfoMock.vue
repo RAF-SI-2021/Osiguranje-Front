@@ -64,7 +64,7 @@ let marketauxNewsData = reactive({});
 const action = ref("Buy");
 
 const myInput = reactive({
-      brojHartija: 0,
+      amount: 0,
       limitValue: 0,
       stopValue: 0,
       allOrNone: false,
