@@ -170,6 +170,8 @@ function filterData(e, tab) {
     });
 }
 
+let showOptions = false
+
 </script>
 
 <template>
@@ -190,8 +192,274 @@ function filterData(e, tab) {
         </div>
         <h5><strong>Last updated:</strong> {{ security.last_updated }}</h5>
       </div>
+      <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#optionsModal">Options</button>
+      <div class="modal fade" id="optionsModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Stock Options</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div>
+              <table border="2" style="width: 65%" align="center" a>
+                <tbody>
+                <tr data-bs-toggle="modal" data-bs-target="#infoModal">
+                  <td colspan="6" rowspan="1" class="border border-1 border-dark" align="center"> CALLS</td>
+                  <td class="border border-1 border-dark bg-secondary"> </td>
+                  <td colspan="6" rowspan="1" class="border border-1 border-dark" align="center"> PUTS</td>
+                </tr>
+                <tr data-bs-toggle="modal" data-bs-target="#infoModal">
+                  <td class="border border-1 border-dark"> Last</td>
+                  <td class="border border-1 border-dark"> Theta</td>
+                  <td class="border border-1 border-dark"> Bid</td>
+                  <td class="border border-1 border-dark"> Ask</td>
+                  <td class="border border-1 border-dark"> Vol</td>
+                  <td class="border border-1 border-dark"> OI</td>
+                  <td class="border border-1 border-dark"> Strike</td>
+                  <td class="border border-1 border-dark"> Last</td>
+                  <td class="border border-1 border-dark"> Theta</td>
+                  <td class="border border-1 border-dark"> Bid</td>
+                  <td class="border border-1 border-dark"> Ask</td>
+                  <td class="border border-1 border-dark"> Vol</td>
+                  <td class="border border-1 border-dark"> OI</td>
+                </tr>
+                <tr data-bs-toggle="modal" data-bs-target="#infoModal">
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFA652"> $140</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                </tr>
+                <tr data-bs-toggle="modal" data-bs-target="#infoModal">
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFA652"> $150</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                </tr>
+                <tr data-bs-toggle="modal" data-bs-target="#infoModal">
+                  <td class="border border-1 border-dark" style="background-color: #FFA652"> </td>
+                  <td class="border border-1 border-dark" style="background-color: #FFA652"> </td>
+                  <td class="border border-1 border-dark" style="background-color: #FFA652"> </td>
+                  <td class="border border-1 border-dark" style="background-color: #FFA652"> </td>
+                  <td class="border border-1 border-dark" style="background-color: #FFA652"> </td>
+                  <td class="border border-1 border-dark" style="background-color: #FFA652"> </td>
+                  <td class="border border-1 border-dark" style="background-color: #FFA652" align="center"> Shared <br/> $160</td>
+                  <td class="border border-1 border-dark" style="background-color: #FFA652"> </td>
+                  <td class="border border-1 border-dark" style="background-color: #FFA652"> </td>
+                  <td class="border border-1 border-dark" style="background-color: #FFA652"> </td>
+                  <td class="border border-1 border-dark" style="background-color: #FFA652"> </td>
+                  <td class="border border-1 border-dark" style="background-color: #FFA652"> </td>
+                  <td class="border border-1 border-dark" style="background-color: #FFA652"> </td>
+                </tr>
+                <tr data-bs-toggle="modal" data-bs-target="#infoModal">
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" style="background-color: #FFA652" align="center">$170</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                </tr>
+                <tr data-bs-toggle="modal" data-bs-target="#infoModal">
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #FFAB97"> x</td>
+                  <td class="border border-1 border-dark" style="background-color: #FFA652" align="center">$180</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                  <td class="border border-1 border-dark" align="center" style="background-color: #A4E299"> x</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Option Information</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <p> Symbol: {{security.ticker}}</p>
+                <p> Contract: {{security.ticker}} 2208D3325 </p>
+                <p> Type: </p>
+                <p> Expiration date: </p>
+                <p> Strike: </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#optionsModal">Go Back</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailedModal">Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="detailedModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Detailed Option Information</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p> Symbol: {{security.ticker}}</p>
+              <p> Contract: {{security.ticker}} 2208D3325</p>
+              <p> Type: </p>
+              <p> Expiration date: </p>
+              <p> Strike: </p>
+              <hr>
+              <p> Last bid: {{security.price}}</p>
+              <p> Change: {{security.price_change}}</p>
+              <p> Bid: {{security.bid}}</p>
+              <p> Ask: {{security.ask}}</p>
+              <p> Volume: {{security.volume}}</p>
+              <p> Open Interest: </p>
+              <p> Daily price range: </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#optionsModal">Go Back</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#buyOptionModal">Buy Option</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="buyOptionModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Buy Option Form</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                  <div class="form-group" style="padding-bottom: 12px">
+                    <p>Action:</p>
+                    <input class="form-check-input" type="radio" id="actionInput" checked v-model="action">
+                    <label class="form-check-label" for="actionInput"> Buy To Open</label>
+                  </div>
+                  <div class="form-group" style="padding-bottom: 12px">
+                    <p> Target price:</p>
+                    <input class="form-check-input" type="radio" name="target_price" id="market" checked v-model="target_price">
+                    <label class="form-check-label" for="market">
+                      Market
+                    </label>
+                    &nbsp;&nbsp;&nbsp;
+                    <input class="form-check-input" type="radio" name="target_price" id="limit" v-model="target_price">
+                    <label class="form-check-label" for="limit">
+                      Limit
+                    </label>
+                    &nbsp;&nbsp;&nbsp;
+                    <input class="form-check-input" type="radio" name="target_price" id="stop" v-model="target_price">
+                    <label class="form-check-label" for="stop">
+                      Stop
+                    </label>
+                  </div>
+                    <div class="form-group" style="padding-bottom: 12px">
+                      <p> Price:</p>
+                      <input class="form-control" type="number" placeholder="0" id="price" v-model="price_">
+                    </div>
+                    <div class="form-group" style="padding-bottom: 12px">
+                      <p> Contract Number:</p>
+                      <input class="form-control" type="number" placeholder="0" id="contract" v-model="contract_number">
+                    </div>
+                    <div class="form-group">
+                      <p> Duration:</p>
+                      <input class="form-check-input" type="radio" name="duration" id="day_order" v-model="duration_">
+                      <label class="form-check-label" for="day_order">
+                        Day Order
+                      </label>
+                      &nbsp;&nbsp;&nbsp;
+                      <input class="form-check-input" type="radio" name="duration" id="good_until" checked v-model="duration_">
+                      <label class="form-check-label" for="good_until">
+                        Good Until Cancelled
+                      </label>
+                      &nbsp;&nbsp;&nbsp;
+                      <input class="form-check-input" type="radio" name="duration" id="cancelled" v-model="duration_">
+                      <label class="form-check-label" for="cancelled">
+                        Cancelled
+                      </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#optionsModal">Go Back</button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewModal">Preview</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Preview Information</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p> Contract number: {{security.ticker}} 2208D3325</p>
+              <p> Contract description: <br/> Target price: {{ target_price}} <br/> Action: {{action}}</p>
+              <p> Duration: {{ duration_ }}</p>
+              <p> Price: {{ price_ }}</p>
+              <p> Quantity: </p>
+              <p> Total Price: </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#buyOptionModal">Go Back</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+
     <div class="row mb-3 mt-3">
+
+
+
       <div class="btn-group" role="group" aria-label="Basic example">
         <button
           @click="action = 'Buy'"
@@ -326,3 +594,4 @@ function filterData(e, tab) {
   <SecurityModal :action="action" :security="security" :my-input="myInput"/>
   <ConfirmationModal :security="security" :my-input="myInput"/>
 </template>
+
