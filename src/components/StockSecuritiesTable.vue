@@ -14,11 +14,11 @@
         <tbody>
             <tr v-for="dataRow in data" :key="dataRow.id">
                 <th>
-                    <router-link class="stocktable-stocksymbol-link" :to="{name:'stockInfo', query: { q: stockType }, params:{symbol:dataRow.symbol}}">{{dataRow.symbol}}</router-link>
+                    <router-link class="stocktable-stocksymbol-link" :to="{name:'stockInfo', query: { q: stockType }, params:{symbol:dataRow.ticker}}">{{dataRow.ticker}}</router-link>
                 </th>
                 <td v-if="actions">{{dataRow.market ? dataRow.market : '-'}}</td>
                 <td>{{dataRow.price}}</td>
-                <td :class="{ 'text-danger': dataRow.priceChange < 0, 'text-success': dataRow.priceChange >= 0 }">{{dataRow.priceChange}}</td>
+                <td :class="{ 'text-danger': dataRow.change < 0, 'text-success': dataRow.change >= 0 }">{{dataRow.change}}</td>
                 <td>{{dataRow.volume}}</td>
                 <td v-if="dataRow.initialMarginCost"> {{dataRow.initialMarginCost}}</td>
             </tr>
@@ -108,7 +108,7 @@ export default {
         });
 
         emitter.on("search-term", (term) => {
-            data.value = backup.value.filter(row => row.symbol.toLowerCase().includes(term.toLowerCase()));
+            data.value = backup.value.filter(row => row.ticker.toLowerCase().includes(term.toLowerCase()));
         });
 
         return {
