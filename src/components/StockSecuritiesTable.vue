@@ -7,8 +7,8 @@
                 <th scope="col" v-if="actions">Market</th>
                 <th scope="col">Price</th>
                 <th scope="col">Change</th>
-                <th scope="col">Volume</th>
-                <th v-if="futures" scope="col">Initial Margin Cost</th>
+                <th v-if="!forex" scope="col">Volume</th>
+                <th v-if="!forex" scope="col">Initial Margin Cost</th>
             </tr>
         </thead>
         <tbody>
@@ -16,7 +16,7 @@
                 <th>
                     <router-link class="stocktable-stocksymbol-link" :to="{name:'stockInfo', query: { q: stockType }, params:{symbol:dataRow.ticker}}">{{dataRow.ticker}}</router-link>
                 </th>
-                <td v-if="actions">{{dataRow.market ? dataRow.market : '-'}}</td>
+                <td v-if="actions">{{dataRow.exchange.acronym || "-"}}</td>
                 <td>{{dataRow.price}}</td>
                 <td :class="{ 'text-danger': dataRow.change < 0, 'text-success': dataRow.change >= 0 }">{{dataRow.change}}</td>
                 <td>{{dataRow.volume}}</td>
@@ -37,6 +37,7 @@ export default {
         const emitter = inject('emitter');
         const futures = ref(false);
         const actions = ref(true);
+        const forex = ref(false);
         const stockType = ref('stock')
         const toast = inject('toast');
         const backup = ref([]);
@@ -91,18 +92,21 @@ export default {
                 backup.value = store.stock;
                 futures.value = false;
                 actions.value = true;
+                forex.value = false;
                 stockType.value = "stock";
             } else if(type === "futures") {
                 data.value = store.futures;
                 backup.value = store.futures;
                 futures.value = true;
                 actions.value = false;
+                forex.value = false;
                 stockType.value = "future";
             } else {
                 data.value = store.forex;
                 backup.value = store.forex;
                 futures.value = false;
                 actions.value = false;
+                forex.value = true;
                 stockType.value = "forex";
             }
         });
@@ -116,7 +120,8 @@ export default {
             data,
             futures,
             stockType,
-            actions
+            actions,
+            forex
         }
     },
 }
