@@ -15,8 +15,4 @@ export const adminLinks = [
         routeName: 'Stock Listings',
         routeLink: '/StockSecuritiesView'
     },
-    {
-        routeName: 'Mock Stock',
-        routeLink: '/mockinfo'
-    }
 ]
