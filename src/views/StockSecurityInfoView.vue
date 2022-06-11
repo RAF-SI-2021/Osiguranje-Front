@@ -43,9 +43,11 @@ const myInput = reactive({
   stopValue: 0,
   allOrNone: false,
   margin: false,
+  type: type,
 });
 
 onMounted(() => {
+  console.log(store);
   loading.value = true;
 
   if (type === "stock") {
