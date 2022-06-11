@@ -15,4 +15,26 @@ describe("Testing the New User page", () => {
     cy.get(".btn-primary").click();
     cy.get(".test-error").should("have.length", 6);
   })
+
+  it("validation case scenario #1", () => {
+    cy.intercept("GET", "/api/currentUser", { fixture: "user.json" });
+    cy.login("car@gmail.com", "raf");
+    cy.get("#app > div > div > div > div:nth-child(2) > div > a").click();
+
+    // Inputs
+    cy.get("#email").type("invalid@mail");
+    cy.get("#name").type("Valid");
+    cy.get("#jmbg").type("12345");
+    cy.get("#position").type("Agent");
+
+    // Submit Form
+    cy.get('.btn-primary').click();
+
+    // Assertions
+    cy.get(".test-error").eq(0).should('contain', 'Value is not a valid email address');
+    cy.get(".test-error").eq(1).should('contain', 'Value is required');
+    cy.get(".test-error").eq(2).should('contain', 'This field should be at least 13 long');
+    cy.get('.test-error').eq(3).should('contain', 'Value is required');
+  })
+
 })
