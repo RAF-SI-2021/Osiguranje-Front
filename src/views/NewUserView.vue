@@ -16,7 +16,7 @@
                   <label class="form-label" for="email">Your Email</label>
                   <input v-model="state.email" type="email" id="email" class="form-control form-control-lg" />
                   <div v-for="error in v$.email.$errors" :key="error.$uid">
-                        <span>{{error.$message}}</span>
+                        <span class="test-error">{{error.$message}}</span>
                   </div>
                 </div>
 
@@ -24,7 +24,7 @@
                   <label class="form-label" for="name">Name</label>
                   <input v-model="state.name" type="text" id="name" class="form-control form-control-lg" />
                   <div v-for="error in v$.name.$errors" :key="error.$uid">
-                        <span>{{error.$message}}</span>
+                        <span class="test-error">{{error.$message}}</span>
                   </div>
                 </div>
 
@@ -32,7 +32,7 @@
                   <label class="form-label" for="surname">Surname</label>
                   <input v-model="state.surname" type="text" id="surname" class="form-control form-control-lg" />
                   <div v-for="error in v$.surname.$errors" :key="error.$uid">
-                        <span>{{error.$message}}</span>
+                        <span class="test-error">{{error.$message}}</span>
                   </div>
                 </div>
 
@@ -40,7 +40,7 @@
                   <label class="form-label" for="jmbg">JMBG</label>
                   <input v-model="state.jmbg" type="text" id="jmbg" class="form-control form-control-lg" />
                     <div v-for="error in v$.jmbg.$errors" :key="error.$uid">
-                        <span>{{error.$message}}</span>
+                        <span class="test-error">{{error.$message}}</span>
                     </div>
                 </div>
 
@@ -49,7 +49,7 @@
                   <label class="form-label" for="position">Position</label>
                   <input v-model="state.position" type="text" id="position" class="form-control form-control-lg" />
                   <div v-for="error in v$.position.$errors" :key="error.$uid">
-                        <span>{{error.$message}}</span>
+                        <span class="test-error">{{error.$message}}</span>
                     </div>
                 </div>
 
@@ -57,7 +57,7 @@
                   <label class="form-label" for="phoneNumber">Phone number</label>
                   <input v-model="state.phoneNumber" type="tel" id="phoneNumber" class="form-control form-control-lg" />
                   <div v-for="error in v$.phoneNumber.$errors" :key="error.$uid">
-                        <span>{{error.$message}}</span>
+                        <span class="test-error">{{error.$message}}</span>
                   </div>
                 </div>
 
