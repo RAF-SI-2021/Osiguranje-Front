@@ -40,4 +40,4 @@ jobs:
         with:
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/raf-si-2021/osiguranje-front:latest
+          tags: ghcr.io/raf-si-2021/osiguranjeraf2022/frontend:latest
