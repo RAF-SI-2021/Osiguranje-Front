@@ -13,6 +13,7 @@ const props = defineProps({
   myInput: {
     type: Object,
     default: {
+      securityId: 0,
       amount: 0,
       limitValue: 0,
       stopValue: 0,
@@ -36,7 +37,7 @@ function getSecurityType(type) {
 
 function makeOrder() {
   const order = {
-    securityId: 1,
+    securityId: props.myInput.securityId,
     userId: store.user.id,
     amount: props.myInput.amount,
     securityType: getSecurityType(props.type),

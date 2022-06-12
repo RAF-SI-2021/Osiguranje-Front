@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "firstName": "Radenko",
+    "lastName": "Milosevic",
+    "email": "car@gmail.com",
+    "position": "Admin",
+    "phoneNumber": "+381657779045",
+    "active": true,
+    "jmbg": "1234567890123"
+  },
+  {
+    "id": 2,
+    "firstName": "Milan",
+    "lastName": "Milosevic",
+    "email": "mmilosevic@gmail.com",
+    "position": "Supervizor",
+    "phoneNumber": "+381657779045",
+    "active": true,
+    "jmbg": "1534567584732"
+  },
+  {
+    "id": 3,
+    "firstName": "Pera",
+    "lastName": "Peric",
+    "email": "peric@yahoo.com",
+    "position": "Agent",
+    "phoneNumber": "+381657779045",
+    "active": true,
+    "jmbg": "134123556789"
+  },
+  {
+    "id": 4,
+    "firstName": "Johnny",
+    "lastName": "Depp",
+    "jmbg": "4123512341234",
+    "email": "validmail@gmail.com",
+    "position": "Agent",
+    "phoneNumber": "312451235",
+    "active": true
+  }
+]
