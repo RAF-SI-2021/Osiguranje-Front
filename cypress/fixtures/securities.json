@@ -3373,7 +3373,7 @@
       "name": "Darden Restaurants, Inc.",
       "exchange": {
         "name": "New York Stock Exchange",
-        "acronym": "NYSE",
+        "acronym": "NASDAQ",
         "country": "United States",
         "timeZone": "−5",
         "open": "09:30",
@@ -3575,7 +3575,7 @@
       "name": "Mesabi Trust",
       "exchange": {
         "name": "New York Stock Exchange",
-        "acronym": "NYSE",
+        "acronym": "NASDAQ",
         "country": "United States",
         "timeZone": "−5",
         "open": "09:30",

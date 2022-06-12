@@ -117,7 +117,7 @@
                     minInputLength: 1,
                 },
                 stock_markets: [
-                    'XNYS', 'XNAS'
+                    'NYSE', 'NASDAQ'
                 ],
                 listFiltered: [],
                 data: {
