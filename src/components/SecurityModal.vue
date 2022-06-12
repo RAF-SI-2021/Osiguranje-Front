@@ -13,6 +13,7 @@ const props = defineProps({
   myInput: {
     type: Object,
     default: {
+      securityId: 0,
       amount: 0,
       limitValue: 0,
       stopValue: 0,
@@ -22,6 +23,7 @@ const props = defineProps({
     },
   },
 });
+
 
 function determineOrderType() {
   if (
@@ -60,7 +62,7 @@ function prefix() {
   } else if (props.myInput.allOrNone !== false) {
     return "All or none ";
   } else if (props.myInput.margi !== false) {
-    return "Margine ";
+    return "Margin ";
   }
 }
 </script>
