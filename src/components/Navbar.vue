@@ -2,16 +2,19 @@
 import { onMounted, ref } from 'vue';
 import { userAPI } from '../api/userAPI';
 import { useRouter } from 'vue-router';
+import { userStore } from "../stores/userStore";
 
 const logged = ref(false);
 const user = ref('');
 const router = useRouter();
+const store = userStore();
 
 onMounted(() => {
   if (localStorage.getItem('token')) {
     logged.value = true;
     userAPI.getCurrentUser().then((res) => {
       user.value = res.data.firstName + ' ' + res.data.lastName;
+      store.setUser(res.data);
     });
   }
 })

@@ -183,6 +183,7 @@ watch(props.myInput, (newInput) => {
             data-bs-target="#confirmationModal"
             @click="determineOrderType()"
             :disabled="disabled"
+            id="action-button"
           >
             {{ props.action }}
           </button>
