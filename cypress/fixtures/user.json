@@ -1,0 +1,15 @@
+{
+    "id": 1,
+    "firstName": "Radenko",
+    "lastName": "Milosevic",
+    "email": "car@gmail.com",
+    "position": "Admin",
+    "phoneNumber": "+381657779045",
+    "active": true,
+    "permissions": {
+        "stockTrading": true,
+        "stockOverview": true,
+        "contractConclusion": true,
+        "admin": false
+    }
+}

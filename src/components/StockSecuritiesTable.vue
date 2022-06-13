@@ -59,25 +59,25 @@ export default {
 
             if (filter.stockTerm) {
                 data.value = data.value.filter(stock => {
-                    return stock.market.includes(filter.stockTerm);
+                    return stock.exchange.acronym.includes(filter.stockTerm);
                 })
             }
 
-            if (filter.price[0] != 0 && filter.price[1] != 0) {
+            if (filter.price[0] != 0 || filter.price[1] != 0) {
                 data.value = data.value.filter(row => row.price >= filter.price[0] && row.price <= filter.price[1]);
             }
-            if (filter.bid[0] != 0 && filter.bid[1] != 0) {
+            if (filter.bid[0] != 0 || filter.bid[1] != 0) {
                 data.value = data.value.filter(row => row.bid >= filter.bid[0] && row.bid <= filter.bid[1]);
             }
-            if (filter.ask[0] != 0 && filter.ask[1] != 0) {
+            if (filter.ask[0] != 0 || filter.ask[1] != 0) {
                 data.value = data.value.filter(row => row.ask >= filter.ask[0] && row.ask <= filter.ask[1]);
             }
-            if (filter.volume[0] != 0 && filter.volume[1] != 0) {
+            if (filter.volume[0] != 0 || filter.volume[1] != 0) {
                 data.value = data.value.filter(row => row.volume >= filter.volume[0] && row.volume <= filter.volume[1]);
             }
 
             if (filter.futureFlag) {
-                if (filter.margin[0] != 0 && filter.margin[1] != 0) {
+                if (filter.margin[0] != 0 || filter.margin[1] != 0) {
                     data.value = data.value.filter(row => row.maintenanceMargin >= filter.margin[0] && row.maintenanceMargin <= filter.margin[1]);
                 }
                 if (filter.date) {

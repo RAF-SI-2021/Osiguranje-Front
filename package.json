@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "dev:test": "vite --port 3000",
     "build": "vite build",
     "preview": "vite preview --port 5050",
     "test": "vitest",
@@ -30,6 +31,7 @@
     "vue3-simple-typeahead": "^1.0.5"
   },
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^2.1.0",
     "@faker-js/faker": "^6.0.0",
     "@rushstack/eslint-patch": "^1.1.0",
     "@vitejs/plugin-vue": "^2.2.2",

@@ -37,15 +37,8 @@ let marketauxNewsData = reactive({});
 
 const action = ref("Buy");
 
-const myInput = reactive({
-  amount: 0,
-  limitValue: 0,
-  stopValue: 0,
-  allOrNone: false,
-  margin: false,
-});
-
 onMounted(() => {
+  console.log("STORE -> ",store);
   loading.value = true;
 
   if (type === "stock") {
@@ -62,6 +55,7 @@ onMounted(() => {
   }
 
   color.value = security.value.change > 0;
+  myInput.securityId = security.value.id;
 
   axios
     .get(
@@ -101,6 +95,16 @@ function fetchMarketauxNews() {
     marketauxNewsData.meta = marketauxCacheResponse.meta;
   }
 }
+
+const myInput = reactive({
+  securityId: 0,
+  amount: 0,
+  limitValue: 0,
+  stopValue: 0,
+  allOrNone: false,
+  margin: false,
+  type: type,
+});
 
 fetchMarketauxNews();
 
