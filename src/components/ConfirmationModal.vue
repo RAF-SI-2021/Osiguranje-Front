@@ -1,9 +1,12 @@
 <script setup>
-import { reactive } from "vue";
+import { computed, inject, reactive, ref } from "vue";
 import { userStore } from "../stores/userStore";
 import { buysellAPI } from "../api/buysellAPI";
+import { numeric, required, minValue } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
 
 const store = userStore();
+const toast = inject('toast');
 
 const props = defineProps({
   security: {
@@ -40,7 +43,7 @@ function makeOrder() {
     securityId: props.myInput.securityId,
     userId: store.user.id,
     amount: props.myInput.amount,
-    securityType: getSecurityType(props.type),
+    securityType: getSecurityType(props.myInput.type),
     allOrNone: props.myInput.allOrNone,
     limitPrice: props.myInput.limitValue,
     stopPrice: props.myInput.stopValue,
@@ -53,9 +56,14 @@ function makeOrder() {
     .makeOrder(order)
     .then((response) => {
       console.log(response);
+      toast.success("Order made successfully.")
     })
     .catch((error) => {
-      console.log(error);
+      if (error.response.status === 400 && error.response.data === "bound must be positive") {
+        toast.success("Order made successfully.")
+      } else {
+        toast.error("Something went wrong.")
+      }
     });
 }
 </script>
@@ -77,9 +85,6 @@ function makeOrder() {
           <p>The quantity: {{ props.myInput.amount }}</p>
           <p>Order type: {{ props.myInput.orderType }}</p>
           <p>Approximate price: {{ props.security.price * props.myInput.amount }}</p>
-        </div>
-        <div>
-          <p>{{ props.myInput }}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

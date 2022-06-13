@@ -1,5 +1,27 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, computed, onMounted, ref, watch } from "vue";
+import { minValue, numeric, required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
+
+const rules = computed(() => {
+  return {
+    amount: {
+      numeric,
+      required,
+      minValue: minValue(1)
+    },
+    limitValue: {
+      numeric,
+      minValue: minValue(0)
+    },
+    stopValue: {
+      numeric,
+      minValue: minValue(0)
+    }
+  };
+})
+
+const disabled = ref(true);
 
 const props = defineProps({
   action: {
@@ -24,6 +46,7 @@ const props = defineProps({
   },
 });
 
+const v$ = useVuelidate(rules, props.myInput);
 
 function determineOrderType() {
   if (
@@ -65,6 +88,12 @@ function prefix() {
     return "Margin ";
   }
 }
+
+watch(props.myInput, (newInput) => {
+  // console.log(v$.value.$invalid);
+  disabled.value = v$.value.$invalid;
+})
+
 </script>
 
 <template>
@@ -72,8 +101,7 @@ function prefix() {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">{{ props.action }}: {{ props.security.symbol }}</h5>
-          <h1>{{ props.myInput.brojHartija }}</h1>
+          <h5 class="modal-title">{{ props.action }}: {{ props.security.ticker }}</h5>
           <button
             type="button"
             class="btn-close"
@@ -93,6 +121,9 @@ function prefix() {
               id="security_amount"
               min="0"
             />
+            <div v-for="error in v$.amount.$errors" :key="error.$uid">
+              <span class="test-error">{{error.$message}}</span>
+            </div>
           </div>
 
           <div>
@@ -104,6 +135,9 @@ function prefix() {
               id="limit_value"
               min="0"
             />
+            <div v-for="error in v$.limitValue.$errors" :key="error.$uid">
+              <span class="test-error">{{error.$message}}</span>
+            </div>
           </div>
 
           <div>
@@ -115,6 +149,9 @@ function prefix() {
               id="stop_value"
               min="0"
             />
+            <div v-for="error in v$.stopValue.$errors" :key="error.$uid">
+              <span class="test-error">{{error.$message}}</span>
+            </div>
           </div>
 
           <div>
@@ -145,6 +182,7 @@ function prefix() {
             data-bs-toggle="modal"
             data-bs-target="#confirmationModal"
             @click="determineOrderType()"
+            :disabled="disabled"
           >
             {{ props.action }}
           </button>
