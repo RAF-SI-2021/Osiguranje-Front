@@ -95,6 +95,7 @@ function makeOrder() {
             type="button"
             class="btn btn-primary"
             data-bs-dismiss="modal"
+            id="confirm-order"
           >
             Confirm
           </button>
