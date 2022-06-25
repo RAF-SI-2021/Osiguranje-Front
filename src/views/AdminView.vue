@@ -1,10 +1,22 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { securitiesAPI } from '../api/securitiesAPI';
+import securitiesAPIMock from '../mock-data/securitiesAPI-mock'
+
+import { onMounted, reactive, ref } from "vue";
 import { adminLinks } from "../consts/AdminNavs";
 import { userAPI } from "../api/userAPI";
 
 const user = ref("");
+const stocksData = reactive({stocks: ""}); 
 onMounted(() => {
+  /*
+  // When using API - This is to avoid exceeding API requests
+  securitiesAPI.getSecurities().then((res) => {
+    stocksData.stocks = res.data.stocks;
+  })
+  */
+ // Change "stocks" to "futures" when they arrive from the API
+ stocksData.stocks = securitiesAPIMock.stocks;
   if (localStorage.getItem("token")) {
     userAPI.getCurrentUser().then((res) => {
       user.value = res.data.firstName + " " + res.data.lastName;
@@ -33,6 +45,36 @@ onMounted(() => {
           </div>
         </div>
       </div>
+    </div>
+    <div class="container">
+      <table class="table table-bordered">
+        <thead>
+          <tr bgcolor="#80aaff">
+            <th scope="col">Stock Name</th>
+            <th scope="col">Stock Symbol</th>
+            <th scope="col">Price (Change [Percent])</th>
+            <th scope="col">Settlement date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Change .stocks to .futures to match futures when being used -->
+          <tr v-for="stock in stocksData.stocks" :key="stock.id">
+            <td>
+              {{stock.name}}
+            </td>
+            <td>
+              {{stock.ticker}}
+            </td>
+            <td>
+              {{stock.price}}
+              ( {{stock.change }} [{{stock.changePercent.toFixed(2)}}%])
+            </td>
+            <td>
+              {{ stock.settlementDate }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
