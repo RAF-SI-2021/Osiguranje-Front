@@ -9,14 +9,19 @@ import { userAPI } from "../api/userAPI";
 const user = ref("");
 const stocksData = reactive({stocks: ""}); 
 onMounted(() => {
-  /*
   // When using API - This is to avoid exceeding API requests
-  securitiesAPI.getSecurities().then((res) => {
-    stocksData.stocks = res.data.stocks;
-  })
-  */
+  // securitiesAPI.getSecurities().then((res) => {
+  //   stocksData.futures = res.data.futures
+  //     .sort((a, b) => { 
+  //       return new Date(a.settlementDate) - new Date(b.settlementDate)
+  //     })
+  //     .slice(0, 10);
+    
+  //   console.log(stocksData.futures);
+  // })
+  
  // Change "stocks" to "futures" when they arrive from the API
- stocksData.stocks = securitiesAPIMock.stocks;
+ stocksData.futures = securitiesAPIMock.futures;
   if (localStorage.getItem("token")) {
     userAPI.getCurrentUser().then((res) => {
       user.value = res.data.firstName + " " + res.data.lastName;
@@ -46,19 +51,20 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="container mt-5">
+      <h2 class="my-4">Futures approaching settlement date</h2>
       <table class="table table-bordered">
         <thead>
           <tr bgcolor="#80aaff">
             <th scope="col">Stock Name</th>
             <th scope="col">Stock Symbol</th>
-            <th scope="col">Price (Change [Percent])</th>
+            <th scope="col">Price</th>
             <th scope="col">Settlement date</th>
           </tr>
         </thead>
         <tbody>
           <!-- Change .stocks to .futures to match futures when being used -->
-          <tr v-for="stock in stocksData.stocks" :key="stock.id">
+          <tr v-for="stock in stocksData.futures" :key="stock.id">
             <td>
               {{stock.name}}
             </td>
@@ -67,10 +73,9 @@ onMounted(() => {
             </td>
             <td>
               {{stock.price}}
-              ( {{stock.change }} [{{stock.changePercent.toFixed(2)}}%])
             </td>
             <td>
-              {{ stock.settlementDate }}
+              {{ new Date(stock.settlementDate).toDateString() }}
             </td>
           </tr>
         </tbody>
