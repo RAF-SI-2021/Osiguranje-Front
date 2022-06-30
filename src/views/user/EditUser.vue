@@ -55,6 +55,15 @@
             <ToggleButton v-model="user.active" @input="valueChanged"></ToggleButton>
           </div>
           <div class="mb-3">
+            <label class="form-label">Cash Limit</label>
+            <input class="form-control" v-model="user.limit" type="number">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Require Approval for Order:</label>
+            <br>
+            <ToggleButton v-model="user.requireApproval" @input="approvalChanged"></ToggleButton>
+          </div>
+          <div class="mb-3">
             <button type="submit" class="btn btn-lg btn-primary">Confirm Edit</button>
           </div>
         </form>
@@ -102,6 +111,7 @@ export default {
           // jmbg:{required, minLength:minLength(13), maxLength:maxLength(13)},
           position:{required},
           phoneNumber:{required, numeric},
+          limit: { required, numeric }
         }
       })
 
@@ -116,7 +126,9 @@ export default {
         email: '',
         jmbg: 0,
         position: '',
-        phoneNumber: 0
+        phoneNumber: 0,
+        limit: 0,
+        requireApproval: false
       })
 
       const v$ = useVuelidate(rules, user);
@@ -150,6 +162,10 @@ export default {
         function valueChanged(val) {
             console.log("VALUE CHANGED", val);
             user.value.active = val;
+        }
+
+        function approvalChanged(val) {
+          user.value.requireApproval = val;
         }
 
 
@@ -189,7 +205,7 @@ export default {
       }
 
 
-        return { state, valueChanged, submit, v$, user, loading };
+        return { state, valueChanged, submit, v$, user, loading, approvalChanged };
     },
     components: { ToggleButton }
 }
