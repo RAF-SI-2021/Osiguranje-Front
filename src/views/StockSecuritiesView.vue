@@ -21,7 +21,7 @@ onMounted(() => {
     loading.value = true;
     let store = securityStore();
     securitiesAPI.getSecurities().then(response => {
-        store.setStock(response.data.stock);
+        store.setStock(response.data.stocks);
         store.setForex(response.data.forex);
         store.setFutures(response.data.futures);
         loading.value = false;
