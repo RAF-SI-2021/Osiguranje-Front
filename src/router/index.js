@@ -6,7 +6,6 @@ import EditUser from '../views/user/EditUser.vue';
 import NewUserView from '../views/NewUserView.vue'
 import StockMarketListView from '../views/StockMarketListView.vue'
 import StockSecuritiesView from '../views/StockSecuritiesView.vue';
-import StockInfoMock from '../views/StockInfoMock.vue';
 
 
 const router = createRouter({
@@ -70,10 +69,10 @@ const router = createRouter({
       component: StockSecuritiesView
     },
     {
-      path: '/mockinfo',
-      name: 'MockSecurityInfo',
-      component: StockInfoMock
-    }
+      path: '/addCompanyInformation',
+      name: 'addCompanyInformation',
+      component: () => import('../views/AddCompanyInformation.vue')
+    },
   ]
 })
 
@@ -88,7 +87,7 @@ const routeNames = [
   'stockInfo', 
   'StockTableDemo', 
   'StockSecuritiesView',
-  'MockSecurityInfo',
+  'addCompanyInformation'
 ]
 
 router.beforeEach((to, from, next) => {
