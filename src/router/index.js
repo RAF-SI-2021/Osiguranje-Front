@@ -75,6 +75,11 @@ const router = createRouter({
       component: StockSecuritiesView
     },
     {
+      path: '/addCompanyInformation',
+      name: 'addCompanyInformation',
+      component: () => import('../views/AddCompanyInformation.vue')
+    },
+    {
       path: '/SecuritiesView',
       name: 'SecuritiesView',
       component: SecuritiesView
@@ -94,6 +99,7 @@ const routeNames = [
   'StockTableDemo', 
   'AddCompanyEmployee',
   'StockSecuritiesView',
+  'addCompanyInformation'
   'SecuritiesView'
 ]
 
