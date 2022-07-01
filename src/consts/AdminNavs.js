@@ -23,4 +23,10 @@ export const adminLinks = [
         icon: 'bi-card-list',
         description: 'Display all stock securities, including stocks, forex pairs and future contracts'
     },
+    {
+        routeName: 'Orders',
+        routeLink: '/orders',
+        icon: 'bi-box2-fill',
+        description: 'List all recent orders'
+    }
 ]
