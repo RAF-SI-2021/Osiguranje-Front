@@ -4,7 +4,6 @@ import { onMounted, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import { securityStore } from "../stores/securityStore";
 
-var ordersCopy = [];
 const orders = reactive({});
 const route = useRoute();
 const ticker = route.query.ticker || "";
@@ -16,14 +15,33 @@ const store = securityStore();
 onMounted(() => {
   ordersAPI.getAllOrders().then((res) => {
     orders.data = res.data;
-    ordersCopy = res.data;
 
     if (store.stock.length === 0 && store.futures.length === 0 && store.forex.length === 0) {
       store.getSecurities();
     }
 
+    if (tickerFlag && typeFlag) {
+      switch (type) {
+        case "stock":
+          console.log("STOCK DAMN IT", ticker);
+          let stockId = store.stock.find((stock) => stock.ticker === ticker).id;
+          orders.data = orders.data.filter((order) => order.securityId === stockId);
+          break;
+        case "forex":
+          console.log("FOREX SHIT");
+          let forexId = store.forex.find((forex) => forex.ticker === ticker).id;
+          orders.data = orders.data.filter((order) => order.securityId === forexId);
+          break;
+        case "future":
+          console.log("FUTURE FUCK");
+          let futureId = store.futures.find((future) => future.ticker === ticker).id;
+          orders.data = orders.data.filter((order) => order.securityId === futureId);
+          break;
+      }
+    }
+
     if (!typeFlag) {
-      for (var i = 0; i < orders.data.length; i++) {
+      for (let i = 0; i < orders.data.length; i++) {
         switch (orders.data[i].securityType) {
           case "STOCKS":
             let sec1 = store.stock.find((sec) => sec.id === orders.data[i].securityId);
@@ -66,7 +84,7 @@ onMounted(() => {
               <thead>
                 <tr>
                   <th>Datetime</th>
-                  <th>Ticker</th>
+                  <th v-if="!tickerFlag">Ticker</th>
                   <th>Order Type</th>
                   <th>Price</th>
                   <th>Amount</th>
@@ -76,7 +94,7 @@ onMounted(() => {
               <tbody>
                 <tr v-for="order in orders.data" key="order.orderId">
                   <td>datetime placeholder</td>
-                  <td>{{ order.symbol }}</td>
+                  <td v-if="!tickerFlag">{{ order.symbol }}</td>
                   <td>BUY/SELL</td>
                   <td>{{ order.limitPrice }}</td>
                   <td>{{ order.amount }}</td>
