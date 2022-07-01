@@ -6,6 +6,7 @@ import NewUserView from '../views/NewUserView.vue'
 import StockMarketListView from '../views/StockMarketListView.vue'
 import StockSecuritiesView from '../views/StockSecuritiesView.vue';
 import SecuritiesView from '../views/SecuritiesView.vue';
+import AddCompanyEmployee from '../views/AddCompanyEmployee.vue';
 
 
 const router = createRouter({
@@ -64,6 +65,11 @@ const router = createRouter({
       component: () => import('../views/StockTableDemo.vue')
     },
     {
+      path: '/AddCompanyEmployee',
+      name: 'AddCompanyEmployee',
+      component: AddCompanyEmployee
+    },
+    {
       path: '/StockSecuritiesView',
       name: 'StockSecuritiesView',
       component: StockSecuritiesView
@@ -86,6 +92,7 @@ const routeNames = [
   'userEdit', 
   'stockInfo', 
   'StockTableDemo', 
+  'AddCompanyEmployee',
   'StockSecuritiesView',
   'SecuritiesView'
 ]
