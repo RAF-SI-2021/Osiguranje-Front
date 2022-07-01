@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { securitiesAPI } from "../api/securitiesAPI";
 
 export const securityStore = defineStore("securityStore", {
     state: () => {
@@ -18,5 +19,13 @@ export const securityStore = defineStore("securityStore", {
         setFutures(value) {
             this.futures = value;
         },
+        async getSecurities() {
+            const response = await securitiesAPI.getSecurities()
+              .then((response) => {
+                  this.setStock(response.data.stocks);
+                  this.setForex(response.data.forex);
+                  this.setFutures(response.data.futures);
+              })
+        }
     }
 });
