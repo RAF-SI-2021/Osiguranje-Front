@@ -88,6 +88,11 @@ const router = createRouter({
       path: '/orders',
       name: 'OrderHistory',
       component: () => import('../views/OrderHistory.vue')
+    },
+    {
+      path: '/createContract',
+      name: 'CreateContract',
+      component: () => import('../views/CreateContract.vue')
     }
   ]
 })
@@ -106,7 +111,8 @@ const routeNames = [
   'StockSecuritiesView',
   'addCompanyInformation',
   'SecuritiesView',
-  'OrderHistory'
+  'OrderHistory',
+  'CreateContract'
 ]
 
 router.beforeEach((to, from, next) => {

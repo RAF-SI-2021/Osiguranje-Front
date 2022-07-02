@@ -28,5 +28,11 @@ export const adminLinks = [
         routeLink: '/orders',
         icon: 'bi-box2-fill',
         description: 'List all recent orders'
+    },
+    {
+        routeName: 'Create Contract',
+        routeLink: '/createContract',
+        icon: 'bi-envelope-paper-fill',
+        description: 'Create a new OTC contract'
     }
 ]
