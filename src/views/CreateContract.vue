@@ -6,7 +6,7 @@
         <form @submit.prevent="">
           <div class="form-outline mb-4">
             <label class="form-label" for="company">Company</label>
-            <select class="form-select" id="company">
+            <select class="form-select" id="company" v-model="contract.companyId">
               <option selected value="1">Company 1</option>
               <option value="2">Company 2</option>
               <option value="3">Company 3</option>
@@ -15,12 +15,12 @@
 
           <div class="form-outline mb-4">
             <label class="form-label" for="referenceNumber">Contract Reference Number</label>
-            <input class="form-control" type="text" id="referenceNumber" />
+            <input class="form-control" type="text" id="referenceNumber"  v-model="contract.referenceNumber" />
           </div>
 
           <div class="form-outline mb-4">
-            <label class="form-label" for="note">Note</label>
-            <textarea class="form-control" id="note" rows="3"></textarea>
+            <label class="form-label" for="note" >Note</label>
+            <textarea class="form-control" id="note" rows="3" v-model="contract.note"></textarea>
           </div>
 
           <div class="d-flex justify-content-between align-items-start">
@@ -36,7 +36,7 @@
             <div class="d-flex justify-content-around">
               <div class="form-outline mb-4">
                 <label class="form-label">Action</label>
-                <select class="form-select">
+                <select class="form-select" v-model="contract.transcationItems[index].action">
                   <option selected value="Buy">Buy</option>
                   <option value="Sell">Sell</option>
                 </select>
@@ -44,7 +44,7 @@
 
               <div class="form-outline mb-4">
                 <label class="form-label">Security</label>
-                <select class="form-select">
+                <select class="form-select" v-model="contract.transcationItems[index].securityId">
                   <option selected value="1">AAPL</option>
                   <option value="2">TSLA</option>
                   <option value="3">MSFT</option>
@@ -53,7 +53,7 @@
 
               <div class="form-outline mb-4">
                 <label class="form-label">Bank Account</label>
-                <select class="form-select">
+                <select class="form-select" v-model="contract.transcationItems[index].bankAccount">
                   <option selected value="Cash">Cash</option>
                   <option value="Margin">Margin</option>
                 </select>
@@ -62,17 +62,17 @@
 
             <div class="form-outline mb-4">
               <label class="form-label">Amount</label>
-              <input class="form-control" type="number" />
+              <input class="form-control" type="number" v-model="contract.transcationItems[index].amount" />
             </div>
 
             <div class="form-outline mb-4">
               <label class="form-label">Price Per Unit</label>
-              <input class="form-control" type="number" />
+              <input class="form-control" type="number" v-model="contract.transcationItems[index].pricePerUnit" />
             </div>
 
           </div>
 
-          <button type="submit" class="btn btn-primary btn-lg">Add Contract</button>
+          <button type="submit" class="btn btn-primary btn-lg" @click="submit">Add Contract</button>
         </form>
       </div>
     </div>
@@ -112,6 +112,10 @@ const contract = reactive({
 
   function removeItem(index) {
     contract.transcationItems.splice(index, 1)
+  }
+
+  function submit() {
+    console.log(contract)
   }
 </script>
 
