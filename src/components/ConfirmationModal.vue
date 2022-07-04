@@ -5,6 +5,7 @@ import { buysellAPI } from "../api/buysellAPI";
 import { numeric, required, minValue } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 
+const loading = ref(false);
 const store = userStore();
 const toast = inject('toast');
 
@@ -23,6 +24,7 @@ const props = defineProps({
       allOrNone: false,
       margin: false,
       orderType: "",
+      actionType: "Buy",
     },
   },
 });
@@ -39,26 +41,28 @@ function getSecurityType(type) {
 }
 
 function makeOrder() {
+  loading.value = true;
   const order = {
     securityId: props.myInput.securityId,
-    userId: store.user.id,
     amount: props.myInput.amount,
     securityType: getSecurityType(props.myInput.type),
     allOrNone: props.myInput.allOrNone,
     limitPrice: props.myInput.limitValue,
     stopPrice: props.myInput.stopValue,
+    actionType: props.myInput.actionType.toUpperCase()
   };
 
   console.log("ORDER -> ", order);
 
-  // TODO: Make it work...
   buysellAPI
     .makeOrder(order)
     .then((response) => {
       console.log(response);
+      loading.value = false;
       toast.success("Order made successfully.")
     })
     .catch((error) => {
+      loading.value = false;
       if (error.response.status === 400 && error.response.data === "bound must be positive") {
         toast.success("Order made successfully.")
       } else {
@@ -69,6 +73,7 @@ function makeOrder() {
 </script>
 
 <template>
+  <vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh" />
   <div class="modal" data-bs-backdrop="static" id="confirmationModal">
     <div class="modal-dialog">
       <div class="modal-content">

@@ -105,6 +105,7 @@ const myInput = reactive({
   allOrNone: false,
   margin: false,
   type: type,
+  actionType: action.value
 });
 
 fetchMarketauxNews();
