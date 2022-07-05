@@ -49,6 +49,18 @@ function handleSearch(e) {
     // console.log(obj.filteredUsers);
 }
 
+function resetLimit(id) {
+    userAPI.resetLimit(id)
+        .then(res => {
+            toast.success('Limit reseted');
+            userToReset.value = {};
+        })
+        .catch(err => {
+            toast.error('Could not get response from server');
+            console.log(err);
+        })
+}
+
 </script>
 
 <template>
@@ -102,7 +114,7 @@ function handleSearch(e) {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger">Reset Limit</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="resetLimit(userToReset.id)">Reset Limit</button>
           </div>
         </div>
       </div>
