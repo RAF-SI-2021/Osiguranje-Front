@@ -8,5 +8,13 @@ export const securitiesAPI = {
             },
             timeout: 5000
         });
+    },
+
+    getCurrency: (id) => {
+        return axios.get('/api/securities/data/currency/' + id, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
     }
 }

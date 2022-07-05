@@ -5,7 +5,9 @@ import securitiesAPIMock from '../mock-data/securitiesAPI-mock'
 import { onMounted, reactive, ref } from "vue";
 import { adminLinks } from "../consts/AdminNavs";
 import { userAPI } from "../api/userAPI";
+import BalanceModal from "../components/BalanceModal.vue";
 
+const admin = ref(false);
 const user = ref("");
 const stocksData = reactive({stocks: ""}); 
 onMounted(() => {
@@ -25,12 +27,14 @@ onMounted(() => {
   if (localStorage.getItem("token")) {
     userAPI.getCurrentUser().then((res) => {
       user.value = res.data.firstName + " " + res.data.lastName;
+      if (res.data.permissions.admin) admin.value = true;
     });
   }
 });
 </script>
 
 <template>
+  <BalanceModal v-if="admin" />
   <div>
     <h1 class="text-center mt-5">Welcome, {{ user }}</h1>
     <div class="container">
@@ -52,6 +56,9 @@ onMounted(() => {
       </div>
     </div>
     <div class="container mt-5">
+      <button v-if="admin" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#balanceModal">
+        Check Balance
+      </button>
       <h2 class="my-4">Futures approaching settlement date</h2>
       <table class="table table-bordered">
         <thead>
@@ -63,7 +70,6 @@ onMounted(() => {
           </tr>
         </thead>
         <tbody>
-          <!-- Change .stocks to .futures to match futures when being used -->
           <tr v-for="stock in stocksData.futures" :key="stock.id">
             <td>
               {{stock.name}}
