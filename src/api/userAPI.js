@@ -54,5 +54,17 @@ export const userAPI = {
                 }
             });
         }
+    },
+
+    resetLimit: (id) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            return axios.put(`/api/buyingmarket/actuaries/usedLimit/${id}`,  {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+        }
     }
+
 }
