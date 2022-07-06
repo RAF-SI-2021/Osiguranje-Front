@@ -34,5 +34,17 @@ export const adminLinks = [
         routeLink: '/createContract',
         icon: 'bi-envelope-paper-fill',
         description: 'Create a new OTC contract'
+    },
+    {
+        routeName: 'Add New Company',
+        routeLink: '/addCompanyInformation',
+        icon: 'bi-building',
+        description: 'Add a new company for OTC transactions'
+    },
+    {
+        routeName: 'Add Company Employee Contact',
+        routeLink: '/AddCompanyEmployee',
+        icon: 'bi-file-person-fill',
+        description: 'Add a new employee contact for a company'
     }
 ]
