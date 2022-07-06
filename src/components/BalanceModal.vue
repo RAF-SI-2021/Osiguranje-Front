@@ -27,7 +27,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="modal" tabindex="-1" id="balanceModal">
+  <div class="modal fade" tabindex="-1" id="balanceModal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

@@ -8,4 +8,20 @@ export const buysellAPI = {
       },
     });
   },
+
+  approveOrder(id) {
+    return axios.put(`/api/buyingmarket/orders/${id}`, {}, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      }
+    })
+  },
+
+  declineOrder(id) {
+    return axios.delete(`/api/buyingmarket/orders/${id}`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      }
+    })
+  }
 };

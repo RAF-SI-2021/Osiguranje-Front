@@ -1,8 +1,9 @@
 <script setup>
 import { ordersAPI } from "../api/ordersAPI";
-import { onMounted, reactive, ref } from "vue";
+import { inject, onMounted, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import { securityStore } from "../stores/securityStore";
+import { buysellAPI } from "../api/buysellAPI";
 
 const orders = reactive({});
 const route = useRoute();
@@ -11,6 +12,8 @@ const tickerFlag = !!ticker;
 const type = route.query.type || "";
 const typeFlag = !!type;
 const store = securityStore();
+const loading = ref(false);
+const toast = inject("toast");
 
 onMounted(() => {
   ordersAPI.getAllOrders().then((res) => {
@@ -70,9 +73,26 @@ onMounted(() => {
 
 })
 
+function approveOrder(id) {
+  loading.value = true;
+  buysellAPI.approveOrder(id).then(() => {
+    toast.success("Order approved");
+    loading.value = false;
+  })
+}
+
+function declineOrder(id) {
+  loading.value = true;
+  buysellAPI.declineOrder(id).then(() => {
+    toast.success("Order denied");
+    loading.value = false;
+  })
+}
+
 </script>
 
 <template>
+  <vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh" />
   <div class="container">
     <h1 class="mt-5 text-center">Order History</h1>
     <h1>{{ ticker }}</h1>
@@ -89,16 +109,28 @@ onMounted(() => {
                   <th>Price</th>
                   <th>Amount</th>
                   <th>Total</th>
+                  <th>Order State</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="order in orders.data" key="order.orderId">
-                  <td>datetime placeholder</td>
+                  <td>{{ new Date(order.modificationDate).toDateString() }}</td>
                   <td v-if="!tickerFlag">{{ order.symbol }}</td>
                   <td>BUY/SELL</td>
                   <td>{{ order.limitPrice }}</td>
                   <td>{{ order.amount }}</td>
-                  <td>{{ order.cost }}</td>
+                  <td>{{ order.amount * order.limitPrice }}</td>
+                  <td>{{ order.orderState }}</td>
+                  <td>
+                    <div v-if="order.orderState !== 'APPROVED'">
+                      <button class="btn btn-sm btn-success mx-1" @click="approveOrder(order.orderId)">Approve</button>
+                      <button class="btn btn-sm btn-danger" @click="declineOrder(order.orderId)">Deny</button>
+                    </div>
+                    <div v-else>
+                      <i class="bi bi-check-square-fill text-success"></i>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
