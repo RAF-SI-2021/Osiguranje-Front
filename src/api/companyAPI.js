@@ -17,6 +17,15 @@ export const companyAPI = {
     })
   },
 
+
+  addCompanyEmployeeContact: (companyId, employee) => {
+    return axios.post(`/api/otc/companies/${companyId}/employee`, employee, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    })
+  },
+  
   createNewCompany: (company) => {
     return axios.post("/api/otc/companies/", company, {
       headers: {
