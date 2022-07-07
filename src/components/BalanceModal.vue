@@ -11,6 +11,8 @@ onMounted(() => {
       for (let key of res.data) {
         if (key.securityType !== "CURRENCY") continue;
         let obj = {};
+        obj.accountId = key.accountId
+        obj.securityId = key.securityId
         obj.total = key.amount;
         obj.reserved = key.reserved;
         obj.available = key.available;
@@ -45,8 +47,11 @@ onMounted(() => {
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in balance">
-                <td>{{ item.currency }}</td>
+              <tr v-for="item in balance" :key="item.securityId">
+                <!-- <td>{{ item.currency}}</td> -->
+                <th>
+                    <router-link class="transactionsymbol-link" :to="{name:'currencyInfo', params:{id:item.securityId}}">{{item.currency}}</router-link>
+                </th>
                 <td>{{ item.total }}</td>
                 <td>{{ item.reserved }}</td>
                 <td>{{ item.available }}</td>
@@ -61,3 +66,9 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+  .transactionsymbol-link {
+    color:blue;
+}
+</style>

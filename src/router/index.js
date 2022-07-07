@@ -60,6 +60,11 @@ const router = createRouter({
       props: route => ({ query: route.query.q })
     },
     {
+      path: '/currency/:id',
+      name: 'currencyInfo',
+      component: () => import('../views/TransactionsForCurrencyView.vue')
+    },
+    {
       path: '/stock-tabledemo',
       name: 'StockTableDemo',
       component: () => import('../views/StockTableDemo.vue')
@@ -106,6 +111,7 @@ const routeNames = [
   'addPassword', 
   'userEdit', 
   'stockInfo', 
+  'currencyInfo',
   'StockTableDemo', 
   'AddCompanyEmployee',
   'StockSecuritiesView',
