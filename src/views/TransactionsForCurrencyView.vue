@@ -12,6 +12,7 @@
     const transactions = ref([]);
 
     onMounted(() => {
+        document.getElementsByClassName("modal-backdrop")[0].remove();
         transactionAPI.getTransactionsByCurrency(id)
         .then((res)=>{
             //transactions.value=res
@@ -62,33 +63,34 @@
 </script>
 
 <template>
+    <div class="container">
 
-    <h1>Currency id:  {{id}}</h1>
-    <h1> Withdraw: {{withdraw}}, Deposit: {{deposit}}</h1>
+      <table class="table table-bordered mt-5">
+        <thead>
+        <tr bgcolor="#80aaff">
+          <th>Timestamp</th>
+          <th>Text</th>
+          <th>Payment</th>
+          <th>Payout</th>
+          <th>TransactionType</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in transactions" :key="item.id">
+          <td>{{ item.timestamp}}</td>
+          <td>{{ item.text }}</td>
+          <td>{{ item.payment }}</td>
+          <td>{{ item.payout }}</td>
+          <td>{{ item.transactionType }}</td>
+        </tr>
+        </tbody>
+      </table>
 
-    <table class="table table-bordered">
-            <thead>
-              <tr bgcolor="#80aaff">
-                <th>Timestamp</th>
-                <th>Text</th>
-                <th>Payment</th>
-                <th>Payout</th>
-                <th>TransactionType</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in transactions" :key="item.id">
-                <td>{{ item.timestamp}}</td>
-                <td>{{ item.text }}</td>
-                <td>{{ item.payment }}</td>
-                <td>{{ item.payout }}</td>
-                <td>{{ item.transactionType }}</td>
-              </tr>
-            </tbody>
-          </table>
+      <label>Deposit: {{deposit}}</label>
+      <br>
+      <label>Withdraw: {{withdraw}}</label>
+    </div>
 
-          <label>Deposit: {{deposit}}</label>
-          <label>Withdraw: {{withdraw}}</label>
 
 
 </template>
