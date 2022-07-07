@@ -17,6 +17,14 @@ export const companyAPI = {
     })
   },
 
+  createNewCompany: (company) => {
+    return axios.post("/api/otc/companies/", company, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    })
+  },
+
   searchCompanies: (searchObject) => {
     let { name, registrationID, taxID } = searchObject;
     let url = '/api/otc/companies?';
