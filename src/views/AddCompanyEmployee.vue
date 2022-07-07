@@ -1,10 +1,21 @@
 <script>
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, onMounted } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
 import router from "@/router";
+import { companyAPI } from "../api/companyAPI";
 export default {
   setup() {
+
+    const companies = ref([]);
+
+    onMounted(() => {
+      companyAPI.getCompanies().then((res) => {
+        companies.value = res.data;
+        console.log(res.data);
+      });
+    });
+
     const form = reactive({
       company: "",
       firstName: "",
@@ -42,7 +53,7 @@ export default {
     return {
       form,
       v$,
-      onSubmit,
+      onSubmit
     };
   },
 };
@@ -55,13 +66,14 @@ export default {
 
     <fieldset>
       <label for="company">Company:</label>
-      <select id="company" name="user_company">
-        <optgroup label="Companies">
-          <option>Company 1</option>
-          <option>Company 2</option>
-          <option>Company 3</option>
-          <option>...</option>
-        </optgroup>
+      <select class="form-select" id="company">
+        <option
+          :selected="i === 0"
+          v-for="(company, i) in companies"
+          :value="company.id"
+        >
+          {{ company.name }}
+        </option>
       </select>
 
       <div class="row">
@@ -173,12 +185,10 @@ export default {
           </textarea>
         </div>
       </div>
-
     </fieldset>
 
     <button type="submit">Submit</button>
   </form>
-
 </template>
 
 
