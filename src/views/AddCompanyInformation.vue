@@ -1,8 +1,8 @@
 <script>
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, computed, inject } from 'vue';
 import useVuelidate from '@vuelidate/core'
 import { required, numeric } from '@vuelidate/validators'
-import router from '@/router';
+import { companyAPI } from '../api/companyAPI';
 
 export default {
 
@@ -28,24 +28,32 @@ export default {
         })
 
         const v$ = useVuelidate(rules, form);
-        const ok = ref(false)
+        const loading = ref(false);
+        const toast = inject('toast');
 
 
         function onSubmit(evt) {
-
             this.v$.$validate();
-
-            ok.value = false;
-
-            if (!this.v$.$error) {
-                ok.value = true;
-                alert('Validacija prosla')
-                console.log(form);
+            if(!this.v$.$error){
+              const newCompany = {
+                name: form.companyName,
+                registrationId: form.companyRegistrationId,
+                taxID: form.companyTaxId,
+                industrialClassificationID: form.sicCode,
+                address: form.address,
+              }
+              loading.value = true;
+              companyAPI.createNewCompany(newCompany).then(response => {
+                loading.value = false;
+                toast.success("Company created successfully!");
+             }).catch(error => {
+                loading.value = false;
+                toast.error("Something went wrong");
+              })
             } else { 
                  evt.preventDefault();
             }
             console.log(form);
-            
             
 
         }
@@ -59,7 +67,7 @@ export default {
         }
 
         return {
-            form, v$, onSubmit, onReset
+            form, v$, onSubmit, onReset, loading
         }
 
     },
