@@ -1,11 +1,10 @@
-<script>
+<script setup>
 import { ref, reactive, computed, onMounted, inject } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
 import router from "@/router";
 import { companyAPI } from "../api/companyAPI";
-export default {
-  setup() {
+
     const companies = ref([]);
     const loading = ref(false);
     const toast = inject("toast");
@@ -13,7 +12,7 @@ export default {
     onMounted(() => {
       companyAPI.getCompanies().then((res) => {
         companies.value = res.data;
-        console.log(res.data);
+        console.log(companies.value);
       });
     });
 
@@ -28,7 +27,7 @@ export default {
     });
     const rules = computed(() => {
       return {
-        company: { required },
+        companyId: { required },
         firstName: { required },
         lastName: { required },
         phoneNumber: { required },
@@ -58,17 +57,11 @@ export default {
       });
     }
 
-    return {
-      form,
-      v$,
-      onSubmit,
-    };
-  },
-};
+
 </script>
 
 <template>
-<vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh; width: 100vw" />
+
   <div class="container">
     <h2 class="mt-5 text-center">Employee contact</h2>
     <br />
@@ -79,11 +72,7 @@ export default {
             <div class="form-outline mb-4">
               <label for="company">Company:</label>
               <select class="form-select" id="company" v-model="form.companyId">
-                <option
-                  :selected="i === 0"
-                  v-for="(company, i) in companies"
-                  :value="company.id"
-                >
+                <option :selected="i === 0" v-for="(company, i) in companies" :value="company.id">
                   {{ company.name }}
                 </option>
               </select>
