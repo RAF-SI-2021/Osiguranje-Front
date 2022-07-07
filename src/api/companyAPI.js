@@ -15,5 +15,12 @@ export const companyAPI = {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     })
+  },
+  createNewCompany: (company) => {
+    return axios.post("/api/otc/companies/", company, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    })
   }
 }
