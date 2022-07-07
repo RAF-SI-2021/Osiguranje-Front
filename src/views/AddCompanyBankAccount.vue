@@ -12,6 +12,13 @@
                 {{ company.name }}
               </option>
             </select>
+            <div
+              class="input-errors"
+              v-for="error of v$.companyId.$errors"
+              :key="error.$uid"
+            >
+              <div class="text-danger">{{ error.$message }}</div>
+            </div>
           </div>
 
           <div class="form-outline mb-4">
@@ -75,7 +82,7 @@ onMounted(() => {
 })
 
 const bankAccount = reactive({
-  companyId: 1,
+  companyId: "",
   accountNumber: "",
   bankName: "",
   accountType: ""
