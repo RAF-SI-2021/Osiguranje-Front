@@ -16,11 +16,32 @@ export const companyAPI = {
       }
     })
   },
+
   createNewCompany: (company) => {
     return axios.post("/api/otc/companies/", company, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     })
+  },
+
+  searchCompanies: (searchObject) => {
+    let { name, registrationID, taxID } = searchObject;
+    let url = '/api/otc/companies?';
+    if (name) {
+      url += `name=${name}&`;
+    }
+    if (registrationID) {
+      url += `registrationID=${registrationID}&`;
+    }
+    if (taxID) {
+      url += `taxID=${taxID}&`;
+    }
+    return axios.get(url, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+      }
+    )
   }
 }

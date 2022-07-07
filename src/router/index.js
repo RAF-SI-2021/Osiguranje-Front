@@ -60,6 +60,11 @@ const router = createRouter({
       props: route => ({ query: route.query.q })
     },
     {
+      path: '/currency/:id',
+      name: 'currencyInfo',
+      component: () => import('../views/TransactionsForCurrencyView.vue')
+    },
+    {
       path: '/stock-tabledemo',
       name: 'StockTableDemo',
       component: () => import('../views/StockTableDemo.vue')
@@ -98,6 +103,11 @@ const router = createRouter({
       path: '/addcompanybankaccount',
       name: 'AddCompanyBankAccount',
       component: () => import('../views/AddCompanyBankAccount.vue')
+    },
+    {
+      path: '/companies',
+      name: 'Companies',
+      component: () => import('../views/CompanyList.vue')
     }
   ]
 })
@@ -111,6 +121,7 @@ const routeNames = [
   'addPassword', 
   'userEdit', 
   'stockInfo', 
+  'currencyInfo',
   'StockTableDemo', 
   'AddCompanyEmployee',
   'StockSecuritiesView',
@@ -118,7 +129,8 @@ const routeNames = [
   'SecuritiesView',
   'OrderHistory',
   'CreateContract',
-  'AddCompanyBankAccount'
+  'AddCompanyBankAccount',
+  'Companies'
 ]
 
 router.beforeEach((to, from, next) => {
