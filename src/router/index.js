@@ -93,6 +93,11 @@ const router = createRouter({
       path: '/createContract',
       name: 'CreateContract',
       component: () => import('../views/CreateContract.vue')
+    },
+    {
+      path: '/addcompanybankaccount',
+      name: 'AddCompanyBankAccount',
+      component: () => import('../views/AddCompanyBankAccount.vue')
     }
   ]
 })
@@ -112,7 +117,8 @@ const routeNames = [
   'addCompanyInformation',
   'SecuritiesView',
   'OrderHistory',
-  'CreateContract'
+  'CreateContract',
+  'AddCompanyBankAccount'
 ]
 
 router.beforeEach((to, from, next) => {

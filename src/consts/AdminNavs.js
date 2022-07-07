@@ -46,5 +46,11 @@ export const adminLinks = [
         routeLink: '/AddCompanyEmployee',
         icon: 'bi-file-person-fill',
         description: 'Add a new employee contact for a company'
+    },
+    {
+        routeName: 'Add Company Bank Account',
+        routeLink: '/AddCompanyBankAccount',
+        icon: 'bi-piggy-bank-fill',
+        description: 'Add a new bank account for a company'
     }
 ]
