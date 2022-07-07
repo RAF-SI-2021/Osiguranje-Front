@@ -87,8 +87,8 @@
             </tbody>
           </table>
 
-          <label>Deposit: {{getDeposit.value}}</label>
-          <label>Withdraw: {{this.withdraw}}</label>
+          <label>Deposit: {{deposit}}</label>
+          <label>Withdraw: {{withdraw}}</label>
 
 
 </template>
