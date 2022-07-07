@@ -1,5 +1,5 @@
 <script>
-import { ref, reactive, computed, onMounted } from "vue";
+import { ref, reactive, computed, onMounted, inject } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
 import router from "@/router";
@@ -7,6 +7,8 @@ import { companyAPI } from "../api/companyAPI";
 export default {
   setup() {
     const companies = ref([]);
+    const loading = ref(false);
+    const toast = inject("toast");
 
     onMounted(() => {
       companyAPI.getCompanies().then((res) => {
@@ -16,7 +18,7 @@ export default {
     });
 
     const form = reactive({
-      company: "",
+      companyId: 1,
       firstName: "",
       lastName: "",
       phoneNumber: "",
@@ -35,18 +37,25 @@ export default {
       };
     });
     const v$ = useVuelidate(rules, form);
-    const ok = ref(false);
+
     function onSubmit(evt) {
-      this.v$.$validate();
-      ok.value = false;
-      if (!this.v$.$error) {
-        ok.value = true;
-        alert("Validacija prosla");
-        console.log(form);
-      } else {
-        evt.preventDefault();
-      }
-      console.log(form);
+      v$.value.$validate().then(() => {
+        if (!v$.value.$invalid) {
+          loading.value = true;
+          companyAPI
+            .addCompanyEmployeeContact(form.companyId, form)
+            .then((res) => {
+              loading.value = false;
+              toast.success("Employee contact added successfully");
+            })
+            .catch((err) => {
+              loading.value = false;
+              toast.error("Something went wrong");
+            });
+        } else {
+          evt.preventDefault();
+        }
+      });
     }
 
     return {
@@ -59,16 +68,17 @@ export default {
 </script>
 
 <template>
+<vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh; width: 100vw" />
   <div class="container">
     <h2 class="mt-5 text-center">Employee contact</h2>
-    <br>
+    <br />
     <div class="row justify-content-center">
       <div class="col-5">
         <form @submit="onSubmit">
           <div class="row">
             <div class="form-outline mb-4">
               <label for="company">Company:</label>
-              <select class="form-select" id="company">
+              <select class="form-select" id="company" v-model="form.companyId">
                 <option
                   :selected="i === 0"
                   v-for="(company, i) in companies"
@@ -192,18 +202,17 @@ export default {
 
           <div class="d-flex justify-content-between">
             <button type="submit" class="btn btn-primary">Submit</button>
-            <button @click="onReset()" class="btn btn-danger">Reset</button>
+          
           </div>
         </form>
       </div>
     </div>
   </div>
-
 </template>
 
 
 <style scoped>
 .error-msg {
-    color: red;
+  color: red;
 }
 </style> 
