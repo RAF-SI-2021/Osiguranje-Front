@@ -30,7 +30,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="contract in contractsCopy" :key="contract.id">
+        <tr v-for="contract in contractsCopy" :key="contract.id" @click="routeToContract(contract.id)">
           <td>{{ contract.creationDate }}</td>
           <td>{{ contract.company.name }}</td>
           <td>{{ contract.refNumber }}</td>
@@ -46,7 +46,9 @@
 <script setup>
 import { onMounted, ref, reactive } from "vue";
 import { contractAPI } from "../api/contractAPI";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const contracts = ref([])
 const contractsCopy = ref([]);
 const searchTerms = reactive({
@@ -71,8 +73,15 @@ function searchContracts() {
 function clearSearch() {
   contractsCopy.value = contracts.value;
 }
+
+function routeToContract(id) {
+  router.push(`/contract/${id}`);
+}
 </script>
 
 <style scoped>
-
+tbody > tr:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
 </style>

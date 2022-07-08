@@ -19,8 +19,8 @@ export const securityStore = defineStore("securityStore", {
         setFutures(value) {
             this.futures = value;
         },
-        async getSecurities() {
-            const response = await securitiesAPI.getSecurities()
+        getSecurities() {
+            const response = securitiesAPI.getSecurities()
               .then((response) => {
                   this.setStock(response.data.stocks);
                   this.setForex(response.data.forex);
