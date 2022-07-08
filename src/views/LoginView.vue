@@ -1,11 +1,9 @@
 <template>
     <vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh" />
     <div id="big" class="text-center">
-        <!--h1 id="pera" class="mt-4" v-if="state.email">Hi: {{state.email}}</h1-->
         <div id="divForm" class="text-center">
             <form @submit.prevent="submitForm" class="border border-primary p-3">
                 <h3>Please log in!</h3>
-                <!--img src="/favicon.ico" height="70"-->
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input v-model="state.email" type="text" class="form-control" id="email" placeholder="Enter email"  autofocus>
@@ -21,18 +19,11 @@
                         <span ref="error-span">{{error.$message}}</span>
                     </div>
                 </div>
-<!--                <div class="checkbox">-->
-<!--                    <label>-->
-<!--                        <input type="checkbox" value="remember-me">Remember Me-->
-<!--                    </label>-->
-<!--                </div>-->
                 <div class="mt-2">
                     <button type="submit" class="btn btn-primary btn-lg">Sign in</button>
                 </div>
 
-                <RouterLink to="/admin">Admin</RouterLink>
-<!--                <p>Don't have an account? <a href="#">Register here</a></p>-->
-                
+
             </form>
         </div>
     </div>

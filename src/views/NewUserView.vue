@@ -6,7 +6,7 @@
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
           <div class="card" style="border-radius: 15px;">
             <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">New User</h2>
+              <h2 class="text-center mb-5">New User</h2>
 
               <form @submit.prevent="submitForm">
 
@@ -74,6 +74,19 @@
                   <label class="form-check-label" for="form2Example3g"> Active </label>
                 </div>
 
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="limit">Cash Limit</label>
+                  <input class="form-control" type="number" id="limit" v-model="state.limit">
+                  <div v-for="error in v$.limit.$errors" :key="error.$uid">
+                    <span class="test-error">{{error.$message}}</span>
+                  </div>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input class="form-check-input me-2" type="checkbox" id="requireApproval" v-model="state.requireApproval">
+                  <label class="form-check-label" for="requireApproval"> Require Approval for Order</label>
+                </div>
+
                 <div class="d-flex justify-content-center">
                   <button type="submit" class="btn btn-primary btn-block btn-lg gradient-custom-4 text-body">Register</button>
                 </div>
@@ -91,14 +104,16 @@
 <script>
 import {reactive, computed, ref, inject} from 'vue';
 import useVuelidate from '@vuelidate/core'
-import {required,minLength, maxLength, email, numeric} from '@vuelidate/validators'
+import { required, minLength, maxLength, email, numeric, minValue } from "@vuelidate/validators";
 import { userAPI } from '../api/userAPI';
 import { useRouter } from 'vue-router';
+import { userStore } from "../stores/userStore";
 
 export default {
 
     setup(){
 
+        const store = userStore();
         const router = useRouter();
         const toast = inject('toast');
         const loading = ref(false);
@@ -110,7 +125,9 @@ export default {
             jmbg:'',
             position:'',
             phoneNumber:'',
-            active: false
+            active: false,
+            limit: 0,
+            requireApproval: false
         })
 
         const rules = computed(()=>{
@@ -121,7 +138,7 @@ export default {
                 jmbg:{required, minLength:minLength(13), maxLength:maxLength(13)},
                 position:{required},
                 phoneNumber:{required, numeric},
-                
+                limit: { required, numeric, minValue: minValue(1) }
             }
         })
 
@@ -147,16 +164,29 @@ export default {
               }
               loading.value = true;
               userAPI.createNewUser(newUser).then(response => {
-                // console.log(response);
                 loading.value = false;
                 toast.success("User created successfully!");
-                if(response.status === 200){
-                  router.push('/admin/users');
+
+                console.log(response.data);
+                let newUserId = response.data.id;
+
+                const actuary = {
+                  userId: newUserId,
+                  actuaryType: "AGENT",
+                  limit: state.limit,
+                  approvedOrders: state.requireApproval
                 }
+
+                userAPI.createActuary(actuary).then(response => {
+                  toast.success("Agent created successfully")
+                  router.push('/admin/users');
+                }).catch(error => {
+                  toast.error("Error creating actuary!");
+                });
+
               }).catch(error => {
                 loading.value = false;
                 toast.error("Something went wrong");
-                console.log(error);
               })
             }
         }
