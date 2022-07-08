@@ -12,18 +12,18 @@ const user = ref("");
 const stocksData = reactive({stocks: ""}); 
 onMounted(() => {
   // When using API - This is to avoid exceeding API requests
-  // securitiesAPI.getSecurities().then((res) => {
-  //   stocksData.futures = res.data.futures
-  //     .sort((a, b) => { 
-  //       return new Date(a.settlementDate) - new Date(b.settlementDate)
-  //     })
-  //     .slice(0, 10);
+  securitiesAPI.getSecurities().then((res) => {
+    stocksData.futures = res.data.futures
+      .sort((a, b) => {
+        return new Date(a.settlementDate) - new Date(b.settlementDate)
+      })
+      .slice(0, 10);
     
-  //   console.log(stocksData.futures);
-  // })
+    console.log(stocksData.futures);
+  })
   
  // Change "stocks" to "futures" when they arrive from the API
- stocksData.futures = securitiesAPIMock.futures;
+ // stocksData.futures = securitiesAPIMock.futures;
   if (localStorage.getItem("token")) {
     userAPI.getCurrentUser().then((res) => {
       user.value = res.data.firstName + " " + res.data.lastName;
