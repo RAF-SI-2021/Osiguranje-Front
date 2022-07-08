@@ -23,5 +23,13 @@ export const contractAPI = {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     });
+  },
+
+  getContractById: (contractId) => {
+    return axios.get(`/api/otc/contracts/${contractId}`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    });
   }
 }

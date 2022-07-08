@@ -76,5 +76,13 @@ export const companyAPI = {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     })
+  },
+
+  updateCompany: (company) => {
+    return axios.put(`/api/otc/companies`, company, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    })
   }
 }
