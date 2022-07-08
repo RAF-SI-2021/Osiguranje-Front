@@ -58,5 +58,11 @@ export const adminLinks = [
         routeLink: '/companies',
         icon: 'bi-list',
         description: 'Display and search companies'
+    },
+    {
+        routeName: 'Contracts',
+        routeLink: '/contracts',
+        icon: 'bi-card-heading',
+        description: 'Display and search contracts'
     }
 ]

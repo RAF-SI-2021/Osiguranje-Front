@@ -1,10 +1,12 @@
 <script setup>
 import { ref, reactive, onMounted, inject, computed, watch } from "vue";
 import { companyAPI } from "../api/companyAPI";
+import { useRouter } from "vue-router";
 
 const companyList = ref([]);
 const loading = ref(false);
 const toast = inject("toast");
+const router = useRouter();
 
 const searchTerms = reactive({
   name: "",
@@ -45,6 +47,10 @@ function resetSearch() {
   });
 }
 
+function routeToCompany(id) {
+  router.push(`/company/${id}`);
+}
+
 </script>
 
 <template>
@@ -81,7 +87,7 @@ function resetSearch() {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="company in companyList">
+        <tr v-for="company in companyList" @click="routeToCompany(company.id)">
           <td>{{ company.name }}</td>
           <td>{{ company.address }}</td>
           <td>{{ company.registrationID }}</td>
@@ -91,3 +97,10 @@ function resetSearch() {
     </table>
   </div>
 </template>
+
+<style scoped>
+tbody > tr:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+</style>
