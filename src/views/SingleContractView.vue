@@ -75,7 +75,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="addItem">Add</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         </div>
       </div>
@@ -84,7 +84,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, watch } from "vue";
+import { inject, onMounted, reactive, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { contractAPI } from "../api/contractAPI";
 import { securitiesAPI } from "../api/securitiesAPI";
@@ -101,6 +101,7 @@ const route = useRoute();
 const contractId = route.params.id;
 const allSecurities = ref({});
 const options = ref([])
+const toast = inject("toast");
 
 const transactionItem = reactive({
   transcationType: "BUY",
@@ -131,6 +132,22 @@ function onSelectChange(e) {
   } else if (e.target.value === "FOREX") {
     options.value = allSecurities.value.forex;
   }
+}
+
+function addItem() {
+  let newTransactionItem = {
+    transactionType: transactionItem.transcationType,
+    securityId: transactionItem.securityId,
+    securityType: transactionItem.securityType,
+    accountId: transactionItem.accountId,
+    currencyId: 62,
+    amount: transactionItem.quantity,
+    pricePerShare: transactionItem.pricePerShare
+  }
+  contractAPI.addContractTransactionItem(contractId, newTransactionItem).then(() => {
+    toast.success("Transaction Item Added");
+    contract.value.transactions.push(newTransactionItem);
+  })
 }
 
 </script>
