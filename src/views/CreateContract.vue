@@ -7,69 +7,32 @@
           <div class="form-outline mb-4">
             <label class="form-label" for="company">Company</label>
             <select class="form-select" id="company" v-model="contract.companyId">
-              <option selected value="1">Company 1</option>
-              <option value="2">Company 2</option>
-              <option value="3">Company 3</option>
+              <option v-for="(company, i) in compaines" :key="company.id" :selected="i === 0" :value="company.id">{{ company.name }}</option>
             </select>
+            <div
+              class="input-errors"
+              v-for="error of v$.companyId.$errors"
+              :key="error.$uid"
+            >
+              <div class="text-danger">{{ error.$message }}</div>
+            </div>
           </div>
 
           <div class="form-outline mb-4">
             <label class="form-label" for="referenceNumber">Contract Reference Number</label>
             <input class="form-control" type="text" id="referenceNumber"  v-model="contract.referenceNumber" />
+            <div
+              class="input-errors"
+              v-for="error of v$.referenceNumber.$errors"
+              :key="error.$uid"
+            >
+              <div class="text-danger">{{ error.$message }}</div>
+            </div>
           </div>
 
           <div class="form-outline mb-4">
             <label class="form-label" for="note" >Note</label>
             <textarea class="form-control" id="note" rows="3" v-model="contract.note"></textarea>
-          </div>
-
-          <div class="d-flex justify-content-between align-items-start">
-            <h4 class="mb-4">Transcation items</h4>
-            <button class="btn btn-primary ml-auto" type="button" @click="addItem">Add item</button>
-          </div>
-
-          <div class="mb-4 p-2 border border-2 rounded" v-for="(item, index) in contract.transcationItems.length">
-            <div class="d-flex justify-content-between align-items-start">
-              <h5>#{{ index+1 }}</h5>
-              <button class="btn btn-danger" type="button" @click="removeItem(index)"><i class="bi bi-x-lg"></i></button>
-            </div>
-            <div class="d-flex justify-content-around">
-              <div class="form-outline mb-4">
-                <label class="form-label">Action</label>
-                <select class="form-select" v-model="contract.transcationItems[index].action">
-                  <option selected value="Buy">Buy</option>
-                  <option value="Sell">Sell</option>
-                </select>
-              </div>
-
-              <div class="form-outline mb-4">
-                <label class="form-label">Security</label>
-                <select class="form-select" v-model="contract.transcationItems[index].securityId">
-                  <option selected value="1">AAPL</option>
-                  <option value="2">TSLA</option>
-                  <option value="3">MSFT</option>
-                </select>
-              </div>
-
-              <div class="form-outline mb-4">
-                <label class="form-label">Bank Account</label>
-                <select class="form-select" v-model="contract.transcationItems[index].bankAccount">
-                  <option selected value="Cash">Cash</option>
-                  <option value="Margin">Margin</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-outline mb-4">
-              <label class="form-label">Amount</label>
-              <input class="form-control" type="number" v-model="contract.transcationItems[index].amount" />
-            </div>
-
-            <div class="form-outline mb-4">
-              <label class="form-label">Price Per Unit</label>
-              <input class="form-control" type="number" v-model="contract.transcationItems[index].pricePerUnit" />
-            </div>
-
           </div>
 
           <button type="submit" class="btn btn-primary btn-lg" @click="submit">Add Contract</button>
@@ -80,42 +43,51 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { computed, inject, onMounted, reactive, ref } from "vue";
+import { companyAPI } from "../api/companyAPI";
+import { contractAPI } from "../api/contractAPI";
+import { minLength, required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
 
+const toast = inject("toast");
+const compaines = ref([]);
 const items = ref(1);
 const contract = reactive({
   companyId: 1,
   referenceNumber: "",
   note: "",
-  transcationItems: [
-    {
-      action: "Buy",
-      securityId: 1,
-      bankAccount: "Cash",
-      currency: "EUR",
-      amount: 1,
-      pricePerUnit: 1
-    }
-  ]
 })
 
-  function addItem() {
-    contract.transcationItems.push({
-      action: "Buy",
-      securityId: 1,
-      bankAccount: "Cash",
-      currency: "EUR",
-      amount: 1,
-      pricePerUnit: 1
-    })
-  }
+const rules = {
+  companyId: { required },
+  referenceNumber: { required, minLength: minLength(3) },
+  note: {}
+}
 
-  function removeItem(index) {
-    contract.transcationItems.splice(index, 1)
-  }
+const v$ = useVuelidate(rules, contract);
+
+onMounted(() => {
+  companyAPI.getCompanies().then(res => {
+    compaines.value = res.data;
+  });
+})
 
   function submit() {
-    console.log(contract)
+    let contractToAdd = {
+      companyID: contract.companyId,
+      refNumber: contract.referenceNumber,
+      description: contract.note
+    }
+    console.log(contractToAdd)
+    v$.value.$validate();
+    console.log(v$.value);
+    if (v$.value.$invalid) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+    contractAPI.createContract(contractToAdd).then(res => {
+      toast.success("Contract created");
+    })
   }
 </script>
 
