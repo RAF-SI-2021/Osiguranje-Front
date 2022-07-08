@@ -23,7 +23,7 @@ export default {
                 companyRegistrationId: { required, numeric },
                 companyTaxId: { required, numeric },
                 sicCode: { required, numeric },
-                address: { required, numeric },
+                address: { required },
             }
         })
 
@@ -37,7 +37,7 @@ export default {
             if(!this.v$.$error){
               const newCompany = {
                 name: form.companyName,
-                registrationId: form.companyRegistrationId,
+                registrationID: form.companyRegistrationId,
                 taxID: form.companyTaxId,
                 industrialClassificationID: form.sicCode,
                 address: form.address,
@@ -80,11 +80,12 @@ export default {
 </script>
 
 <template>
-    <div class="container">
+  <vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh" />
+  <div class="container">
         <h2 class="mt-5 text-center">Add Company Information</h2>
         <div class="row justify-content-center">
             <div class="col-5">
-                <form @submit="onSubmit">
+                <form @submit.prevent="onSubmit">
 
                     <div class="row">
                         <div class="mb-3">

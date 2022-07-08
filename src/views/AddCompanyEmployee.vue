@@ -4,6 +4,7 @@ import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
 import router from "@/router";
 import { companyAPI } from "../api/companyAPI";
+import axios from "axios";
 
     const companies = ref([]);
     const loading = ref(false);
@@ -41,8 +42,16 @@ import { companyAPI } from "../api/companyAPI";
       v$.value.$validate().then(() => {
         if (!v$.value.$invalid) {
           loading.value = true;
+          let data = {
+            name: form.firstName,
+            surname: form.lastName,
+            phone: form.phoneNumber,
+            email: form.email,
+            companyPosition: form.companyPosition,
+            description: form.note
+          }
           companyAPI
-            .addCompanyEmployeeContact(form.companyId, form)
+            .addCompanyEmployeeContact(form.companyId, data)
             .then((res) => {
               loading.value = false;
               toast.success("Employee contact added successfully");
@@ -61,13 +70,13 @@ import { companyAPI } from "../api/companyAPI";
 </script>
 
 <template>
-
+  <vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh" />
   <div class="container">
     <h2 class="mt-5 text-center">Employee contact</h2>
     <br />
     <div class="row justify-content-center">
       <div class="col-5">
-        <form @submit="onSubmit">
+        <form @submit.prevent="onSubmit">
           <div class="row">
             <div class="form-outline mb-4">
               <label for="company">Company:</label>
