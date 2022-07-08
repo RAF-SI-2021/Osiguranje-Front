@@ -60,5 +60,21 @@ export const companyAPI = {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     })
+  },
+
+  deleteEmployee: (companyId, employeeId) => {
+    return axios.delete(`/api/otc/companies/${companyId}/employees/${employeeId}`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    })
+  },
+
+  deleteBankAccount: (companyId, bankAccountId) => {
+    return axios.delete(`/api/otc/companies/${companyId}/bank-accounts/${bankAccountId}`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    })
   }
 }
