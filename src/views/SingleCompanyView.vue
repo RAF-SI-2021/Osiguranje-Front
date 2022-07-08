@@ -52,6 +52,17 @@ function deleteBankAccount(id) {
   });
 }
 
+function updateCompany() {
+  loading.value = true;
+  companyAPI.updateCompany(company.value).then((res) => {
+    loading.value = false;
+    toast.success("Company updated successfully");
+  }).catch((err) => {
+    loading.value = false;
+    console.log(err);
+  });
+}
+
 </script>
 
 <template>
@@ -74,7 +85,7 @@ function deleteBankAccount(id) {
           <label for="name">Industrial Classification ID</label>
           <input type="text" class="form-control" id="name" v-model="company.industrialClassificationID">
         </div>
-        <button type="button" class="btn btn-primary mt-3">Update Info</button>
+        <button type="button" class="btn btn-primary mt-3" @click="updateCompany">Update Info</button>
       </div>
       <div class="col">
         <h3 class="mt-3 mb-5 text-center">Contact Employees</h3>
