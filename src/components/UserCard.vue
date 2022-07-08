@@ -8,7 +8,7 @@
                 <button type="button" class="btn btn-primary btn-sm" @click="editUser(id)"> Edit user</button>
             </div>
             <div class="mx-2">
-                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" @click="emitUser({ id: id, firstName: name, lastName: surname })" data-bs-target="#approveModal">Reset Limit</button>
+                <button v-if="permissions.agent || permissions.traineeagent" type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" @click="emitUser({ id: id, firstName: name, lastName: surname })" data-bs-target="#approveModal">Reset Limit</button>
             </div>
         </div>
         <hr>
@@ -31,7 +31,8 @@
                 'email',
                 'phone',
                 'position',
-                'active'],
+                'active',
+                'permissions'],
 
         methods: {
             editUser: function (id) {

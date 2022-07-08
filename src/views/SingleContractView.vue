@@ -42,8 +42,8 @@
             <div class="col">
               <label class="form-label">Security Type</label>
               <select class="form-select" v-model="transactionItem.securityType" @change="onSelectChange">
-                <option selected value="STOCK">Stock</option>
-                <option value="FUTURE">Future</option>
+                <option selected value="STOCKS">Stock</option>
+                <option value="FUTURES">Future</option>
                 <option value="FOREX">Forex</option>
               </select>
             </div>
@@ -125,9 +125,9 @@ onMounted(() => {
 
 function onSelectChange(e) {
   transactionItem.securityType = e.target.value;
-  if (e.target.value === "STOCK") {
+  if (e.target.value === "STOCKS") {
     options.value = allSecurities.value.stocks;
-  } else if (e.target.value === "FUTURE") {
+  } else if (e.target.value === "FUTURES") {
     options.value = allSecurities.value.futures;
   } else if (e.target.value === "FOREX") {
     options.value = allSecurities.value.forex;
