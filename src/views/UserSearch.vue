@@ -97,7 +97,9 @@ function resetLimit(id) {
                 :email="user.email"
                 :phone="user.phoneNumber"
                 :position="user.position"
-                :active="user.active">
+                :active="user.active"
+                :permissions="user.permissions"
+            >
             </UserCard>
         </div>
     </div>
