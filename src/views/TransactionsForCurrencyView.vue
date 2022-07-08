@@ -16,27 +16,22 @@
         transactionAPI.getTransactionsByCurrency(id)
         .then((res)=>{
             //transactions.value=res
-            for(let key of res.data){
-                let obj = {}
-                obj.id = key.id
-                obj.timestamp = key.timestamp
-                obj.text = key.text
-                obj.payment = key.payment
-                obj.payout = key.payout
-                obj.transactionType = key.transactionType
+            for(let key of res.data) {
+              let obj = {}
+              obj.id = key.id
+              obj.timestamp = key.timestamp
+              obj.text = key.text
+              obj.payment = key.payment
+              obj.payout = key.payout
+              obj.transactionType = key.transactionType
 
-                transactions.value.push(obj)
-
+              transactions.value.push(obj)
+              deposit.value += key.payment;
+              withdraw.value += key.payout;
             }
         },
         (err)=>{
             console.log(err);
-        }).then(()=>{
-            console.log(transactions.value)
-            for(item in transactions.value){
-                deposit += item.payment
-                withdraw += item.payout;
-            }
         })
         
     });
