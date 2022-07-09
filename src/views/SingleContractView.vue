@@ -16,7 +16,26 @@
         </div>
         <p v-if="contract.transactions.length === 0" class="text-center mt-5"><strong>No Transaction Items to display</strong></p>
         <div v-else class="mt-5">
-
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Security</th>
+                <th>Amount</th>
+                <th>Transaction Type</th>
+                <th>Price per Share</th>
+                <th>Currency</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in contract.transactions">
+                <td>{{ getSecurityName(item.securityType, item.securityId).ticker }}</td>
+                <td>{{ item.amount }}</td>
+                <td>{{ item.transactionType }}</td>
+                <td>{{ item.pricePerShare }}</td>
+                <td>{{ getSecurityName(item.securityType, item.securityId).currency }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -84,7 +103,7 @@
 </template>
 
 <script setup>
-import { inject, onMounted, reactive, ref, watch } from "vue";
+import { inject, onMounted, reactive, ref, toRef, watch } from "vue";
 import { useRoute } from "vue-router";
 import { contractAPI } from "../api/contractAPI";
 import { securitiesAPI } from "../api/securitiesAPI";
@@ -115,7 +134,7 @@ const transactionItem = reactive({
 onMounted(() => {
   Promise.all([
     contractAPI.getContractById(contractId),
-    securitiesAPI.getSecurities()
+    securitiesAPI.getSecurities(),
   ]).then((values) => {
     contract.value = values[0].data;
     allSecurities.value = values[1].data;
@@ -140,14 +159,39 @@ function addItem() {
     securityId: transactionItem.securityId,
     securityType: transactionItem.securityType,
     accountId: transactionItem.accountId,
-    currencyId: 62,
+    currencyId: options.value.find(security => security.id === transactionItem.securityId).exchange.currency.id,
     amount: transactionItem.quantity,
     pricePerShare: transactionItem.pricePerShare
   }
   contractAPI.addContractTransactionItem(contractId, newTransactionItem).then(() => {
     toast.success("Transaction Item Added");
     contract.value.transactions.push(newTransactionItem);
+  }).catch(() => {
+    toast.error("Transaction failed");
   })
+}
+
+function getSecurityName(type, id) {
+  if (type === "STOCKS") {
+    return {
+      ticker: allSecurities.value.stocks.find(security => security.id === id).ticker,
+      currency: allSecurities.value.stocks.find(security => security.id === id).exchange.currency.isoCode
+    }
+  } else if (type === "FUTURES") {
+    return {
+      ticker: allSecurities.value.futures.find(security => security.id === id).ticker,
+      currency: allSecurities.value.futures.find(security => security.id === id).exchange.currency.isoCode
+    }
+  } else if (type === "FOREX") {
+    return {
+      ticker: allSecurities.value.forex.find(security => security.id === id).ticker,
+      currency: allSecurities.value.forex.find(security => security.id === id).exchange.currency.isoCode
+    }
+  }
+}
+
+function getCurrencyName(id) {
+
 }
 
 </script>

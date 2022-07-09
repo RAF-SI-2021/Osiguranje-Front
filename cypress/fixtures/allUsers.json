@@ -34,7 +34,7 @@
             "supervisor": false,
             "traineeAgent": false,
             "agent": true,
-            "admin": false
+            "admin": true
         }
     },
     {
@@ -50,10 +50,10 @@
             "stockTrading": true,
             "stockOverview": true,
             "contractConclusion": true,
-            "supervisor": false,
-            "traineeAgent": true,
+            "supervisor": true,
+            "traineeAgent": false,
             "agent": false,
-            "admin": false
+            "admin": true
         }
     }
 ]
