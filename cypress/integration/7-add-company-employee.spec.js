@@ -46,7 +46,7 @@ describe("Add Company Employee tests", () => {
     it("should successfully create employee", () => {
 
         let expectedCompanyId = 14;
-        cy.get("#company").select("Apple").should("have.value", "14");
+        cy.get("#company").select("Apple").should("have.value", expectedCompanyId);
         cy.intercept("POST", `/api/otc/companies/${expectedCompanyId}/employees`, { status: 200 });
 
         cy.get("#firstName").type("Test Employee Name");
