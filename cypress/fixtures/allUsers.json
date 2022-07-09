@@ -7,7 +7,16 @@
         "position": "Admin",
         "phoneNumber": "+381657779045",
         "active": true,
-        "jmbg": "1234567890123"
+        "jmbg": "1234567890123",
+        "permissions": {
+            "stockTrading": true,
+            "stockOverview": true,
+            "contractConclusion": true,
+            "supervisor": true,
+            "traineeAgent": false,
+            "agent": false,
+            "admin": true
+        }
     },
     {
         "id": 2,
@@ -17,7 +26,16 @@
         "position": "Supervizor",
         "phoneNumber": "+381657779045",
         "active": true,
-        "jmbg": "1534567584732"
+        "jmbg": "1534567584732",
+        "permissions": {
+            "stockTrading": true,
+            "stockOverview": true,
+            "contractConclusion": true,
+            "supervisor": false,
+            "traineeAgent": false,
+            "agent": true,
+            "admin": false
+        }
     },
     {
         "id": 3,
@@ -27,6 +45,15 @@
         "position": "Agent",
         "phoneNumber": "+381657779045",
         "active": true,
-        "jmbg": "134123556789"
+        "jmbg": "134123556789",
+        "permissions": {
+            "stockTrading": true,
+            "stockOverview": true,
+            "contractConclusion": true,
+            "supervisor": false,
+            "traineeAgent": true,
+            "agent": false,
+            "admin": false
+        }
     }
 ]
