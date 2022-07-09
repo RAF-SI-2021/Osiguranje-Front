@@ -31,7 +31,7 @@ Cypress.Commands.add("login", (email, password) => {
       statusCode: 200,
       headers: {
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXJAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY1NDk3ODE2NSwiZXhwIjoxNjU1MDY0NTY1fQ.J3LC2fwAs09nlUKjyaF4vXHt6Mh4qsH2-Lny1p8T-7Y",
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXJAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE2NTczNjQyNDMsImV4cCI6MTY1NzQ1MDY0M30.xJzTwTb0VjZaTo2WLTQvjOmBH2nInDwGcxkSswSA5rE",
       },
     });
   } else {
