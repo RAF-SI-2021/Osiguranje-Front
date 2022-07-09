@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const transactionAPI = {
   getBalance: () => {
-    return axios.get('http://localhost:8093/api/balance/all', {
+    return axios.get('/api/account-transaction/balance/all', {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       }
@@ -10,7 +10,7 @@ export const transactionAPI = {
   },
 
   getTransactionsByCurrency: (currencyId) => {
-    return axios.get('http://localhost:8093/api/transaction/currency?currency=' + currencyId, {
+    return axios.get('/api/account-transaction/transaction/currency?currency=' + currencyId, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
     }
