@@ -1,0 +1,29 @@
+[
+  {
+    "id": 14,
+    "registrationID": 111,
+    "name": "Apple",
+    "taxID": 123,
+    "industrialClassificationID": 7,
+    "address": "Palo Alto, CA",
+    "employees": [
+      {
+        "id": 15,
+        "name": "Steve",
+        "surname": "Jobs",
+        "phone": "064213456",
+        "email": "064213456",
+        "companyPosition": "CEO",
+        "description": ""
+      }
+    ],
+    "bankAccounts": [
+      {
+        "id": 16,
+        "accountNumber": "25005845774890",
+        "bankName": "World Bank",
+        "accountType": "Cash"
+      }
+    ]
+  }
+]

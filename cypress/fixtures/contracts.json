@@ -1,0 +1,121 @@
+[
+  {
+    "id": 544,
+    "company": {
+      "id": 17,
+      "registrationID": 222,
+      "name": "Google",
+      "taxID": 456,
+      "industrialClassificationID": 5,
+      "address": "London, UK",
+      "employees": [
+        {
+          "id": 18,
+          "name": "Bill",
+          "surname": "Gates",
+          "phone": "065288867",
+          "email": "065288867",
+          "companyPosition": "CTO",
+          "description": ""
+        }
+      ],
+      "bankAccounts": [
+        {
+          "id": 19,
+          "accountNumber": "111122223333",
+          "bankName": "UK Bank",
+          "accountType": "Cash"
+        }
+      ]
+    },
+    "status": "DRAFT",
+    "creationDate": "09/07/2022 16:40:12",
+    "lastUpdated": "09/07/2022 16:40:36",
+    "refNumber": "4568/614",
+    "description": "dasdasgg bgdf fgs",
+    "transactions": [
+      {
+        "id": 545,
+        "transactionType": "BUY",
+        "securityId": 370,
+        "securityType": "STOCKS",
+        "accountId": 1,
+        "currencyId": 62,
+        "amount": 2,
+        "pricePerShare": 120
+      }
+    ]
+  },
+  {
+    "id": 546,
+    "company": {
+      "id": 14,
+      "registrationID": 111,
+      "name": "Apple",
+      "taxID": 123,
+      "industrialClassificationID": 7,
+      "address": "Palo Alto, CA",
+      "employees": [
+        {
+          "id": 15,
+          "name": "Steve",
+          "surname": "Jobs",
+          "phone": "064213456",
+          "email": "064213456",
+          "companyPosition": "CEO",
+          "description": ""
+        }
+      ],
+      "bankAccounts": [
+        {
+          "id": 16,
+          "accountNumber": "25005845774890",
+          "bankName": "World Bank",
+          "accountType": "Cash"
+        }
+      ]
+    },
+    "status": "DRAFT",
+    "creationDate": "09/07/2022 17:42:36",
+    "lastUpdated": "09/07/2022 17:42:36",
+    "refNumber": "4567/844",
+    "description": "Another note xD",
+    "transactions": []
+  },
+  {
+    "id": 547,
+    "company": {
+      "id": 17,
+      "registrationID": 222,
+      "name": "Google",
+      "taxID": 456,
+      "industrialClassificationID": 5,
+      "address": "London, UK",
+      "employees": [
+        {
+          "id": 18,
+          "name": "Bill",
+          "surname": "Gates",
+          "phone": "065288867",
+          "email": "065288867",
+          "companyPosition": "CTO",
+          "description": ""
+        }
+      ],
+      "bankAccounts": [
+        {
+          "id": 19,
+          "accountNumber": "111122223333",
+          "bankName": "UK Bank",
+          "accountType": "Cash"
+        }
+      ]
+    },
+    "status": "DRAFT",
+    "creationDate": "09/07/2022 17:42:47",
+    "lastUpdated": "09/07/2022 17:42:47",
+    "refNumber": "99848/2022",
+    "description": "Some note...",
+    "transactions": []
+  }
+]

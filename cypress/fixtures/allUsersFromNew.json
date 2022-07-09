@@ -12,10 +12,10 @@
       "stockTrading": true,
       "stockOverview": true,
       "contractConclusion": true,
-      "supervisor": false,
+      "supervisor": true,
       "traineeAgent": false,
-      "agent": true,
-      "admin": false
+      "agent": false,
+      "admin": true
     }
   },
   {
@@ -31,10 +31,10 @@
       "stockTrading": true,
       "stockOverview": true,
       "contractConclusion": true,
-      "supervisor": false,
+      "supervisor": true,
       "traineeAgent": false,
-      "agent": true,
-      "admin": false
+      "agent": false,
+      "admin": true
     }
   },
   {
@@ -50,10 +50,10 @@
       "stockTrading": true,
       "stockOverview": true,
       "contractConclusion": true,
-      "supervisor": false,
+      "supervisor": true,
       "traineeAgent": false,
-      "agent": true,
-      "admin": false
+      "agent": false,
+      "admin": true
     }
   },
   {
@@ -69,10 +69,10 @@
       "stockTrading": true,
       "stockOverview": true,
       "contractConclusion": true,
-      "supervisor": false,
+      "supervisor": true,
       "traineeAgent": false,
-      "agent": true,
-      "admin": false
+      "agent": false,
+      "admin": true
     }
   }
 ]

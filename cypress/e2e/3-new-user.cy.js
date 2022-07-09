@@ -82,7 +82,7 @@ describe("Testing the New User page", () => {
     cy.intercept("POST", "/api/user", {
       statusCode: 200
     });
-    cy.intercept("POST", "/api/buyingmarket/actuaries", { statusCode: 200, body: {} })
+    cy.intercept("POST", "/api/buyingmarket/actuaries", { statusCode: 200 })
     cy.intercept("GET", "/api/user/all", { fixture: "allUsersFromNew.json" })
 
     cy.intercept("GET", "/api/currentUser", { fixture: "user.json" });
@@ -96,15 +96,14 @@ describe("Testing the New User page", () => {
     cy.get("#position").type("Agent");
     cy.get("#phoneNumber").type("555333");
     cy.get("#form2Example3cg").click();
-    cy.get('#limit').clear().type('100');
+    cy.get("#limit").clear().type("100");
 
     cy.get(".btn-primary").click();
-
 
     cy.url().should("contain", "/admin/users");
   });
 
-  it("should display validation error on cash limit if it's less than 0", () => {
+  it("should display cash limit validation error", () => {
     cy.intercept("GET", "/api/currentUser", { fixture: "user.json" });
     cy.login("car@gmail.com", "raf");
     cy.get("#app > div > div > div > div:nth-child(2) > div > a").click();
@@ -116,12 +115,13 @@ describe("Testing the New User page", () => {
     cy.get("#position").type("Agent");
     cy.get("#phoneNumber").type("555333");
     cy.get("#form2Example3cg").click();
-    cy.get('#limit').clear().type('-20');
+    cy.get("#limit").clear().type("-100");
 
     cy.get(".btn-primary").click();
 
     cy.get(".test-error").should("have.length", 2);
     cy.get(".test-error").eq(1).should("contain", "The minimum value allowed is 1");
+
   })
 
 })
