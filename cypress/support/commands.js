@@ -23,7 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-require("@4tw/cypress-drag-drop");
+// require("@4tw/cypress-drag-drop");
 
 Cypress.Commands.add("login", (email, password) => {
   if (email == "car@gmail.com" && password == "raf") {
@@ -31,7 +31,7 @@ Cypress.Commands.add("login", (email, password) => {
       statusCode: 200,
       headers: {
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXJAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY1NDk3ODE2NSwiZXhwIjoxNjU1MDY0NTY1fQ.J3LC2fwAs09nlUKjyaF4vXHt6Mh4qsH2-Lny1p8T-7Y",
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXJAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE2NTczNzQyMjcsImV4cCI6MTY1NzQ2MDYyN30.10q1aHxWRUkyWEJ3NYl4euMSNyP_YFqZn4n_Z4_C6eU",
       },
     });
   } else {
