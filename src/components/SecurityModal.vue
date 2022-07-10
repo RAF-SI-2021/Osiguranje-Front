@@ -42,6 +42,7 @@ const props = defineProps({
       allOrNone: false,
       margin: false,
       orderType: "",
+      actionType: "Buy",
     },
   },
 });
