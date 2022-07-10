@@ -26,17 +26,14 @@ onMounted(() => {
     if (tickerFlag && typeFlag) {
       switch (type) {
         case "stock":
-          console.log("STOCK DAMN IT", ticker);
           let stockId = store.stock.find((stock) => stock.ticker === ticker).id;
           orders.data = orders.data.filter((order) => order.securityId === stockId);
           break;
         case "forex":
-          console.log("FOREX SHIT");
           let forexId = store.forex.find((forex) => forex.ticker === ticker).id;
           orders.data = orders.data.filter((order) => order.securityId === forexId);
           break;
         case "future":
-          console.log("FUTURE FUCK");
           let futureId = store.futures.find((future) => future.ticker === ticker).id;
           orders.data = orders.data.filter((order) => order.securityId === futureId);
           break;
@@ -117,7 +114,7 @@ function declineOrder(id) {
                 <tr v-for="order in orders.data" key="order.orderId">
                   <td>{{ new Date(order.modificationDate).toDateString() }}</td>
                   <td v-if="!tickerFlag">{{ order.symbol }}</td>
-                  <td>BUY/SELL</td>
+                  <td>{{ order.actionType }}</td>
                   <td>{{ order.limitPrice }}</td>
                   <td>{{ order.amount }}</td>
                   <td>{{ order.amount * order.limitPrice }}</td>

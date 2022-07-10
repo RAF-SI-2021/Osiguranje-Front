@@ -146,6 +146,11 @@ function filterData(e, tab) {
   });
 }
 
+function setAction(actionName) {
+  action.value = actionName;
+  myInput.actionType = actionName;
+}
+
 let showOptions = false;
 </script>
 
@@ -498,7 +503,7 @@ let showOptions = false;
     <div class="row mb-3 mt-3">
       <div class="btn-group" role="group" aria-label="Basic example">
         <button
-          @click="action = 'Buy'"
+          @click="setAction('Buy')"
           type="button"
           class="btn btn-dark"
           data-bs-toggle="modal"
@@ -507,7 +512,7 @@ let showOptions = false;
           Buy
         </button>
         <button
-          @click="action = 'Sell'"
+          @click="setAction('Sell')"
           type="button"
           class="btn btn-secondary"
           data-bs-toggle="modal"
