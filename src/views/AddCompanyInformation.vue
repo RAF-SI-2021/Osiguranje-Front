@@ -3,11 +3,12 @@ import { ref, reactive, computed, inject } from 'vue';
 import useVuelidate from '@vuelidate/core'
 import { required, numeric } from '@vuelidate/validators'
 import { companyAPI } from '../api/companyAPI';
+import { useRouter } from "vue-router";
 
 export default {
 
     setup() {
-
+        const router = useRouter();
         const form = reactive({
             companyName: '',
             companyRegistrationId: '',
@@ -46,6 +47,7 @@ export default {
               companyAPI.createNewCompany(newCompany).then(response => {
                 loading.value = false;
                 toast.success("Company created successfully!");
+                router.push("/companies")
              }).catch(error => {
                 loading.value = false;
                 toast.error("Something went wrong");

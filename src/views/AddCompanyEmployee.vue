@@ -2,13 +2,14 @@
 import { ref, reactive, computed, onMounted, inject } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
-import router from "@/router";
+import { useRouter } from "vue-router";
 import { companyAPI } from "../api/companyAPI";
 import axios from "axios";
 
     const companies = ref([]);
     const loading = ref(false);
     const toast = inject("toast");
+    const router = useRouter();
 
     onMounted(() => {
       companyAPI.getCompanies().then((res) => {
@@ -55,6 +56,7 @@ import axios from "axios";
             .then((res) => {
               loading.value = false;
               toast.success("Employee contact added successfully");
+              router.push("/company/" + form.companyId);
             })
             .catch((err) => {
               loading.value = false;
