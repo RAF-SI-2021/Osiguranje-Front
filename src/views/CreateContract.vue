@@ -1,4 +1,5 @@
 <template>
+  <vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh" />
   <div class="container">
     <h1 class="text-center my-5">Create Contract</h1>
     <div class="row justify-content-center">
@@ -48,7 +49,10 @@ import { companyAPI } from "../api/companyAPI";
 import { contractAPI } from "../api/contractAPI";
 import { minLength, required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
+const loading = ref(false);
 const toast = inject("toast");
 const compaines = ref([]);
 const items = ref(1);
@@ -78,15 +82,19 @@ onMounted(() => {
       refNumber: contract.referenceNumber,
       description: contract.note
     }
-    console.log(contractToAdd)
     v$.value.$validate();
-    console.log(v$.value);
     if (v$.value.$invalid) {
       toast.error("Please fill in all required fields");
       return;
     }
+    loading.value = true;
     contractAPI.createContract(contractToAdd).then(res => {
+      loading.value = false;
       toast.success("Contract created");
+      router.push("/contracts")
+    }).catch(err => {
+      loading.value = false;
+      toast.error("Something went wrong");
     })
   }
 </script>
