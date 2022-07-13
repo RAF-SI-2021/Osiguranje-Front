@@ -23,6 +23,8 @@ onMounted(() => {
       .slice(0, 10);
     
     console.log(stocksData.futures);
+  }).catch((err) => {
+    console.log(err);
   })
   
  // Change "stocks" to "futures" when they arrive from the API
