@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 describe("Login Tests", () => {
+
   beforeEach(() => {
     cy.visit("/");
   });
@@ -16,6 +17,11 @@ describe("Login Tests", () => {
 
   it("should show a validation error", () => {
     cy.login("fakemail@mail.com", "blabla");
-    cy.should("be.visible", ".c-toast--error");
+
+    cy.wait(500);
+
+    cy.get('.c-toast').should('be.visible');
+    cy.get('.c-toast--error').should('contain', 'Invalid email or password');
+
   });
 });

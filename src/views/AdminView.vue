@@ -8,6 +8,9 @@ import { userAPI } from "../api/userAPI";
 import BalanceModal from "../components/BalanceModal.vue";
 
 const admin = ref(false);
+const agent = ref(false);
+const usedLimit = ref(0);
+const maxLimit = ref(0);
 const user = ref("");
 const stocksData = reactive({stocks: ""}); 
 onMounted(() => {
@@ -20,6 +23,8 @@ onMounted(() => {
       .slice(0, 10);
     
     console.log(stocksData.futures);
+  }).catch((err) => {
+    console.log(err);
   })
   
  // Change "stocks" to "futures" when they arrive from the API
@@ -27,7 +32,14 @@ onMounted(() => {
   if (localStorage.getItem("token")) {
     userAPI.getCurrentUser().then((res) => {
       user.value = res.data.firstName + " " + res.data.lastName;
-      if (res.data.permissions.admin) admin.value = true;
+      if (res.data.permissions.admin || res.data.permissions.supervisor) admin.value = true;
+      if (res.data.permissions.agent || res.data.permissions.traineeAgent) {
+        agent.value = true;
+        userAPI.getActuaryById(res.data.id).then((actuary) => {
+          usedLimit.value = actuary.data.usedLimit;
+          maxLimit.value = actuary.data.spendingLimit;
+        })
+      }
     });
   }
 });
@@ -59,6 +71,9 @@ onMounted(() => {
       <button v-if="admin" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#balanceModal">
         Check Balance
       </button>
+      <div v-if="agent">
+        <h2 class="mt-3">Current Limit: {{ usedLimit.toLocaleString('en') }} / {{ maxLimit.toLocaleString('en') }}</h2>
+      </div>
       <h2 class="my-4">Futures approaching settlement date</h2>
       <table class="table table-bordered">
         <thead>
@@ -90,4 +105,9 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+table > tbody > tr:hover {
+  background-color: #cccccc;
+  cursor: pointer;
+}
+</style>
