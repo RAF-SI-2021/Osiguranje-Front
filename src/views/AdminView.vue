@@ -68,9 +68,15 @@ onMounted(() => {
       </div>
     </div>
     <div class="container mt-5">
-      <button v-if="admin" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#balanceModal">
-        Check Balance
-      </button>
+      <div class="d-flex">
+        <button v-if="admin" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#balanceModal">
+          Check Balance
+        </button>
+        <button v-if="admin" type="button" class="btn btn-primary mx-3" data-bs-toggle="modal" data-bs-target="#">
+          Check Owned Securities
+        </button>
+      </div>
+
       <div v-if="agent">
         <h2 class="mt-3">Current Limit: {{ usedLimit.toLocaleString('en') }} / {{ maxLimit.toLocaleString('en') }}</h2>
       </div>
