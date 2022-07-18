@@ -1,21 +1,27 @@
 <script setup>
 import { securitiesAPI } from '../api/securitiesAPI';
 import securitiesAPIMock from '../mock-data/securitiesAPI-mock'
+import { securityStore } from "../stores/securityStore";
 
 import { onMounted, reactive, ref } from "vue";
 import { adminLinks } from "../consts/AdminNavs";
 import { userAPI } from "../api/userAPI";
 import BalanceModal from "../components/BalanceModal.vue";
+import SecurityBalanceModal from "../components/SecurityBalanceModal.vue";
 
 const admin = ref(false);
 const agent = ref(false);
 const usedLimit = ref(0);
 const maxLimit = ref(0);
 const user = ref("");
-const stocksData = reactive({stocks: ""}); 
+const stocksData = reactive({stocks: ""});
+const secStore = securityStore();
 onMounted(() => {
   // When using API - This is to avoid exceeding API requests
   securitiesAPI.getSecurities().then((res) => {
+    secStore.setStock(res.data.stocks);
+    secStore.setForex(res.data.forex);
+    secStore.setFutures(res.data.futures);
     stocksData.futures = res.data.futures
       .sort((a, b) => {
         return new Date(a.settlementDate) - new Date(b.settlementDate)
@@ -47,6 +53,7 @@ onMounted(() => {
 
 <template>
   <BalanceModal v-if="admin" />
+  <SecurityBalanceModal v-if="admin" />
   <div>
     <h1 class="text-center mt-5">Welcome, {{ user }}</h1>
     <div class="container">
@@ -68,9 +75,15 @@ onMounted(() => {
       </div>
     </div>
     <div class="container mt-5">
-      <button v-if="admin" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#balanceModal">
-        Check Balance
-      </button>
+      <div class="d-flex">
+        <button v-if="admin" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#balanceModal">
+          Check Balance
+        </button>
+        <button v-if="admin" type="button" class="btn btn-primary mx-3" data-bs-toggle="modal" data-bs-target="#securityBalanceModal">
+          Check Owned Securities
+        </button>
+      </div>
+
       <div v-if="agent">
         <h2 class="mt-3">Current Limit: {{ usedLimit.toLocaleString('en') }} / {{ maxLimit.toLocaleString('en') }}</h2>
       </div>

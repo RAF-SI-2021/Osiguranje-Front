@@ -3,11 +3,13 @@ import { data } from '../mock-data/data';
 import { ref, reactive, onMounted, inject } from 'vue';
 import UserCard from "../components/UserCard.vue";
 import { userAPI } from '../api/userAPI';
+import { userStore } from "../stores/userStore";
 
 console.log(data);
 
 const toast = inject('toast');
 const emitter = inject('emitter');
+const store = userStore();
 
 const obj = reactive({
     users: [],
@@ -26,8 +28,13 @@ emitter.on("reset", (user) => {
 onMounted(() => {
     userAPI.getAllUsers()
         .then(res => {
-            obj.users = res.data;
-            obj.filteredUsers = res.data;
+            for (let i = 0; i < res.data.length; i++) {
+              if (res.data[i].id === store.user.id) continue;
+              userAPI.getActuaryById(res.data[i].id).then(act => {
+                obj.users.push({ ...res.data[i], actuaryType: act.data.actuaryType})
+                obj.filteredUsers.push({ ...res.data[i], actuaryType: act.data.actuaryType})
+              })
+            }
             loading.value = false;
         })
         .catch(err => {
@@ -99,6 +106,7 @@ function resetLimit(id) {
                 :position="user.position"
                 :active="user.active"
                 :permissions="user.permissions"
+                :actuaryType="user.actuaryType"
             >
             </UserCard>
         </div>
