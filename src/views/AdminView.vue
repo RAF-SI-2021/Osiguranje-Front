@@ -38,14 +38,23 @@ onMounted(() => {
   if (localStorage.getItem("token")) {
     userAPI.getCurrentUser().then((res) => {
       user.value = res.data.firstName + " " + res.data.lastName;
-      if (res.data.permissions.admin || res.data.permissions.supervisor) admin.value = true;
-      if (res.data.permissions.agent || res.data.permissions.traineeAgent) {
-        agent.value = true;
-        userAPI.getActuaryById(res.data.id).then((actuary) => {
+      // if (res.data.permissions.admin || res.data.permissions.supervisor) admin.value = true;
+      // if (res.data.permissions.agent || res.data.permissions.traineeAgent) {
+      //   agent.value = true;
+      //   userAPI.getActuaryById(res.data.id).then((actuary) => {
+      //     usedLimit.value = actuary.data.usedLimit;
+      //     maxLimit.value = actuary.data.spendingLimit;
+      //   })
+      // }
+      userAPI.getActuaryById(res.data.id).then((actuary) => {
+        if (res.data.permissions.admin) admin.value = true;
+        if (actuary.data.actuaryType === "SUPERVISOR") admin.value = true;
+        else {
+          agent.value = true;
           usedLimit.value = actuary.data.usedLimit;
           maxLimit.value = actuary.data.spendingLimit;
-        })
-      }
+        }
+      })
     });
   }
 });

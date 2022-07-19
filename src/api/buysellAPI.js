@@ -10,17 +10,19 @@ export const buysellAPI = {
   },
 
   approveOrder(id) {
-    return axios.put(`/api/buyingmarket/orders/${id}`, {}, {
+    return axios.put(`/api/buyingmarket/orders/${id}`, "APPROVED", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
+        "Content-Type": "application/json",
       }
     })
   },
 
   declineOrder(id) {
-    return axios.delete(`/api/buyingmarket/orders/${id}`, {
+    return axios.put(`/api/buyingmarket/orders/${id}`, "DECLINED", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
+        "Content-Type": "application/json",
       }
     })
   }
