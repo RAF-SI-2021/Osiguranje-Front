@@ -20,7 +20,7 @@ const toast = inject("toast");
 function userOrders() {
   if (user.user.permissions.supervisor) {
     return ordersAPI.getAllOrders();
-  } else if (user.user.permissions.agent || user.user.permissions.traineeAgent) {
+  } else {
     return ordersAPI.getOrdersForCurrentAgent();
   }
 }
@@ -84,6 +84,10 @@ function approveOrder(id) {
   loading.value = true;
   buysellAPI.approveOrder(id).then(() => {
     toast.success("Order approved");
+    refreshList();
+    loading.value = false;
+  }).catch(() => {
+    toast.error("Error approving order");
     loading.value = false;
   })
 }
@@ -92,7 +96,17 @@ function declineOrder(id) {
   loading.value = true;
   buysellAPI.declineOrder(id).then(() => {
     toast.success("Order denied");
+    refreshList();
     loading.value = false;
+  }).catch(() => {
+    toast.error("Error declining order");
+    loading.value = false;
+  })
+}
+
+function refreshList() {
+  userOrders().then((res) => {
+    orders.data = res.data;
   })
 }
 
