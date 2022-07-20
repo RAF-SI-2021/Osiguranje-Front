@@ -1,7 +1,7 @@
 <script setup>
 import { ordersAPI } from "../api/ordersAPI";
 import { inject, onMounted, reactive, ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { securityStore } from "../stores/securityStore";
 import { buysellAPI } from "../api/buysellAPI";
 import { userStore } from "../stores/userStore";
@@ -16,6 +16,7 @@ const typeFlag = !!type;
 const store = securityStore();
 const loading = ref(false);
 const toast = inject("toast");
+const router = useRouter();
 
 function userOrders() {
   if (user.user.permissions.supervisor) {
@@ -136,7 +137,11 @@ function refreshList() {
               </thead>
               <tbody>
                 <tr v-for="order in orders.data" key="order.orderId">
-                  <td>{{ new Date(order.modificationDate).toDateString() }}</td>
+                  <td>
+                    <router-link :to="'/order-transactions/' + order.orderId">
+                      {{ new Date(order.modificationDate).toDateString() }}
+                    </router-link>
+                  </td>
                   <td v-if="!tickerFlag">{{ order.symbol }}</td>
                   <td>{{ order.actionType }}</td>
                   <td>{{ order.limitPrice }}</td>

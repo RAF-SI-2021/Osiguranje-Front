@@ -15,6 +15,14 @@ export const transactionAPI = {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
     }
     })
+  },
+
+  getTransactionsByOrder: (orderId) => {
+    return axios.get(`/api/account-transaction/transaction/order?order=${orderId}`, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      }
+    })
   }
 
 
