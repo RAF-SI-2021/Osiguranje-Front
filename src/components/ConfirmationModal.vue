@@ -65,7 +65,7 @@ function makeOrder() {
       loading.value = false;
       if (error.response.status === 400 && error.response.data === "bound must be positive") {
         toast.success("Order made successfully.")
-      } else if (error.response.status === 400) {
+      } else if (error.response.status === 400 && error.response.data.indexOf("Agent") === 0) {
         toast.error(error.response.data);
       } else {
         toast.error("Something went wrong.")
