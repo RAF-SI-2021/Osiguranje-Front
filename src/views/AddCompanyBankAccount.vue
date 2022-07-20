@@ -70,10 +70,12 @@ import { computed, inject, onMounted, reactive, ref } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { maxLength, minLength, required } from "@vuelidate/validators";
 import { companyAPI } from "../api/companyAPI";
+import { useRouter } from "vue-router";
 
 const companies = ref([])
 const loading = ref(false);
 const toast = inject("toast");
+const router = useRouter();
 
 onMounted(() => {
   companyAPI.getCompanies().then(res => {
@@ -120,6 +122,7 @@ function submitForm() {
       companyAPI.addCompanyBankAccount(bankAccount.companyId, bankAccount).then(res => {
         loading.value = false
         toast.success("Bank account added successfully")
+        router.push("/company/" + bankAccount.companyId);
       }).catch(err => {
         loading.value = false
         toast.error("Something went wrong")

@@ -28,11 +28,11 @@ describe("Testing security filters", () => {
   it("should display adequate results based on search term", () => {
     cy.intercept("GET", "/api/currentUser", { fixture: "user.json" });
     cy.login("car@gmail.com", "raf");
-    cy.intercept("GET", "/api/securities/data", { fixture: "securities.json" });
 
     cy.get("#app > div > div > div > div:nth-child(4) > div > a").click();
+    cy.intercept("GET", "/api/securities/data", { fixture: "securities.json" });
 
-    cy.wait(500);
+    cy.wait(1500);
 
     cy.get("input").eq(0).type("MS");
     cy.get("tr").should("have.length", 3);
@@ -60,7 +60,7 @@ describe("Testing security filters", () => {
     cy.get(".slider-connects").eq(0)
       .click(60, 0, { force: true })
 
-    cy.wait(500);
+    cy.wait(1500);
 
     cy.get(".slider-connects").eq(0)
       .click(10, 0, { force: true });
@@ -69,7 +69,7 @@ describe("Testing security filters", () => {
 
     cy.get("tr").should("have.length", 3);
   });
-
+  //
   it("filters scenario #2", () => {
     cy.intercept("GET", "/api/currentUser", { fixture: "user.json" });
     cy.login("car@gmail.com", "raf");

@@ -4,9 +4,11 @@ import { inject, onMounted, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import { securityStore } from "../stores/securityStore";
 import { buysellAPI } from "../api/buysellAPI";
+import { userStore } from "../stores/userStore";
 
 const orders = reactive({});
 const route = useRoute();
+const user = userStore();
 const ticker = route.query.ticker || "";
 const tickerFlag = !!ticker;
 const type = route.query.type || "";
@@ -15,8 +17,16 @@ const store = securityStore();
 const loading = ref(false);
 const toast = inject("toast");
 
+function userOrders() {
+  if (user.user.permissions.supervisor) {
+    return ordersAPI.getAllOrders();
+  } else {
+    return ordersAPI.getOrdersForCurrentAgent();
+  }
+}
+
 onMounted(() => {
-  ordersAPI.getAllOrders().then((res) => {
+  userOrders().then((res) => {
     orders.data = res.data;
 
     if (store.stock.length === 0 && store.futures.length === 0 && store.forex.length === 0) {
@@ -74,6 +84,10 @@ function approveOrder(id) {
   loading.value = true;
   buysellAPI.approveOrder(id).then(() => {
     toast.success("Order approved");
+    refreshList();
+    loading.value = false;
+  }).catch(() => {
+    toast.error("Error approving order");
     loading.value = false;
   })
 }
@@ -82,7 +96,17 @@ function declineOrder(id) {
   loading.value = true;
   buysellAPI.declineOrder(id).then(() => {
     toast.success("Order denied");
+    refreshList();
     loading.value = false;
+  }).catch(() => {
+    toast.error("Error declining order");
+    loading.value = false;
+  })
+}
+
+function refreshList() {
+  userOrders().then((res) => {
+    orders.data = res.data;
   })
 }
 
@@ -107,7 +131,7 @@ function declineOrder(id) {
                   <th>Amount</th>
                   <th>Total</th>
                   <th>Order State</th>
-                  <th>Action</th>
+                  <th v-if="user.user.permissions.supervisor">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -119,13 +143,16 @@ function declineOrder(id) {
                   <td>{{ order.amount }}</td>
                   <td>{{ order.amount * order.limitPrice }}</td>
                   <td>{{ order.orderState }}</td>
-                  <td>
-                    <div v-if="order.orderState !== 'APPROVED'">
+                  <td v-if="user.user.permissions.supervisor">
+                    <div v-if="order.orderState === 'WAITING'">
                       <button class="btn btn-sm btn-success mx-1" @click="approveOrder(order.orderId)">Approve</button>
                       <button class="btn btn-sm btn-danger" @click="declineOrder(order.orderId)">Deny</button>
                     </div>
-                    <div v-else>
+                    <div v-else-if="order.orderState === 'APPROVED'">
                       <i class="bi bi-check-square-fill text-success"></i>
+                    </div>
+                    <div v-else-if="order.orderState === 'DECLINED'">
+                      <i class="bi bi-x-square-fill text-danger"></i>
                     </div>
                   </td>
                 </tr>

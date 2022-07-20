@@ -23,10 +23,9 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-// require("@4tw/cypress-drag-drop");
-
 Cypress.Commands.add("login", (email, password) => {
-  if (email == "car@gmail.com" && password == "raf") {
+
+  if (email === "car@gmail.com" && password === "raf") {
     cy.intercept("POST", "/api/login", {
       statusCode: 200,
       headers: {
@@ -34,8 +33,9 @@ Cypress.Commands.add("login", (email, password) => {
           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXJAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJpYXQiOjE2NTczNzQyMjcsImV4cCI6MTY1NzQ2MDYyN30.10q1aHxWRUkyWEJ3NYl4euMSNyP_YFqZn4n_Z4_C6eU",
       },
     });
+    cy.intercept("GET", "/api/securities/data", { fixture: "securities.json" });
   } else {
-    cy.intercept("POST", "/login", {
+    cy.intercept("POST", "/api/login", {
       statusCode: 403,
     });
   }
@@ -43,4 +43,8 @@ Cypress.Commands.add("login", (email, password) => {
   cy.get("#email").type(email);
   cy.get("#password").type(password);
   cy.get(".btn-primary").click();
+
+  cy.wait(500);
+
+
 });

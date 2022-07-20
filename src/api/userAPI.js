@@ -65,6 +65,17 @@ export const userAPI = {
                 }
             })
         }
+    },
+
+    getActuaryById: (id) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            return axios.get(`/api/buyingmarket/actuaries/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+        }
     }
 
 }

@@ -165,13 +165,6 @@ watch(props.myInput, (newInput) => {
               />
             </label>
           </div>
-
-          <div>
-            <label for="margin_cb">
-              Margin:
-              <input v-model="props.myInput.margin" type="checkbox" id="margin_cb" />
-            </label>
-          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
