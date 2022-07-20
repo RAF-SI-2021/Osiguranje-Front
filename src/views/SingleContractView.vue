@@ -1,4 +1,5 @@
 <template>
+  <vue-element-loading :active="loading" spinner="bar-fade-scale" style="height: 100vh" />
   <div class="container">
     <h1 class="mt-5 text-center">Contract Info</h1>
     <div class="row row-cols-2">
@@ -8,6 +9,7 @@
         <p><strong>Contract Description: </strong>{{ contract.description }}</p>
         <p><strong>Contract Creation Date: </strong>{{ contract.creationDate }}</p>
         <p><strong>Last Updated: </strong>{{ contract.lastUpdated }}</p>
+        <button v-if="!finalized" class="btn btn-success mt-2" @click="finalizeContract">Finalize Contract</button>
       </div>
       <div class="col">
         <div class="d-flex justify-content-between align-items-end">
@@ -121,6 +123,8 @@ const contractId = route.params.id;
 const allSecurities = ref({});
 const options = ref([])
 const toast = inject("toast");
+const loading = ref(false);
+const finalized = ref(true);
 
 const transactionItem = reactive({
   transcationType: "BUY",
@@ -137,6 +141,7 @@ onMounted(() => {
     securitiesAPI.getSecurities(),
   ]).then((values) => {
     contract.value = values[0].data;
+    finalized.value = contract.value.status === "FINALIZED";
     allSecurities.value = values[1].data;
     options.value = allSecurities.value.stocks;
   })
@@ -190,8 +195,17 @@ function getSecurityName(type, id) {
   }
 }
 
-function getCurrencyName(id) {
-
+function finalizeContract() {
+  loading.value = true;
+  contractAPI.finalizeContract(contractId).then(() => {
+    toast.success("Contract Finalized");
+    contract.value.status = "FINALIZED";
+    loading.value = false;
+    finalized.value = true;
+  }).catch(() => {
+    toast.error("Finalizing contract failed");
+    loading.value = false;
+  })
 }
 
 </script>

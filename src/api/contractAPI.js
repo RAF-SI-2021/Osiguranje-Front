@@ -31,5 +31,13 @@ export const contractAPI = {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
     });
+  },
+
+  finalizeContract: (contractId) => {
+    return axios.post(`/api/otc/contracts/${contractId}/finalize`, {}, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    })
   }
 }
