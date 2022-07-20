@@ -159,7 +159,7 @@ function addItem() {
     securityId: transactionItem.securityId,
     securityType: transactionItem.securityType,
     accountId: transactionItem.accountId,
-    currencyId: options.value.find(security => security.id === transactionItem.securityId).exchange.currency.id,
+    currencyId: 14,
     amount: transactionItem.quantity,
     pricePerShare: transactionItem.pricePerShare
   }
