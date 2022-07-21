@@ -41,7 +41,11 @@ describe("Contract creation tests", () => {
 
     cy.get(".btn-primary").click();
 
+    cy.intercept("GET", "/api/otc/contracts", { fixture: "contractFromCreate.json" });
+
     cy.get(".c-toast").should("be.visible");
+
+    cy.get("tr").should("have.length", 2);
   })
 
   it("should create contract with note", () => {
@@ -53,7 +57,12 @@ describe("Contract creation tests", () => {
 
     cy.get(".btn-primary").click();
 
+    cy.intercept("GET", "/api/otc/contracts", { fixture: "contractFromCreate2.json" });
+
+
     cy.get(".c-toast").should("be.visible");
+
+    cy.get("tr").should("have.length", 2);
   });
 
 })

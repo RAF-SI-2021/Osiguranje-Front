@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "registrationID": 123,
+    "name": "Test company",
+    "taxID": 21345,
+    "industrialClassificationID": 123,
+    "address": "Test Address 123",
+    "employees": [],
+    "bankAccounts": []
+  }
+]

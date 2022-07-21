@@ -7,7 +7,7 @@ describe("User Search", () => {
 
   it("should route to the all users page and display the users", () => {
     cy.intercept("GET", "/api/user/all", { fixture: "allUsers.json" });
-    cy.intercept("/api/buyingmarket/actuaries/**", { statusCode: 200 }).as("agents");
+    cy.intercept("/api/buyingmarket/actuaries/**", { statusCode: 200, fixture: "supervisor.json" }).as("agents");
     cy.intercept("GET", "/api/currentUser", { fixture: "user.json" });
 
     cy.login("car@gmail.com", "raf");
@@ -21,7 +21,7 @@ describe("User Search", () => {
 
   it("shoud return adequate search results based on the search term", () => {
     cy.intercept("GET", "/api/user/all", { fixture: "allUsers.json" });
-    cy.intercept("/api/buyingmarket/actuaries/**", { statusCode: 200 }).as("agents");
+    cy.intercept("/api/buyingmarket/actuaries/**", { statusCode: 200, fixture: "supervisor.json" }).as("agents");
     cy.intercept("GET", "/api/currentUser", { fixture: "user.json" });
 
     cy.login("car@gmail.com", "raf");

@@ -1,0 +1,36 @@
+{
+  "id": 544,
+  "company": {
+    "id": 17,
+    "registrationID": 222,
+    "name": "Google",
+    "taxID": 456,
+    "industrialClassificationID": 5,
+    "address": "London, UK",
+    "employees": [
+      {
+        "id": 18,
+        "name": "Bill",
+        "surname": "Gates",
+        "phone": "065288867",
+        "email": "065288867",
+        "companyPosition": "CTO",
+        "description": ""
+      }
+    ],
+    "bankAccounts": [
+      {
+        "id": 19,
+        "accountNumber": "111122223333",
+        "bankName": "UK Bank",
+        "accountType": "Cash"
+      }
+    ]
+  },
+  "status": "DRAFT",
+  "creationDate": "09/07/2022 16:40:12",
+  "lastUpdated": "09/07/2022 16:40:36",
+  "refNumber": "4568/614",
+  "description": "dasdasgg bgdf fgs",
+  "transactions": []
+}
