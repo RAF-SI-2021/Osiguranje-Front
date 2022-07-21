@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "userId": 1,
+  "active": true,
+  "orders": [],
+  "spendingLimit": 0,
+  "usedLimit": 0,
+  "approvalRequired": false,
+  "actuaryType": "SUPERVISOR",
+  "version": 0
+}

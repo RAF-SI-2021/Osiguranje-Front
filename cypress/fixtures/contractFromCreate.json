@@ -1,0 +1,49 @@
+[
+  {
+    "id": 547,
+    "company": {
+      "id": 1,
+      "registrationID": 111,
+      "name": "Apple",
+      "taxID": 123,
+      "industrialClassificationID": 7,
+      "address": "Palo Alto, CA",
+      "employees": [
+        {
+          "id": 2,
+          "name": "Steve",
+          "surname": "Jobs",
+          "phone": "064213456",
+          "email": "stevejobs@apple.com",
+          "companyPosition": "CEO",
+          "description": ""
+        }
+      ],
+      "bankAccounts": [
+        {
+          "id": 3,
+          "accountNumber": "25005845774890",
+          "bankName": "World Bank",
+          "accountType": "Cash"
+        }
+      ]
+    },
+    "status": "DRAFT",
+    "creationDate": "21/07/2022 14:02:02",
+    "lastUpdated": "21/07/2022 14:02:18",
+    "refNumber": "123456789",
+    "description": "",
+    "transactions": [
+      {
+        "id": 548,
+        "transactionType": "BUY",
+        "securityId": 378,
+        "securityType": "STOCKS",
+        "accountId": 1,
+        "currencyId": 14,
+        "amount": 10,
+        "pricePerShare": 100
+      }
+    ]
+  }
+]

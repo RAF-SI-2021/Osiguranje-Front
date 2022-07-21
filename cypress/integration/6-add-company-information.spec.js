@@ -14,7 +14,7 @@ describe("Add Company Info tests", () => {
       })
 
     it("should display Add Company Info form", () => {
-        
+
         cy.get("h2.mt-5.text-center").should("contain", "Add Company Information");
     })
 
@@ -36,7 +36,7 @@ describe("Add Company Info tests", () => {
     })
 
     it("should require all fields except for companyName", () => {
-        cy.get("#companyName").type("Test company"); 
+        cy.get("#companyName").type("Test company");
         cy.get("button.btn.btn-primary").click();
         cy.get("form > div:nth-child(1) > div.input-errors").should("not.exist");
         cy.get("form > div:nth-child(2) > div.input-errors > div.error-msg").should("exist");
@@ -46,7 +46,7 @@ describe("Add Company Info tests", () => {
     })
 
     it("should require all fields except for companyId", () => {
-        cy.get("#companyRegistrationId").type("123"); 
+        cy.get("#companyRegistrationId").type("123");
         cy.get("button.btn.btn-primary").click();
         cy.get("form > div:nth-child(1) > div.input-errors > div.error-msg").should("exist");
         cy.get("form > div:nth-child(2) > div.input-errors").should("not.exist");
@@ -56,7 +56,7 @@ describe("Add Company Info tests", () => {
     })
 
     it("should require all fields except for companyId", () => {
-        cy.get("#companyRegistrationId").type("123"); 
+        cy.get("#companyRegistrationId").type("123");
         cy.get("button.btn.btn-primary").click();
         cy.get("form > div:nth-child(1) > div.input-errors > div.error-msg").should("exist");
         cy.get("form > div:nth-child(2) > div.input-errors").should("not.exist");
@@ -73,7 +73,9 @@ describe("Add Company Info tests", () => {
         cy.get("#sicCode").type("123");
         cy.get("#address").type("Test Address 123");
         cy.get("button.btn.btn-primary").click();
-        cy.should("be.visible", ".c-toast--success");
         cy.get(".c-toast--success").should("contain","Company created successfully!");
+
+        cy.intercept("GET", "/api/otc/companies", { fixture: "companyFromCreate.json" });
+        cy.get("tr").should("have.length", 2);
     })
 })
